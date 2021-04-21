@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A6676625-89CB-4EFE-9619-B49438FE50F5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>VaccinationCentrumSimulation</RootNamespace>
+    <AssemblyName>VaccinationCentrumSimulation</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ABACore">
+      <HintPath>..\ABACore.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="agents\AgentCentrum.cs" />
+    <Compile Include="agents\AgentExamination.cs" />
+    <Compile Include="agents\AgentModel.cs" />
+    <Compile Include="agents\AgentRegistration.cs" />
+    <Compile Include="agents\AgentSurrounding.cs" />
+    <Compile Include="agents\AgentVaccination.cs" />
+    <Compile Include="agents\AgentWaitingRoom.cs" />
+    <Compile Include="continualAssistants\ProcessExamination.cs" />
+    <Compile Include="continualAssistants\ProcessRegistration.cs" />
+    <Compile Include="continualAssistants\ProcessVaccination.cs" />
+    <Compile Include="continualAssistants\ProcessWaitingRoom.cs" />
+    <Compile Include="continualAssistants\SchedulerPatientsArrival.cs" />
+    <Compile Include="entities\EntityPatient.cs" />
+    <Compile Include="managers\ManagerCentrum.cs" />
+    <Compile Include="managers\ManagerExamination.cs" />
+    <Compile Include="managers\ManagerModel.cs" />
+    <Compile Include="managers\ManagerRegistration.cs" />
+    <Compile Include="managers\ManagerSurrounding.cs" />
+    <Compile Include="managers\ManagerVaccination.cs" />
+    <Compile Include="managers\ManagerWaitingRoom.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="simulation\Mc.cs" />
+    <Compile Include="simulation\MyMessage.cs" />
+    <Compile Include="simulation\MySimulation.cs" />
+    <Compile Include="simulation\SimId.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="instantAssistants\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataStructures\DataStructures.csproj">
+      <Project>{6feafeab-0afe-4506-a407-3ed21f14a12d}</Project>
+      <Name>DataStructures</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
