@@ -7,11 +7,13 @@ namespace simulation
 	public class MySimulation : Simulation
     {
         public Random RandSeedGenerator { get; private set; }
+        public int OrderedPatientsNum { get; set; }
 
 		public MySimulation()
 		{
             RandSeedGenerator = new Random(); RandSeedGenerator = new Random();
-            Init();
+            OrderedPatientsNum = 2500;
+			Init();
 		}
 
         protected override void PrepareSimulation()
@@ -28,7 +30,7 @@ namespace simulation
         {
             base.ReplicationFinished();
 
-            Console.WriteLine("R" + CurrentReplication + ": Ordered patients: " + AgentSurrounding.OrderedPatientsNum);
+            Console.WriteLine("R" + CurrentReplication + ": Ordered patients: " + OrderedPatientsNum);
             Console.WriteLine("R" + CurrentReplication + ": Arrived patients: " + AgentSurrounding.ArrivedPatientsCount);
             Console.WriteLine("R" + CurrentReplication + ": Canceled patients: " + AgentSurrounding.CanceledPatientsNum);
 		}

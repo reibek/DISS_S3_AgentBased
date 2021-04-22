@@ -13,7 +13,7 @@ namespace agents
 	//meta! id="2"
 	public class AgentSurrounding : Agent
     {
-        public int OrderedPatientsNum { get; set; }
+        public int PatientsCount { get; set; }
         public int ArrivedPatientsCount { get; set; }
         public int CanceledPatientsNum { get; set; }
         public List<int> CanceledPatientsIds { get; set; }
@@ -24,22 +24,24 @@ namespace agents
 			base(id, mySim, parent)
 		{
 			Init();
-            OrderedPatientsNum = 540;
 
             CanceledPatientsIds = new List<int>();
 			RandCanceledPatientsNum = new UniformDiscreteRNG(5, 25, ((MySimulation) MySim).RandSeedGenerator);
-			RandCanceledPatientsIds = new UniformDiscreteRNG(1, OrderedPatientsNum, ((MySimulation)MySim).RandSeedGenerator);
+            RandCanceledPatientsIds = new UniformDiscreteRNG(1, ((MySimulation) MySim).OrderedPatientsNum,
+                ((MySimulation) MySim).RandSeedGenerator);
         }
 
         public override void PrepareReplication()
         {
             base.PrepareReplication();
 
+            PatientsCount = 0;
             ArrivedPatientsCount = 0;
 
             CanceledPatientsIds.Clear();
             CanceledPatientsNum =
-                (int) Math.Round(RandCanceledPatientsNum.Sample() * ((double) OrderedPatientsNum / 540), 0);
+                (int) Math.Round(
+                    RandCanceledPatientsNum.Sample() * ((double) ((MySimulation) MySim).OrderedPatientsNum / 540), 0);
 
             for (int i = 0; i < CanceledPatientsNum; i++)
             {

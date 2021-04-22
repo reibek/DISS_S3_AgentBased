@@ -22,7 +22,10 @@ namespace managers
 		//meta! sender="AgentSurrounding", id="30", type="Notice"
 		public void ProcessNoticePatientArrival(MessageForm message)
 		{
-		}
+			message.Addressee = MySim.FindAgent(SimId.AgentCentrum);
+            message.Code = Mc.NoticeNewPatient;
+			Notice(message);
+        }
 
 		//meta! sender="AgentCentrum", id="37", type="Notice"
 		public void ProcessNoticePatientLeave(MessageForm message)

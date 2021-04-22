@@ -14,7 +14,7 @@ namespace managers
 			Init();
 		}
 
-		override public void PrepareReplication()
+		public override void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
@@ -38,6 +38,9 @@ namespace managers
 		//meta! sender="AgentModel", id="31", type="Notice"
 		public void ProcessNoticeNewPatient(MessageForm message)
 		{
+            message.Addressee = MySim.FindAgent(SimId.AgentRegistration);
+            message.Code = Mc.RequestRegistration;
+            Request(message);
 		}
 
 		//meta! sender="AgentVaccination", id="34", type="Response"

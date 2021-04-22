@@ -22,7 +22,7 @@ namespace continualAssistants
         {
             message.Code = Mc.NoticePatientGenerated;
             message.Addressee = MyAgent;
-            Hold(60, message);
+            Hold(32400.0 / ((MySimulation) MySim).OrderedPatientsNum, message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"

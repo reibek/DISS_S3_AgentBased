@@ -58,7 +58,9 @@
     <Compile Include="continualAssistants\ProcessVaccination.cs" />
     <Compile Include="continualAssistants\ProcessWaitingRoom.cs" />
     <Compile Include="continualAssistants\SchedulerPatientsArrival.cs" />
+    <Compile Include="entities\AdminWorker.cs" />
     <Compile Include="entities\EntityPatient.cs" />
+    <Compile Include="entities\VaccineCentrumEntity.cs" />
     <Compile Include="managers\ManagerCentrum.cs" />
     <Compile Include="managers\ManagerExamination.cs" />
     <Compile Include="managers\ManagerModel.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="simulation\Mc.cs" />
     <Compile Include="simulation\MyMessage.cs" />
     <Compile Include="simulation\MySimulation.cs" />
+    <Compile Include="simulation\Pool.cs" />
     <Compile Include="simulation\SimId.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -45,8 +45,9 @@ namespace managers
 
 		//meta! sender="SchedulerPatientsArrival", id="45", type="Notice"
 		public void ProcessNoticePatientGenerated(MessageForm message)
-		{
-            var patient = new EntityPatient(MyAgent.ArrivedPatientsCount, MySim);
+        {
+            MyAgent.PatientsCount++;
+            var patient = new EntityPatient(MyAgent.PatientsCount, MySim);
             if (MyAgent.CanceledPatientsIds.Count > 0 
                 && patient.Id == MyAgent.CanceledPatientsIds.First())
             {
