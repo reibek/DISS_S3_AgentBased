@@ -1,8 +1,12 @@
+using System.Collections.Generic;
 using OSPABA;
 using simulation;
 using managers;
 using continualAssistants;
-using DataStructures;
+using entities;
+using OSPRNG;
+using OSPStat;
+using VaccineCentrum;
 
 //using instantAssistants;
 namespace agents
@@ -10,22 +14,42 @@ namespace agents
 	//meta! id="4"
 	public class AgentRegistration : Agent
 	{
-        public Queue<MyMessage> QuRegistration { get; set; }
+        public DataStructures.Queue<MessageForm> QuRegistration { get; set; }
+		public WStat StatQuRegistrationSize { get; set; }
+        public Stat StatQuRegistrationTime { get; set; }
+		public Pool<EntityAdminWorker> PoolAdminWorkers { get; set; }
+		public List<UniformDiscreteRNG> RandAdminWorkerChoice { get; set; }
 
 		public AgentRegistration(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
 			Init();
 
-			QuRegistration = new Queue<MyMessage>();
-		}
+            AddOwnMessage(Mc.ProcessRegistrationEnded);
+
+			QuRegistration = new DataStructures.Queue<MessageForm>();
+			StatQuRegistrationSize = new WStat(MySim);
+			StatQuRegistrationTime = new Stat();
+        }
 
 		public override void PrepareReplication()
 		{
 			base.PrepareReplication();
-			
+
+            var adminWorkersCount = ((MySimulation) MySim).ResAdminWorkersCount;
+
 			QuRegistration.Clear();
-		}
+			StatQuRegistrationSize.Clear();
+			StatQuRegistrationTime.Clear();
+
+            PoolAdminWorkers = new Pool<EntityAdminWorker>(adminWorkersCount);
+			RandAdminWorkerChoice = new List<UniformDiscreteRNG>(adminWorkersCount);
+            for (int i = 0; i < adminWorkersCount; i++)
+            {
+                PoolAdminWorkers.Add(new EntityAdminWorker(i + 1, MySim, ((MySimulation) MySim).RandSeedGenerator));
+                RandAdminWorkerChoice.Add(new UniformDiscreteRNG(0, i, ((MySimulation) MySim).RandSeedGenerator));
+            }
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()

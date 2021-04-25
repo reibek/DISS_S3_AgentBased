@@ -5,6 +5,9 @@ namespace simulation
 	public class MyMessage : MessageForm
 	{
 		public EntityPatient Patient { get; set; }
+		public EntityAdminWorker AdminWorker { get; set; }
+		public EntityDoctor Doctor { get; set; }
+		public EntityNurse Nurse { get; set; }
 
 		public MyMessage(Simulation sim) :
 			base(sim)
@@ -26,8 +29,12 @@ namespace simulation
 		{
 			base.Copy(message);
 			MyMessage original = (MyMessage)message;
-			// Copy attributes
+			
+            // Copy attributes
             Patient = original.Patient;
+            AdminWorker = original.AdminWorker;
+            Doctor = original.Doctor;
+            Nurse = original.Nurse;
 		}
 	}
 }

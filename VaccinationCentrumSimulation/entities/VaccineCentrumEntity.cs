@@ -39,17 +39,38 @@ namespace entities
 
         public void Assign(EntityPatient patient)
         {
+            #region STATISTICS
+
+            StatUtilizationLastChange = MySim.CurrentTime;
+
+            #endregion
+
             Patient = patient;
             IsBusy = true;
         }
 
         public void AcceptNext(EntityPatient patient)
         {
+            #region STATISTICS
+
+            WorkingTime += MySim.CurrentTime - StatUtilizationLastChange;
+            StatUtilizationLastChange = MySim.CurrentTime;
+
+            #endregion
+
             Patient = patient;
         }
 
         public void Release()
         {
+            #region STATISTICS
+
+            WorkingTime += MySim.CurrentTime - StatUtilizationLastChange;
+            StatUtilizationLastChange = MySim.CurrentTime;
+
+
+            #endregion
+
             Patient = null;
             IsBusy = false;
         }

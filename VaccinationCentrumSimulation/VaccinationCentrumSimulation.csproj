@@ -58,7 +58,9 @@
     <Compile Include="continualAssistants\ProcessVaccination.cs" />
     <Compile Include="continualAssistants\ProcessWaitingRoom.cs" />
     <Compile Include="continualAssistants\SchedulerPatientsArrival.cs" />
-    <Compile Include="entities\AdminWorker.cs" />
+    <Compile Include="entities\EntityAdminWorker.cs" />
+    <Compile Include="entities\EntityDoctor.cs" />
+    <Compile Include="entities\EntityNurse.cs" />
     <Compile Include="entities\EntityPatient.cs" />
     <Compile Include="entities\VaccineCentrumEntity.cs" />
     <Compile Include="managers\ManagerCentrum.cs" />

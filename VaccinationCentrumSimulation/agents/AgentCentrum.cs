@@ -7,18 +7,23 @@ namespace agents
 {
 	//meta! id="3"
 	public class AgentCentrum : Agent
-	{
+    {
+        public int ArrivedPatientsCount { get; set; }
+		public int VaccinatedPatientsCount { get; set; }
+
 		public AgentCentrum(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
 			Init();
-		}
+        }
 
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
-			// Setup component for the next replication
-		}
+
+            ArrivedPatientsCount = 0;
+			VaccinatedPatientsCount = 0;
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()

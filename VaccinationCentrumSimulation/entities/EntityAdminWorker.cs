@@ -8,14 +8,14 @@ using OSPRNG;
 
 namespace entities
 {
-    public class AdminWorker : VaccineCentrumEntity
+    public class EntityAdminWorker : VaccineCentrumEntity
     {
         /// <summary>
         /// Uniform random variable for registration time of admin worker.
         /// </summary>
         public UniformContinuousRNG RandRegistrationTime { get; set; }
 
-        public AdminWorker(int id, Simulation simRef, Random randomGenerator) : base(id, simRef)
+        public EntityAdminWorker(int id, Simulation simRef, Random randomGenerator) : base(id, simRef)
         {
             Id = id;
             IsBusy = false;

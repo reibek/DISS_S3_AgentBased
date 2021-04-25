@@ -28,30 +28,49 @@ namespace managers
 		//meta! sender="AgentExamination", id="33", type="Response"
 		public void ProcessRequestExamination(MessageForm message)
 		{
+            message.Addressee = MySim.FindAgent(SimId.AgentVaccination);
+            message.Code = Mc.RequestVaccination;
+            Request(message);
 		}
 
 		//meta! sender="AgentWaitingRoom", id="35", type="Response"
 		public void ProcessRequestWaitingRoom(MessageForm message)
-		{
-		}
+        {
+            MyAgent.VaccinatedPatientsCount++;
+			message.Addressee = MySim.FindAgent(SimId.AgentModel);
+            message.Code = Mc.NoticePatientLeave;
+			Notice(message);
+
+            if (MyAgent.VaccinatedPatientsCount == MyAgent.ArrivedPatientsCount)
+            {
+                MySim.StopReplication();
+            }
+        }
 
 		//meta! sender="AgentModel", id="31", type="Notice"
 		public void ProcessNoticeNewPatient(MessageForm message)
 		{
-            message.Addressee = MySim.FindAgent(SimId.AgentRegistration);
+            MyAgent.ArrivedPatientsCount++;
+			message.Addressee = MySim.FindAgent(SimId.AgentRegistration);
             message.Code = Mc.RequestRegistration;
             Request(message);
 		}
 
 		//meta! sender="AgentVaccination", id="34", type="Response"
 		public void ProcessRequestVaccination(MessageForm message)
-		{
-		}
+        {
+            message.Addressee = MySim.FindAgent(SimId.AgentWaitingRoom);
+            message.Code = Mc.RequestWaitingRoom;
+			Request(message);
+        }
 
 		//meta! sender="AgentRegistration", id="32", type="Response"
 		public void ProcessRequestRegistration(MessageForm message)
-		{
-		}
+        {
+            message.Addressee = MySim.FindAgent(SimId.AgentExamination);
+            message.Code = Mc.RequestExamination;
+			Request(message);
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
@@ -66,7 +85,7 @@ namespace managers
 		{
 		}
 
-		override public void ProcessMessage(MessageForm message)
+		public override void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{

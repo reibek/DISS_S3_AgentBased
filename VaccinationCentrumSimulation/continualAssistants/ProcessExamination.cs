@@ -11,7 +11,7 @@ namespace continualAssistants
 		{
 		}
 
-		override public void PrepareReplication()
+		public override void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
@@ -19,7 +19,11 @@ namespace continualAssistants
 
 		//meta! sender="AgentExamination", id="23", type="Start"
 		public void ProcessStart(MessageForm message)
-		{
+        {
+            ((MyMessage) message).Patient.WaitingRoomTime =
+                ((MyMessage) message).Doctor.RandWaitingRoomTimeDecision.Sample() < 0.95 ? 900 : 1800;
+            message.Code = Mc.ProcessExaminationEnded;
+            Hold(((MyMessage)message).AdminWorker.RandRegistrationTime.Sample(), message);
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -27,11 +31,14 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+                case Mc.ProcessExaminationEnded:
+                    AssistantFinished(message);
+                    break;
 			}
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
-		override public void ProcessMessage(MessageForm message)
+		public override void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{

@@ -29,8 +29,11 @@ namespace managers
 
 		//meta! sender="AgentCentrum", id="37", type="Notice"
 		public void ProcessNoticePatientLeave(MessageForm message)
-		{
-		}
+        {
+            message.Addressee = MySim.FindAgent(SimId.AgentSurrounding);
+            message.Code = Mc.NoticePatientLeave;
+			Notice(message);
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)

@@ -16,5 +16,9 @@ namespace simulation
 		//meta! tag="end"
 
 		// 1..1000 range reserved for user
-	}
+        public const int ProcessRegistrationEnded = 11;
+        public const int ProcessExaminationEnded = 12;
+        public const int ProcessVaccinationEnded = 13;
+        public const int ProcessWaitingRoomEnded = 14;
+    }
 }

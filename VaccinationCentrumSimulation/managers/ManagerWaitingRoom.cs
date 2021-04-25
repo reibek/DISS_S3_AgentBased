@@ -3,6 +3,7 @@ using simulation;
 using agents;
 using continualAssistants;
 //using instantAssistants;
+
 namespace managers
 {
 	//meta! id="7"
@@ -27,13 +28,20 @@ namespace managers
 
 		//meta! sender="AgentCentrum", id="35", type="Request"
 		public void ProcessRequestWaitingRoom(MessageForm message)
-		{
-		}
+        {
+            MyAgent.WaitingPatientsCount++;
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessWaitingRoom);
+			StartContinualAssistant(message);
+        }
 
 		//meta! sender="ProcessWaitingRoom", id="29", type="Finish"
 		public void ProcessFinish(MessageForm message)
-		{
-		}
+        {
+            MyAgent.WaitingPatientsCount--;
+            message.Addressee = MySim.FindAgent(SimId.AgentCentrum);
+            message.Code = Mc.RequestWaitingRoom;
+			Response(message);
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)

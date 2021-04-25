@@ -19,7 +19,9 @@ namespace continualAssistants
 
 		//meta! sender="AgentRegistration", id="20", type="Start"
 		public void ProcessStart(MessageForm message)
-		{
+        {
+            message.Code = Mc.ProcessRegistrationEnded;
+			Hold(((MyMessage)message).AdminWorker.RandRegistrationTime.Sample(), message);
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -27,6 +29,9 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+				case Mc.ProcessRegistrationEnded:
+					AssistantFinished(message);
+                    break;
 			}
 		}
 

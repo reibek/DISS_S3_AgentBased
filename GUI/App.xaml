@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:GUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/GUI;component/src/fonts/#Poppins Light"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
     </Application.Resources>
 </Application>

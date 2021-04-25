@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1A5786A8-244B-4ED9-B71D-3A31C158D180}</ProjectGuid>
+    <ProjectGuid>{16116095-1734-457D-AEE1-3509690F568A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>GUI</RootNamespace>
     <AssemblyName>GUI</AssemblyName>
@@ -35,6 +35,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ABACore, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ABACore.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,6 +65,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControls\LabeledInput.xaml.cs">
+      <DependentUpon>LabeledInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ResourceInfoPanel.xaml.cs">
+      <DependentUpon>ResourceInfoPanel.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,8 +83,45 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\PageExperiment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageReplications.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageSimulation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\LabeledInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ResourceInfoPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\PageExperiment.xaml.cs">
+      <DependentUpon>PageExperiment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageReplications.xaml.cs">
+      <DependentUpon>PageReplications.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSettings.xaml.cs">
+      <DependentUpon>PageSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSimulation.xaml.cs">
+      <DependentUpon>PageSimulation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -86,13 +139,43 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="src\fonts\Poppins-Bold.ttf" />
+    <Resource Include="src\fonts\Poppins-Light.ttf" />
+    <Resource Include="src\fonts\Poppins-Regular.ttf" />
+    <Resource Include="src\fonts\Poppins-Thin.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataStructures\DataStructures.csproj">
+      <Project>{6FEAFEAB-0AFE-4506-A407-3ED21F14A12D}</Project>
+      <Name>DataStructures</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VaccinationCentrumSimulation\VaccinationCentrumSimulation.csproj">
+      <Project>{a6676625-89cb-4efe-9619-b49438fe50f5}</Project>
+      <Name>VaccinationCentrumSimulation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\icons\009-multiply.png" />
+    <Resource Include="src\icons\010-substract.png" />
+    <Resource Include="src\icons\024-squares.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\icons\005-play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\icons\021-pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\icons\023-stop.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

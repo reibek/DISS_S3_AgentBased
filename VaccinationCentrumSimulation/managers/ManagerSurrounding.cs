@@ -57,16 +57,17 @@ namespace managers
             } 
             else
             {
-                MyAgent.ArrivedPatientsCount++;
-				((MyMessage)message).Patient = patient;
+                ((MyMessage)message).Patient = patient;
                 message.Addressee = MySim.FindAgent(SimId.AgentModel);
                 message.Code = Mc.NoticePatientArrival;
                 Notice(new MyMessage(message));
             }
 
+            if (MyAgent.PatientsCount == ((MySimulation)MySim).OrderedPatientsNum) return;
+
             message.Addressee = MyAgent.FindAssistant(SimId.SchedulerPatientsArrival);
             StartContinualAssistant(message);
-		}
+        }
 
 		//meta! sender="AgentModel", id="47", type="Notice"
 		public void ProcessNoticePatientLeave(MessageForm message)

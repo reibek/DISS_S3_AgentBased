@@ -1,24 +1,55 @@
+using System.Collections.Generic;
 using OSPABA;
 using simulation;
 using managers;
 using continualAssistants;
+using entities;
+using OSPRNG;
+using OSPStat;
+using VaccineCentrum;
+
 //using instantAssistants;
 namespace agents
 {
 	//meta! id="5"
 	public class AgentExamination : Agent
-	{
+    {
+        public DataStructures.Queue<MessageForm> QuExamination;
+        public WStat StatQuExaminationSize { get; set; }
+        public Stat StatQuExaminationTime { get; set; }
+		public Pool<EntityDoctor> PoolDoctors { get; set; }
+        public List<UniformDiscreteRNG> RandDoctorChoice { get; set; }
+
 		public AgentExamination(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
 			Init();
+
+            AddOwnMessage(Mc.ProcessExaminationEnded);
+
+			QuExamination = new DataStructures.Queue<MessageForm>();
+            StatQuExaminationSize = new WStat(MySim);
+            StatQuExaminationTime = new Stat();
 		}
 
-		override public void PrepareReplication()
+		public override void PrepareReplication()
 		{
 			base.PrepareReplication();
-			// Setup component for the next replication
-		}
+
+            var doctorsCount = ((MySimulation) MySim).ResDoctorsCount;
+
+			QuExamination.Clear();
+            StatQuExaminationSize.Clear();
+            StatQuExaminationTime.Clear();
+
+			PoolDoctors = new Pool<EntityDoctor>(doctorsCount);
+			RandDoctorChoice = new List<UniformDiscreteRNG>(doctorsCount);
+            for (int i = 0; i < doctorsCount; i++)
+            {
+                PoolDoctors.Add(new EntityDoctor(i + 1, MySim, ((MySimulation) MySim).RandSeedGenerator));
+                RandDoctorChoice.Add(new UniformDiscreteRNG(0, i, ((MySimulation) MySim).RandSeedGenerator));
+            }
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()

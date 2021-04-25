@@ -1,0 +1,255 @@
+﻿<Page x:Class="GUI.Pages.PageReplications"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:local="clr-namespace:GUI.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1000"
+      Title="PageReplications">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock FontFamily="/GUI;component/src/fonts/#Poppins"
+                       FontWeight="Bold"
+                       FontSize="36"
+                       Grid.Column="0" Margin="10,0">
+                Replications
+            </TextBlock>
+
+            <!-- REPLICATIONS EVALUATED -->
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <TextBlock Text="Replications count"/>
+                <TextBlock Text="{Binding RepCount, Mode=OneWay}" 
+                           FontFamily="JetBrains Mono ExtraLight" FontSize="36"/>
+            </StackPanel>
+
+            <!-- CONTROL BUTTONS -->
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <!-- BUTTON START -->
+                <Button HorizontalAlignment="Center" Click="ButtonRepStart_Click">
+
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#e0e0e0"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Image Source="../src/icons/005-play.png" Width="30" Margin="10" />
+
+                </Button>
+
+                <!-- BUTTON PAUSE -->
+                <Button HorizontalAlignment="Center" Click="ButtonRepPause_Click">
+
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#e0e0e0"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Image Source="../src/icons/021-pause.png" Width="30" Margin="10" />
+
+                </Button>
+
+                <!-- BUTTON STOP -->
+                <Button HorizontalAlignment="Center" Click="ButtonRepStop_Click">
+
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#e0e0e0"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Image Source="../src/icons/023-stop.png" Width="30" Margin="10" />
+
+                </Button>
+            </StackPanel>
+
+        </Grid>
+
+        <!-- STATISTICS ROW -->
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="10">
+                    <TextBlock Text="Registration room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
+                    <TextBlock Text="Average queue length"/>
+                    <TextBlock Text="{Binding RepQuRegistrationSize, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="Average waiting time"/>
+                    <TextBlock Text="{Binding RepQuRegistrationTime, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="Average utilization of entities"/>
+                    <TextBlock Text="{Binding RepAdminWorkersUtil, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="10">
+                    <TextBlock Text="Examination room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
+                    <TextBlock Text="Average queue length"/>
+                    <TextBlock Text="{Binding RepQuExaminationSize, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="Average waiting time"/>
+                    <TextBlock Text="{Binding RepQuExaminationTime, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="Average utilization of entities"/>
+                    <TextBlock Text="{Binding RepDoctorsUtil, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="10">
+                    <TextBlock Text="Vaccination room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
+                    <TextBlock Text="Average queue length"/>
+                    <TextBlock Text="{Binding RepQuVaccinationSize, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="Average waiting time"/>
+                    <TextBlock Text="{Binding RepQuVaccinationTime, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="Average utilization of entities"/>
+                    <TextBlock Text="{Binding RepNursesUtil, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="2" Grid.Column="0" Background="#fafafa" Margin="10" 
+                CornerRadius="3" >
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+            </Border.Effect>
+
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="lvc:LineSeries">
+                        <Setter Property="StrokeThickness" Value="2"></Setter>
+                        <Setter Property="Stroke" Value="#7DB700"></Setter>
+                        <Setter Property="Fill" Value="#4E7DB700"></Setter>
+                        <Setter Property="PointGeometrySize" Value="0"></Setter>
+                        <Setter Property="LineSmoothness" Value="0"></Setter>
+                    </Style>
+                    <Style TargetType="lvc:Axis">
+                        <Setter Property="IsEnabled" Value="False"></Setter>
+                    </Style>
+                </Grid.Resources>
+
+                <TextBlock Grid.Row="0" Text="Waiting room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
+
+                <lvc:CartesianChart Grid.Row="1"
+                                    Series="{Binding AvgWaitingRoomCountSeries}" Hoverable="False" DataTooltip="{x:Null}" DisableAnimations="True">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Number of replications" LabelFormatter="{Binding XFormatter}" ></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+
+                <StackPanel Grid.Row="2">
+                    <TextBlock Text="Average number of patients in waiting room"/>
+                    <TextBlock Text="{Binding RepQuWaitingRoomSize, StringFormat={}{0:F6}}" 
+                           FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                           HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding RepQuWaitingRoomSizeCiLower, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding RepQuWaitingRoomSizeCiUpper, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Page>

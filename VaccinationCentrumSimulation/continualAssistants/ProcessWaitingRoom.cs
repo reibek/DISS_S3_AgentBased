@@ -11,7 +11,7 @@ namespace continualAssistants
 		{
 		}
 
-		override public void PrepareReplication()
+		public override void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
@@ -19,14 +19,19 @@ namespace continualAssistants
 
 		//meta! sender="AgentWaitingRoom", id="29", type="Start"
 		public void ProcessStart(MessageForm message)
-		{
-		}
+        {
+            message.Code = Mc.ProcessWaitingRoomEnded;
+            Hold(((MyMessage) message).Patient.WaitingRoomTime, message);
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
 			switch (message.Code)
 			{
+                case Mc.ProcessWaitingRoomEnded:
+                    AssistantFinished(message);
+                    break;
 			}
 		}
 

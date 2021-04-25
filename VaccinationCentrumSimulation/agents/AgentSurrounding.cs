@@ -14,7 +14,6 @@ namespace agents
 	public class AgentSurrounding : Agent
     {
         public int PatientsCount { get; set; }
-        public int ArrivedPatientsCount { get; set; }
         public int CanceledPatientsNum { get; set; }
         public List<int> CanceledPatientsIds { get; set; }
         public UniformDiscreteRNG RandCanceledPatientsNum { get; set; }
@@ -36,7 +35,6 @@ namespace agents
             base.PrepareReplication();
 
             PatientsCount = 0;
-            ArrivedPatientsCount = 0;
 
             CanceledPatientsIds.Clear();
             CanceledPatientsNum =
