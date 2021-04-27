@@ -43,6 +43,7 @@ namespace managers
 
             if (MyAgent.VaccinatedPatientsCount == MyAgent.ArrivedPatientsCount)
             {
+                ((MySimulation) MySim).CurrentReplicationDuration = MySim.CurrentTime;
                 MySim.StopReplication();
             }
         }

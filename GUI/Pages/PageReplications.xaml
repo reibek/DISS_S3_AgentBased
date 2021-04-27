@@ -33,7 +33,7 @@
             <!-- REPLICATIONS EVALUATED -->
             <StackPanel Grid.Row="0" Grid.Column="1">
                 <TextBlock Text="Replications count"/>
-                <TextBlock Text="{Binding RepCount, Mode=OneWay}" 
+                <TextBlock Text="{Binding ReplicationsCount, Mode=OneWay}" 
                            FontFamily="JetBrains Mono ExtraLight" FontSize="36"/>
             </StackPanel>
 
@@ -140,15 +140,15 @@
                 <StackPanel Margin="10">
                     <TextBlock Text="Registration room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
                     <TextBlock Text="Average queue length"/>
-                    <TextBlock Text="{Binding RepQuRegistrationSize, StringFormat={}{0:F6}}" 
+                    <TextBlock Text="{Binding RegistrationQuSize, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="Average waiting time"/>
-                    <TextBlock Text="{Binding RepQuRegistrationTime, StringFormat={}{0:F6}}" 
+                    <TextBlock Text="{Binding RegistrationQuTime, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="Average utilization of entities"/>
-                    <TextBlock Text="{Binding RepAdminWorkersUtil, StringFormat={}{0:F6}}" 
+                    <TextBlock Text="{Binding AdminWorkersUtilization, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
                 </StackPanel>
@@ -163,15 +163,15 @@
                 <StackPanel Margin="10">
                     <TextBlock Text="Examination room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
                     <TextBlock Text="Average queue length"/>
-                    <TextBlock Text="{Binding RepQuExaminationSize, StringFormat={}{0:F6}}" 
+                    <TextBlock Text="{Binding ExaminationQuSize, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="Average waiting time"/>
-                    <TextBlock Text="{Binding RepQuExaminationTime, StringFormat={}{0:F6}}" 
+                    <TextBlock Text="{Binding ExaminationQuTime, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="Average utilization of entities"/>
-                    <TextBlock Text="{Binding RepDoctorsUtil, StringFormat={}{0:F6}}" 
+                    <TextBlock Text="{Binding DoctorsUtilization, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
                 </StackPanel>
@@ -186,15 +186,15 @@
                 <StackPanel Margin="10">
                     <TextBlock Text="Vaccination room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
                     <TextBlock Text="Average queue length"/>
-                    <TextBlock Text="{Binding RepQuVaccinationSize, StringFormat={}{0:F6}}" 
+                    <TextBlock Text="{Binding VaccinationQuSize, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="Average waiting time"/>
-                    <TextBlock Text="{Binding RepQuVaccinationTime, StringFormat={}{0:F6}}" 
+                    <TextBlock Text="{Binding VaccinationQuTime, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="Average utilization of entities"/>
-                    <TextBlock Text="{Binding RepNursesUtil, StringFormat={}{0:F6}}" 
+                    <TextBlock Text="{Binding NursesUtilization, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
                 </StackPanel>

@@ -2,6 +2,8 @@ using OSPABA;
 using simulation;
 using managers;
 using continualAssistants;
+using OSPStat;
+
 //using instantAssistants;
 namespace agents
 {
@@ -9,12 +11,15 @@ namespace agents
 	public class AgentWaitingRoom : Agent
 	{
         public int WaitingPatientsCount { get; set; }
+        public WStat StatWaitingPatientsCount { get; set; }
 		public AgentWaitingRoom(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
 			Init();
 
             AddOwnMessage(Mc.ProcessWaitingRoomEnded);
+
+			StatWaitingPatientsCount = new WStat(MySim);
 		}
 
 		override public void PrepareReplication()
@@ -22,6 +27,7 @@ namespace agents
 			base.PrepareReplication();
 
             WaitingPatientsCount = 0;
+			StatWaitingPatientsCount.Clear();
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

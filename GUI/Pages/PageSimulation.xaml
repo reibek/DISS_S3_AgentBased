@@ -489,9 +489,9 @@
                         <StackPanel Grid.Row="1" Grid.Column="0">
                             <TextBlock Text="Waiting patients" FontFamily="/GUI;component/src/fonts/#Poppins"/>
                             <TextBlock Text="Current" FontFamily="/GUI;component/src/fonts/#Poppins" Opacity=".6" />
-                            <TextBlock Text="{Binding SimQuWaitingRoomCount, Mode=OneWay}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                            <TextBlock Text="{Binding QuWaitingRoomSize, Mode=OneWay}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
                             <TextBlock Text="Average" FontFamily="/GUI;component/src/fonts/#Poppins" Opacity=".6" />
-                            <TextBlock Text="{Binding SimStatQuWaitingRoom, Mode=OneWay, StringFormat={}{0:F4}}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                            <TextBlock Text="{Binding QuWaitingRoomAverageSize, Mode=OneWay, StringFormat={}{0:F4}}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
                         </StackPanel>
                     </Grid>
                 </Grid>

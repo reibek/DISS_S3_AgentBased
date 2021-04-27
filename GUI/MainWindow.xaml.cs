@@ -721,7 +721,7 @@ namespace GUI
             RepQuWaitingRoomSizeCiUpper = 0;
 
             _pageSim = new PageSimulation();
-            //_pageRep = new PageReplications(this, _vaccineCentrum);
+            _pageRep = new PageReplications();
             //_pageExp = new PageExperiment(this, _vaccineCentrum);
             //_pageSet = new PageSettings(this, _vaccineCentrum);
 

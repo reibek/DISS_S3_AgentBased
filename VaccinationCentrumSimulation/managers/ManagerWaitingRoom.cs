@@ -32,7 +32,9 @@ namespace managers
             MyAgent.WaitingPatientsCount++;
             message.Addressee = MyAgent.FindAssistant(SimId.ProcessWaitingRoom);
 			StartContinualAssistant(message);
-        }
+
+            MyAgent.StatWaitingPatientsCount.AddSample(MyAgent.WaitingPatientsCount);
+		}
 
 		//meta! sender="ProcessWaitingRoom", id="29", type="Finish"
 		public void ProcessFinish(MessageForm message)
@@ -41,7 +43,9 @@ namespace managers
             message.Addressee = MySim.FindAgent(SimId.AgentCentrum);
             message.Code = Mc.RequestWaitingRoom;
 			Response(message);
-        }
+
+            MyAgent.StatWaitingPatientsCount.AddSample(MyAgent.WaitingPatientsCount);
+		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)

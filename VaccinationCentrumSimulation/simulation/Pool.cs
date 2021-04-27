@@ -63,6 +63,13 @@ namespace VaccineCentrum
             return sum / Count;
         }
 
+        public double AverageWorkingTime()
+        {
+            double sum = 0.0;
+            Entities.ForEach(e => sum += e.WorkingTime);
+            return sum / Count;
+        }
+
         public void Reset()
         {
             Entities.ForEach(e => e.Reset());

@@ -1,6 +1,7 @@
 using System;
 using OSPABA;
 using agents;
+using OSPStat;
 
 namespace simulation
 {
@@ -12,7 +13,23 @@ namespace simulation
         public int ResDoctorsCount { get; set; }
         public int ResNursesCount { get; set; }
 
-		public MySimulation()
+        #region STATISTICS
+
+        public Stat RegistrationQuSize { get; set; }
+        public Stat RegistrationQuTime { get; set; }
+        public Stat AdminWorkersUtilization { get; set; }
+        public Stat ExaminationQuSize { get; set; }
+        public Stat ExaminationQuTime { get; set; }
+        public Stat DoctorsUtilization { get; set; }
+        public Stat VaccinationQuSize { get; set; }
+        public Stat VaccinationQuTime { get; set; }
+        public Stat NursesUtilization { get; set; }
+        public Stat WaitingRoomQuSize { get; set; }
+        public double CurrentReplicationDuration { get; set; }
+
+        #endregion
+
+        public MySimulation()
 		{
             RandSeedGenerator = new Random(); RandSeedGenerator = new Random();
             OrderedPatientsNum = 540;
@@ -21,11 +38,37 @@ namespace simulation
             ResNursesCount = 3;
 			
             Init();
-		}
+
+            RegistrationQuSize = new Stat();
+            RegistrationQuTime = new Stat();
+            AdminWorkersUtilization = new Stat();
+            ExaminationQuSize = new Stat();
+            ExaminationQuTime = new Stat();
+            DoctorsUtilization = new Stat();
+            VaccinationQuSize = new Stat();
+            VaccinationQuTime = new Stat();
+            NursesUtilization = new Stat();
+            WaitingRoomQuSize = new Stat();
+
+            CurrentReplicationDuration = 0;
+        }
 
         protected override void PrepareSimulation()
         {
             base.PrepareSimulation();
+
+            RegistrationQuSize.Clear();
+            RegistrationQuTime.Clear();
+            AdminWorkersUtilization.Clear();
+            ExaminationQuSize.Clear();
+            ExaminationQuTime.Clear();
+            DoctorsUtilization.Clear();
+            VaccinationQuSize.Clear();
+            VaccinationQuTime.Clear();
+            NursesUtilization.Clear();
+            WaitingRoomQuSize.Clear();
+
+            CurrentReplicationDuration = 0;
         }
 
         protected override void PrepareReplication()
@@ -35,13 +78,24 @@ namespace simulation
 
         protected override void ReplicationFinished()
         {
-            base.ReplicationFinished();
+            RegistrationQuSize.AddSample(AgentRegistration.StatQuRegistrationSize.Mean());
+            RegistrationQuTime.AddSample(AgentRegistration.StatQuRegistrationTime.Mean());
+            AdminWorkersUtilization.AddSample(AgentRegistration.PoolAdminWorkers.AverageWorkingTime() /
+                                              CurrentReplicationDuration);
+            
+            ExaminationQuSize.AddSample(AgentExamination.StatQuExaminationSize.Mean());
+            ExaminationQuTime.AddSample(AgentExamination.StatQuExaminationTime.Mean());
+            DoctorsUtilization.AddSample(AgentExamination.PoolDoctors.AverageWorkingTime() /
+                                         CurrentReplicationDuration);
+            
+            VaccinationQuSize.AddSample(AgentVaccination.StatQuVaccinationSize.Mean());
+            VaccinationQuTime.AddSample(AgentVaccination.StatQuVaccinationTime.Mean());
+            NursesUtilization.AddSample(AgentVaccination.PoolNurses.AverageWorkingTime() / 
+                                        CurrentReplicationDuration);
 
-            Console.WriteLine("R" + CurrentReplication + ": Ordered patients: " + OrderedPatientsNum);
-            Console.WriteLine("R" + CurrentReplication + ": Arrived patients: " + AgentCentrum.ArrivedPatientsCount);
-            Console.WriteLine("R" + CurrentReplication + ": Canceled patients: " + AgentSurrounding.CanceledPatientsNum);
-            Console.WriteLine("R" + CurrentReplication + ": Vaccinated patients: " + AgentCentrum.VaccinatedPatientsCount);
-            Console.WriteLine("================================================================================");
+            WaitingRoomQuSize.AddSample(AgentWaitingRoom.StatWaitingPatientsCount.Mean());
+
+            base.ReplicationFinished();
 		}
 
         protected override void SimulationFinished()

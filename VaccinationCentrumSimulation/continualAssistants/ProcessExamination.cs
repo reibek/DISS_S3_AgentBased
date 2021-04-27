@@ -23,7 +23,7 @@ namespace continualAssistants
             ((MyMessage) message).Patient.WaitingRoomTime =
                 ((MyMessage) message).Doctor.RandWaitingRoomTimeDecision.Sample() < 0.95 ? 900 : 1800;
             message.Code = Mc.ProcessExaminationEnded;
-            Hold(((MyMessage)message).AdminWorker.RandRegistrationTime.Sample(), message);
+            Hold(((MyMessage)message).Doctor.RandExaminationTime.Sample(), message);
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"

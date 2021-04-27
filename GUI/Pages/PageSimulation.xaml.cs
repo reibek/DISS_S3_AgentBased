@@ -5,7 +5,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using simulation;
-using VaccinationCentrumSimulation;
 using OSPABA;
 using GUI.Annotations;
 
@@ -40,6 +39,8 @@ namespace GUI.Pages
         private int _nursesCount;
         private int _nursesBusyCount;
         private double _nursesUtilization;
+        private int _quWaitingRoomSize;
+        private double _quWaitingRoomAverageSize;
 
         #region PROPERTIES
 
@@ -273,6 +274,26 @@ namespace GUI.Pages
             }
         }
 
+        public int QuWaitingRoomSize
+        {
+            get => _quWaitingRoomSize;
+            set
+            {
+                _quWaitingRoomSize = value;
+                OnPropertyChanged(nameof(QuWaitingRoomSize));
+            }
+        }
+
+        public double QuWaitingRoomAverageSize
+        {
+            get => _quWaitingRoomAverageSize;
+            set
+            {
+                _quWaitingRoomAverageSize = value;
+                OnPropertyChanged(nameof(QuWaitingRoomAverageSize));
+            }
+        }
+
         #endregion
 
         public PageSimulation()
@@ -313,6 +334,9 @@ namespace GUI.Pages
             NursesCount = 0;
             NursesBusyCount = 0;
             NursesUtilization = 0;
+
+            QuWaitingRoomSize = 0;
+            QuWaitingRoomAverageSize = 0;
         }
 
         private void RunSimulation()
@@ -329,12 +353,12 @@ namespace GUI.Pages
 
         private void ButtonSimPause_Click(object sender, RoutedEventArgs e)
         {
-            //
+            _simRef.PauseSimulation();
         }
 
         private void ButtonSimStop_Click(object sender, RoutedEventArgs e)
         {
-            //
+            _simRef.StopSimulation();
         }
 
         private void ComboSpeed_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -360,7 +384,7 @@ namespace GUI.Pages
         {
             if (sim is MySimulation simulation)
             {
-                Application.Current.Dispatcher.Invoke(() => {});
+                Application.Current.Dispatcher.Invoke(() => { });
 
                 SimulationTimeSpan = TimeSpan.FromSeconds(simulation.CurrentTime) + TimeSpan.FromHours(8);
                 OrderedPatientsNum = simulation.OrderedPatientsNum;
@@ -388,6 +412,9 @@ namespace GUI.Pages
                 NursesCount = simulation.AgentVaccination.PoolNurses.Count;
                 NursesBusyCount = simulation.AgentVaccination.PoolNurses.BusyCount;
                 NursesUtilization = simulation.AgentVaccination.PoolNurses.AverageUtilization();
+
+                QuWaitingRoomSize = simulation.AgentWaitingRoom.WaitingPatientsCount;
+                QuWaitingRoomAverageSize = simulation.AgentWaitingRoom.StatWaitingPatientsCount.Mean();
             }
         }
 
