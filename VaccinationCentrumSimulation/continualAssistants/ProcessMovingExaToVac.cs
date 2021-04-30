@@ -20,6 +20,8 @@ namespace continualAssistants
 		//meta! sender="AgentCentrum", id="74", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
+            message.Code = Mc.ProcessMovingExaToVacEnded;
+            Hold(MyAgent.RandMovingExaToVacTime.Sample(), message);
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -27,6 +29,9 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+                case Mc.ProcessMovingExaToVacEnded:
+                    AssistantFinished(message);
+                    break;
 			}
 		}
 

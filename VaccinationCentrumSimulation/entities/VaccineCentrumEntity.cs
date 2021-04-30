@@ -31,10 +31,13 @@ namespace entities
         /// </summary>
         public EntityPatient Patient { get; set; }
 
+        public EntityState State { get; set; }
+
         public VaccineCentrumEntity(int id, Simulation simRef) : base(id, simRef)
         {
             StatUtilizationLastChange = 0;
             WorkingTime = 0;
+            State = EntityState.Free;
         }
 
         public void Assign(EntityPatient patient)
@@ -47,6 +50,7 @@ namespace entities
 
             Patient = patient;
             IsBusy = true;
+            State = EntityState.Working;
         }
 
         public void AcceptNext(EntityPatient patient)
@@ -59,6 +63,7 @@ namespace entities
             #endregion
 
             Patient = patient;
+            State = EntityState.Working;
         }
 
         public void Release()
@@ -73,6 +78,7 @@ namespace entities
 
             Patient = null;
             IsBusy = false;
+            State = EntityState.Free;
         }
 
         public virtual void Reset()
@@ -81,6 +87,15 @@ namespace entities
             StatUtilizationLastChange = 0;
             WorkingTime = 0;
             Patient = null;
+            State = EntityState.Free;
         }
+    }
+
+    public enum EntityState
+    {
+        Free,
+        Working,
+        Preparing,
+        Break
     }
 }

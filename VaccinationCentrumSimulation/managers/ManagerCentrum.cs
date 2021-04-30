@@ -28,10 +28,11 @@ namespace managers
 		//meta! sender="AgentExamination", id="33", type="Response"
 		public void ProcessRequestExamination(MessageForm message)
 		{
-            message.Addressee = MySim.FindAgent(SimId.AgentVaccination);
-            message.Code = Mc.RequestVaccination;
-            Request(message);
-		}
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingExaToVac);
+            StartContinualAssistant(message);
+
+            MyAgent.MovingPatientsExaToVac++;
+        }
 
 		//meta! sender="AgentWaitingRoom", id="35", type="Response"
 		public void ProcessRequestWaitingRoom(MessageForm message)
@@ -60,17 +61,19 @@ namespace managers
 		//meta! sender="AgentVaccination", id="34", type="Response"
 		public void ProcessRequestVaccination(MessageForm message)
         {
-            message.Addressee = MySim.FindAgent(SimId.AgentWaitingRoom);
-            message.Code = Mc.RequestWaitingRoom;
-			Request(message);
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingVacToWai);
+            StartContinualAssistant(message);
+
+            MyAgent.MovingPatientsVacToWai++;
         }
 
 		//meta! sender="AgentRegistration", id="32", type="Response"
 		public void ProcessRequestRegistration(MessageForm message)
         {
-            message.Addressee = MySim.FindAgent(SimId.AgentExamination);
-            message.Code = Mc.RequestExamination;
-			Request(message);
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingRegToExa);
+            StartContinualAssistant(message);
+
+            MyAgent.MovingPatientsRegToExa++;
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -94,16 +97,31 @@ namespace managers
 		//meta! sender="ProcessMovingRegToExa", id="72", type="Finish"
 		public void ProcessFinishProcessMovingRegToExa(MessageForm message)
 		{
+            message.Addressee = MySim.FindAgent(SimId.AgentExamination);
+            message.Code = Mc.RequestExamination;
+            Request(message);
+
+            MyAgent.MovingPatientsRegToExa--;
 		}
 
 		//meta! sender="ProcessMovingVacToWai", id="76", type="Finish"
 		public void ProcessFinishProcessMovingVacToWai(MessageForm message)
 		{
+            message.Addressee = MySim.FindAgent(SimId.AgentWaitingRoom);
+            message.Code = Mc.RequestWaitingRoom;
+            Request(message);
+
+            MyAgent.MovingPatientsVacToWai--;
 		}
 
 		//meta! sender="ProcessMovingExaToVac", id="74", type="Finish"
 		public void ProcessFinishProcessMovingExaToVac(MessageForm message)
 		{
+            message.Addressee = MySim.FindAgent(SimId.AgentVaccination);
+            message.Code = Mc.RequestVaccination;
+            Request(message);
+
+            MyAgent.MovingPatientsExaToVac--;
 		}
 
 		//meta! sender="ProcessMovingToFromCan", id="78", type="Finish"

@@ -18,6 +18,9 @@ namespace GUI.Pages
     public partial class PageSimulation : Page, INotifyPropertyChanged, ISimDelegate
     {
         private readonly MySimulation _simRef;
+        private Thread _simulationThread;
+        private bool _simPaused;
+        private readonly double[] _speedValues;
         private int _orderedPatientsNum;
         private int _arrivedPatientsCount;
         private TimeSpan _simulationTimeSpan;
@@ -46,6 +49,13 @@ namespace GUI.Pages
         private ObservableCollection<EntityAdminWorker> _adminWorkers;
         private ObservableCollection<EntityDoctor> _doctors;
         private ObservableCollection<EntityNurse> _nurses;
+        private int _nursesFillingCount;
+        private int _quNursesSize;
+        private double _quNursesAverageSize;
+        private int _currentCentrumPatients;
+        private int _patientsRegToExaCount;
+        private int _patientsExaToVacCount;
+        private int _patientsVacToWaiCount;
 
         #region PROPERTIES
 
@@ -279,6 +289,36 @@ namespace GUI.Pages
             }
         }
 
+        public int NursesFillingCount
+        {
+            get => _nursesFillingCount;
+            set
+            {
+                _nursesFillingCount = value;
+                OnPropertyChanged(nameof(NursesFillingCount));
+            }
+        }
+
+        public int QuNursesSize
+        {
+            get => _quNursesSize;
+            set
+            {
+                _quNursesSize = value;
+                OnPropertyChanged(nameof(QuNursesSize));
+            }
+        }
+
+        public double QuNursesAverageSize
+        {
+            get => _quNursesAverageSize;
+            set
+            {
+                _quNursesAverageSize = value;
+                OnPropertyChanged(nameof(QuNursesAverageSize));
+            }
+        }
+
         public int QuWaitingRoomSize
         {
             get => _quWaitingRoomSize;
@@ -329,6 +369,46 @@ namespace GUI.Pages
             }
         }
 
+        public int CurrentCentrumPatients
+        {
+            get => _currentCentrumPatients;
+            set
+            {
+                _currentCentrumPatients = value;
+                OnPropertyChanged(nameof(CurrentCentrumPatients));
+            }
+        }
+
+        public int PatientsRegToExaCount
+        {
+            get => _patientsRegToExaCount;
+            set
+            {
+                _patientsRegToExaCount = value;
+                OnPropertyChanged(nameof(PatientsRegToExaCount));
+            }
+        }
+
+        public int PatientsExaToVacCount
+        {
+            get => _patientsExaToVacCount;
+            set
+            {
+                _patientsExaToVacCount = value;
+                OnPropertyChanged(nameof(PatientsExaToVacCount));
+            }
+        }
+
+        public int PatientsVacToWaiCount
+        {
+            get => _patientsVacToWaiCount;
+            set
+            {
+                _patientsVacToWaiCount = value;
+                OnPropertyChanged(nameof(PatientsVacToWaiCount));
+            }
+        }
+
         #endregion
 
         public PageSimulation()
@@ -337,6 +417,8 @@ namespace GUI.Pages
             _simRef = new MySimulation();
             _simRef.RegisterDelegate(this);
             DataContext = this;
+
+            _speedValues = new[] {1, 2.5, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000};
 
             InitGui();
         }
@@ -369,45 +451,62 @@ namespace GUI.Pages
             NursesCount = 0;
             NursesBusyCount = 0;
             NursesUtilization = 0;
+            
+            NursesFillingCount = 0;
+            QuNursesSize = 0;
+            QuNursesAverageSize = 0;
 
             QuWaitingRoomSize = 0;
             QuWaitingRoomAverageSize = 0;
+
+            CurrentCentrumPatients = 0;
+            PatientsRegToExaCount = 0;
+            PatientsExaToVacCount = 0;
+            PatientsVacToWaiCount = 0;
         }
 
         private void RunSimulation()
         {
-            _simRef.SetSimSpeed(5, 0.01);
+            _simRef.SetSimSpeed(5, 0.1);
             _simRef.Simulate(1, double.MaxValue);
         }
 
         private void ButtonSimStart_Click(object sender, RoutedEventArgs e)
         {
-            Thread simulationThread = new Thread(RunSimulation);
-            simulationThread.Start();
+            _simRef.StopSimulation();
+            _simulationThread?.Abort();
+            _simulationThread = new Thread(RunSimulation);
+            _simulationThread.Start();
+            _simPaused = false;
         }
 
         private void ButtonSimPause_Click(object sender, RoutedEventArgs e)
         {
-            _simRef.PauseSimulation();
+            if (_simPaused)
+            {
+                _simRef.ResumeSimulation();
+                _simPaused = false;
+            }
+            else
+            {
+                _simRef.PauseSimulation();
+                _simPaused = true;
+            }
         }
 
         private void ButtonSimStop_Click(object sender, RoutedEventArgs e)
         {
             _simRef.StopSimulation();
+            _simulationThread?.Abort();
+            _simPaused = false;
         }
 
         private void ComboSpeed_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //if (_dataContext == null) return;
-
-            //if (ComboSpeed.SelectedIndex == 8)
-            //{
-            //    _modelRef.ContinuousSimulation = false;
-            //    return;
-            //}
-
-            //_modelRef.ContinuousSimulation = false;
-            //_modelRef.Speed = _dataContext.SpeedValues[ComboSpeed.SelectedIndex];
+            if (ComboSpeed.SelectedIndex < 4)
+                _simRef?.SetSimSpeed(1, 1.0 / _speedValues[ComboSpeed.SelectedIndex]);
+            else
+                _simRef?.SetSimSpeed(_speedValues[ComboSpeed.SelectedIndex] / 10, 0.1);
         }
 
         public void SimStateChanged(Simulation sim, SimState state)
@@ -448,8 +547,17 @@ namespace GUI.Pages
                 NursesBusyCount = simulation.AgentVaccination.PoolNurses.BusyCount;
                 NursesUtilization = simulation.AgentVaccination.PoolNurses.AverageUtilization();
 
+                NursesFillingCount = simulation.AgentColdStorage.PreparingNursesCount;
+                QuNursesSize = simulation.AgentColdStorage.QuNurses.Size;
+                QuNursesAverageSize = simulation.AgentColdStorage.StatQuNursesSize.Mean();
+
                 QuWaitingRoomSize = simulation.AgentWaitingRoom.WaitingPatientsCount;
                 QuWaitingRoomAverageSize = simulation.AgentWaitingRoom.StatWaitingPatientsCount.Mean();
+
+                CurrentCentrumPatients = ArrivedPatientsCount - VaccinatedPatientsCount;
+                PatientsRegToExaCount = simulation.AgentCentrum.MovingPatientsRegToExa;
+                PatientsExaToVacCount = simulation.AgentCentrum.MovingPatientsExaToVac;
+                PatientsVacToWaiCount = simulation.AgentCentrum.MovingPatientsVacToWai;
 
                 AdminWorkers = new ObservableCollection<EntityAdminWorker>(simulation.AgentRegistration.PoolAdminWorkers.Entities);
                 Doctors = new ObservableCollection<EntityDoctor>(simulation.AgentExamination.PoolDoctors.Entities);

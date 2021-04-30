@@ -2,19 +2,35 @@ using OSPABA;
 using simulation;
 using managers;
 using continualAssistants;
+using OSPRNG;
+
 //using instantAssistants;
 namespace agents
 {
 	//meta! id="3"
 	public class AgentCentrum : Agent
     {
+        public UniformContinuousRNG RandMovingRegToExaTime { get; set; }
+        public UniformContinuousRNG RandMovingExaToVacTime { get; set; }
+        public UniformContinuousRNG RandMovingVacToWaiTime { get; set; }
         public int ArrivedPatientsCount { get; set; }
 		public int VaccinatedPatientsCount { get; set; }
+        public int MovingPatientsRegToExa { get; set; }
+        public int MovingPatientsExaToVac { get; set; }
+        public int MovingPatientsVacToWai { get; set; }
 
 		public AgentCentrum(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
 			Init();
+
+			AddOwnMessage(Mc.ProcessMovingRegToExaEnded);
+			AddOwnMessage(Mc.ProcessMovingExaToVacEnded);
+			AddOwnMessage(Mc.ProcessMovingVacToWaiEnded);
+
+			RandMovingRegToExaTime = new UniformContinuousRNG(40, 90, ((MySimulation)MySim).RandSeedGenerator);
+			RandMovingExaToVacTime = new UniformContinuousRNG(20, 45, ((MySimulation)MySim).RandSeedGenerator);
+			RandMovingVacToWaiTime = new UniformContinuousRNG(45, 110, ((MySimulation)MySim).RandSeedGenerator);
         }
 
 		override public void PrepareReplication()
@@ -23,6 +39,9 @@ namespace agents
 
             ArrivedPatientsCount = 0;
 			VaccinatedPatientsCount = 0;
+            MovingPatientsRegToExa = 0;
+            MovingPatientsExaToVac = 0;
+            MovingPatientsVacToWai = 0;
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

@@ -19,14 +19,27 @@ namespace continualAssistants
 
 		//meta! sender="AgentColdStorage", id="81", type="Start"
 		public void ProcessStart(MessageForm message)
-		{
-		}
+        {
+			var nurse = ((MessageNurse)message).Nurse;
+            double fillingTime = 0.0;
+
+            for (int i = 0; i < 20; i++)
+            {
+                fillingTime += nurse.RandFillSyringeTime.Sample();
+            }
+
+            message.Code = Mc.ProcessFillingSyringesEnded;
+			Hold(fillingTime, message);
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
 			switch (message.Code)
 			{
+				case Mc.ProcessFillingSyringesEnded:
+					AssistantFinished(message);
+                    break;
 			}
 		}
 

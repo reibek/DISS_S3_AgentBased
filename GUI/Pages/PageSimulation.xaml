@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
@@ -124,7 +125,7 @@
 
         </Grid>
 
-        <!-- STATISTICS ROW -->
+        <!-- STATISTICS ROW 1 -->
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -140,7 +141,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30">
+                <StackPanel Margin="30,10">
                     <TextBlock Text="Patients ordered"/>
                     <TextBlock Text="{Binding OrderedPatientsNum}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -154,7 +155,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30">
+                <StackPanel Margin="30,10">
                     <TextBlock Text="Patients canceled"/>
                     <TextBlock Text="{Binding CanceledPatientsNum}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -168,7 +169,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30">
+                <StackPanel Margin="30,10">
                     <TextBlock Text="Patients arrived"/>
                     <TextBlock Text="{Binding ArrivedPatientsCount}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -182,7 +183,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30">
+                <StackPanel Margin="30,10">
                     <TextBlock Text="Patients vaccinated"/>
                     <TextBlock Text="{Binding VaccinatedPatientsCount}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -196,28 +197,97 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30">
+                <StackPanel Margin="30,10">
                     <TextBlock Text="Simulation speed"/>
                     <ComboBox Name="ComboSpeed" Margin="0,5,0,0" SelectedIndex="0" 
                               SelectionChanged="ComboSpeed_SelectionChanged"
                               IsEnabled="{Binding SetCheckContSim}">
                         <ListBoxItem Content="1x"/>
-                        <ListBoxItem Content="2x"/>
+                        <ListBoxItem Content="2.5x"/>
                         <ListBoxItem Content="5x"/>
                         <ListBoxItem Content="10x"/>
+                        <ListBoxItem Content="25x"/>
                         <ListBoxItem Content="50x"/>
                         <ListBoxItem Content="100x"/>
+                        <ListBoxItem Content="250x"/>
                         <ListBoxItem Content="500x"/>
                         <ListBoxItem Content="1000x"/>
-                        <ListBoxItem Content="Full speed"/>
+                        <ListBoxItem Content="2500x"/>
+                        <ListBoxItem Content="5000x"/>
+                        <ListBoxItem Content="10000x"/>
                     </ComboBox>
                 </StackPanel>
             </Border>
-
         </Grid>
 
-        <!-- LEFT HALF CONTENT -->
-        <Grid Grid.Row="2" Grid.Column="0" >
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="30,10">
+                    <TextBlock Text="Current patients in centre" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding CurrentCentrumPatients}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="30,10">
+                    <TextBlock Text="Patients moving for examination" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding PatientsRegToExaCount}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="30,10">
+                    <TextBlock Text="Patients moving for vaccination" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding PatientsExaToVacCount}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="3" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="30,10">
+                    <TextBlock Text="Patients moving for waiting" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding PatientsVacToWaiCount}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- ROOMS CONTENT -->
+        <Grid Grid.Row="3" Grid.Column="0" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -282,10 +352,10 @@
                                                 <Ellipse.Style>
                                                     <Style TargetType="Ellipse">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                                            <DataTrigger Binding="{Binding State}" Value="Working">
                                                                 <Setter Property="Fill" Value="Red"/>
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsBusy}" Value="False">
+                                                            <DataTrigger Binding="{Binding State}" Value="Free">
                                                                 <Setter Property="Fill" Value="Green"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -356,10 +426,10 @@
                                                 <Ellipse.Style>
                                                     <Style TargetType="Ellipse">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                                            <DataTrigger Binding="{Binding State}" Value="Working">
                                                                 <Setter Property="Fill" Value="Red"/>
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsBusy}" Value="False">
+                                                            <DataTrigger Binding="{Binding State}" Value="Free">
                                                                 <Setter Property="Fill" Value="Green"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -430,11 +500,14 @@
                                                 <Ellipse.Style>
                                                     <Style TargetType="Ellipse">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                                            <DataTrigger Binding="{Binding State}" Value="Working">
                                                                 <Setter Property="Fill" Value="Red"/>
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsBusy}" Value="False">
+                                                            <DataTrigger Binding="{Binding State}" Value="Free">
                                                                 <Setter Property="Fill" Value="Green"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding State}" Value="Preparing">
+                                                                <Setter Property="Fill" Value="Orange"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -451,7 +524,7 @@
 
             </Border>
 
-            <Border Grid.Row="0" Grid.Column="3" Grid.RowSpan="2"
+            <Border Grid.Row="0" Grid.Column="3"
                     Background="#fafafa" Margin="10" CornerRadius="3">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
@@ -470,10 +543,6 @@
                 </Border.Resources>
 
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
@@ -497,8 +566,52 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
+            </Border>
 
-                
+            <Border Grid.Row="1" Grid.Column="3"
+                    Background="#fafafa" Margin="10" CornerRadius="3">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+                <Border.Resources>
+                    <Style TargetType="lvc:LineSeries">
+                        <Setter Property="StrokeThickness" Value="2"></Setter>
+                        <Setter Property="Stroke" Value="#FFB3FD"></Setter>
+                        <Setter Property="Fill" Value="#4EFFB3FD"></Setter>
+                        <Setter Property="PointGeometrySize" Value="0"></Setter>
+                        <Setter Property="LineSmoothness" Value="0"></Setter>
+                    </Style>
+                    <Style TargetType="lvc:Axis">
+                        <Setter Property="IsEnabled" Value="False"></Setter>
+                    </Style>
+                </Border.Resources>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Margin="30" Grid.Row="0" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Cold Storage Room" 
+                                   Grid.Row="0" Grid.Column="0"
+                                   FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0">
+                            <TextBlock Text="Currently filling" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                            <TextBlock Text="{Binding NursesFillingCount, Mode=OneWay}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                            <TextBlock Text="Waiting nurses" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                            <TextBlock Text="Current" FontFamily="/GUI;component/src/fonts/#Poppins" Opacity=".6" />
+                            <TextBlock Text="{Binding QuNursesSize, Mode=OneWay}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                            <TextBlock Text="Average" FontFamily="/GUI;component/src/fonts/#Poppins" Opacity=".6" />
+                            <TextBlock Text="{Binding QuNursesAverageSize, Mode=OneWay, StringFormat={}{0:F4}}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

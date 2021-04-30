@@ -15,6 +15,11 @@ namespace entities
         /// </summary>
         public TriangularRNG RandVaccinationTime { get; set; }
 
+        /// <summary>
+        /// Triangular random variable for filling syringe with vaccine.
+        /// </summary>
+        public TriangularRNG RandFillSyringeTime { get; set; }
+
         public int SyringesFullCount { get; set; }
 
         public EntityNurse(int id, Simulation simRef, Random randomGenerator) : base(id, simRef)
@@ -22,6 +27,7 @@ namespace entities
             Id = id;
             IsBusy = false;
             RandVaccinationTime = new TriangularRNG(20, 75, 100, randomGenerator);
+            RandFillSyringeTime = new TriangularRNG(6,10,40, randomGenerator);
             SyringesFullCount = 20;
         }
 

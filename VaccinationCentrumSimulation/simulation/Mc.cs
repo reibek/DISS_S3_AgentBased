@@ -25,5 +25,10 @@ namespace simulation
         public const int ProcessExaminationEnded = 12;
         public const int ProcessVaccinationEnded = 13;
         public const int ProcessWaitingRoomEnded = 14;
-    }
+        public const int ProcessFillingSyringesEnded = 15;
+        public const int ProcessMovingRegToExaEnded = 16;
+        public const int ProcessMovingExaToVacEnded = 17;
+        public const int ProcessMovingVacToWaiEnded = 18;
+        public const int ProcessMovingToFromCanEnded = 19;
+	}
 }

@@ -33,8 +33,20 @@ namespace managers
             var nurse = ((MessagePatient) message).Nurse;
             nurse.SyringesFullCount--;
 
-            if (MyAgent.PoolNurses.FreeCount == 0 
-                && MyAgent.QuVaccination.Count > 0)
+            if (nurse.SyringesFullCount == 0)
+            {
+                var nurseMessage = new MessageNurse(MySim)
+                {
+                    Nurse = nurse
+                };
+
+                nurse.State = EntityState.Preparing;
+				nurseMessage.Addressee = MySim.FindAgent(SimId.AgentColdStorage);
+                nurseMessage.Code = Mc.RequestFillSyringes;
+                Request(nurseMessage);
+			} 
+            else if (MyAgent.PoolNurses.FreeCount == 0 
+                     && MyAgent.QuVaccination.Count > 0)
             {
                 var messageFromQueue = MyAgent.QuVaccination.Dequeue();
                 nurse.AcceptNext(((MessagePatient) messageFromQueue).Patient);
@@ -100,8 +112,27 @@ namespace managers
 
 		//meta! sender="AgentColdStorage", id="50", type="Response"
 		public void ProcessRequestFillSyringes(MessageForm message)
-		{
-		}
+        {
+            var nurse = ((MessageNurse) message).Nurse;
+
+            if (!MyAgent.QuVaccination.IsEmpty())
+            {
+                var messageFromQueue = MyAgent.QuVaccination.Dequeue();
+                nurse.AcceptNext(((MessagePatient) messageFromQueue).Patient);
+                ((MessagePatient)messageFromQueue).Nurse = nurse;
+                messageFromQueue.Addressee = MyAgent.FindAssistant(SimId.ProcessVaccination);
+                StartContinualAssistant(messageFromQueue);
+
+                MyAgent.StatQuVaccinationTime.AddSample(MySim.CurrentTime -
+                                                        ((MessagePatient) messageFromQueue).Patient
+                                                        .VaccinationQuStartTime);
+                MyAgent.StatQuVaccinationSize.AddSample(MyAgent.QuVaccination.Size);
+            }
+            else
+            {
+                MyAgent.PoolNurses.Release(nurse);
+            }
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()

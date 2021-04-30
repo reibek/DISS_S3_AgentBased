@@ -28,12 +28,42 @@ namespace managers
 
 		//meta! sender="ProcessFillingSyringes", id="81", type="Finish"
 		public void ProcessFinish(MessageForm message)
-		{
+        {
+            var nurse = ((MessageNurse) message).Nurse;
+            nurse.SyringesFullCount = 20;
+
+            MyAgent.PreparingNursesCount--;
+
+            if (!MyAgent.QuNurses.IsEmpty())
+            {
+                var messageFromQueue = MyAgent.QuNurses.Dequeue();
+                MyAgent.PreparingNursesCount++;
+                messageFromQueue.Addressee = MyAgent.FindAssistant(SimId.ProcessFillingSyringes);
+                StartContinualAssistant(messageFromQueue);
+
+                MyAgent.StatQuNursesSize.AddSample(MyAgent.QuNurses.Size);
+			}
+
+            message.Addressee = MySim.FindAgent(SimId.AgentVaccination);
+            message.Code = Mc.RequestFillSyringes;
+            Response(message);
 		}
 
 		//meta! sender="AgentVaccination", id="50", type="Request"
 		public void ProcessRequestFillSyringes(MessageForm message)
 		{
+            if (MyAgent.PreparingNursesCount < 2)
+            {
+                MyAgent.PreparingNursesCount++;
+                message.Addressee = MyAgent.FindAssistant(SimId.ProcessFillingSyringes);
+				StartContinualAssistant(message);
+            }
+            else
+            {
+				MyAgent.QuNurses.Enqueue(message);
+
+                MyAgent.StatQuNursesSize.AddSample(MyAgent.QuNurses.Size);
+			}
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"

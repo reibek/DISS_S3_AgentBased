@@ -19,14 +19,19 @@ namespace continualAssistants
 
 		//meta! sender="AgentCentrum", id="72", type="Start"
 		public void ProcessStart(MessageForm message)
-		{
-		}
+        {
+            message.Code = Mc.ProcessMovingRegToExaEnded;
+			Hold(MyAgent.RandMovingRegToExaTime.Sample(), message);
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
 			switch (message.Code)
 			{
+				case Mc.ProcessMovingRegToExaEnded:
+					AssistantFinished(message);
+                    break;
 			}
 		}
 
