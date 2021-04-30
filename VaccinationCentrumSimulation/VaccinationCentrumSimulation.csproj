@@ -61,6 +61,7 @@
     <Compile Include="continualAssistants\ProcessMovingExaToVac.cs" />
     <Compile Include="continualAssistants\ProcessMovingRegToExa.cs" />
     <Compile Include="continualAssistants\ProcessMovingToFromCan.cs" />
+    <Compile Include="continualAssistants\ProcessMovingToFromColdStor.cs" />
     <Compile Include="continualAssistants\ProcessMovingVacToWai.cs" />
     <Compile Include="continualAssistants\ProcessRegistration.cs" />
     <Compile Include="continualAssistants\ProcessVaccination.cs" />

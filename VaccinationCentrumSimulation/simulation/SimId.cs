@@ -32,6 +32,7 @@ namespace simulation
 		public const int ProcessFillingSyringes = 1014;
 		public const int ProcessRegistration = 1002;
 		public const int ProcessExamination = 1003;
+		public const int ProcessMovingToFromColdStor = 1015;
 		public const int ProcessVaccination = 1004;
 		public const int SchedulerAdminWorkerBreak = 1006;
 		public const int ProcessWaitingRoom = 1005;

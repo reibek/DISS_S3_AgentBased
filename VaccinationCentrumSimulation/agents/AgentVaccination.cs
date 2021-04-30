@@ -18,6 +18,7 @@ namespace agents
         public WStat StatQuVaccinationSize { get; set; }
         public Stat StatQuVaccinationTime { get; set; }
 		public Pool<EntityNurse> PoolNurses { get; set; }
+        public UniformContinuousRNG RandMovingToFromColdStorTime { get; set; }
         public List<UniformDiscreteRNG> RandNurseChoice { get; set; }
 		public AgentVaccination(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
@@ -25,10 +26,12 @@ namespace agents
 			Init();
 
             AddOwnMessage(Mc.ProcessVaccinationEnded);
+			AddOwnMessage(Mc.ProcessMovingToFromColdStorEnded);
 
             QuVaccination = new DataStructures.Queue<MessageForm>();
             StatQuVaccinationSize = new WStat(MySim);
             StatQuVaccinationTime = new Stat();
+			RandMovingToFromColdStorTime = new UniformContinuousRNG(10, 18, ((MySimulation)MySim).RandSeedGenerator);
 		}
 
 		public override void PrepareReplication()
@@ -54,6 +57,7 @@ namespace agents
 		private void Init()
 		{
 			new ManagerVaccination(SimId.ManagerVaccination, MySim, this);
+			new ProcessMovingToFromColdStor(SimId.ProcessMovingToFromColdStor, MySim, this);
 			new ProcessVaccination(SimId.ProcessVaccination, MySim, this);
 			new SchedulerNurseBreak(SimId.SchedulerNurseBreak, MySim, this);
 			AddOwnMessage(Mc.RequestNurseBreak);

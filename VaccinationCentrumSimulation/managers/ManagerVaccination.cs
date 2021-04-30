@@ -40,11 +40,10 @@ namespace managers
                     Nurse = nurse
                 };
 
-                nurse.State = EntityState.Preparing;
-				nurseMessage.Addressee = MySim.FindAgent(SimId.AgentColdStorage);
-                nurseMessage.Code = Mc.RequestFillSyringes;
-                Request(nurseMessage);
-			} 
+                nurse.State = EntityState.Moving;
+                nurseMessage.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingToFromColdStor);
+				StartContinualAssistant(nurseMessage);
+            } 
             else if (MyAgent.PoolNurses.FreeCount == 0 
                      && MyAgent.QuVaccination.Count > 0)
             {
@@ -115,45 +114,61 @@ namespace managers
         {
             var nurse = ((MessageNurse) message).Nurse;
 
-            if (!MyAgent.QuVaccination.IsEmpty())
-            {
-                var messageFromQueue = MyAgent.QuVaccination.Dequeue();
-                nurse.AcceptNext(((MessagePatient) messageFromQueue).Patient);
-                ((MessagePatient)messageFromQueue).Nurse = nurse;
-                messageFromQueue.Addressee = MyAgent.FindAssistant(SimId.ProcessVaccination);
-                StartContinualAssistant(messageFromQueue);
+            nurse.State = EntityState.Moving;
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingToFromColdStor);
+            StartContinualAssistant(message);
+        }
 
-                MyAgent.StatQuVaccinationTime.AddSample(MySim.CurrentTime -
-                                                        ((MessagePatient) messageFromQueue).Patient
-                                                        .VaccinationQuStartTime);
-                MyAgent.StatQuVaccinationSize.AddSample(MyAgent.QuVaccination.Size);
-            }
+		//meta! sender="ProcessMovingToFromColdStor", id="89", type="Finish"
+		public void ProcessFinishProcessMovingToFromColdStor(MessageForm message)
+        {
+            var nurse = ((MessageNurse) message).Nurse;
+
+			if (nurse.SyringesFullCount == 0)
+            {
+				nurse.State = EntityState.Preparing;
+                message.Addressee = MySim.FindAgent(SimId.AgentColdStorage);
+                message.Code = Mc.RequestFillSyringes;
+                Request(message);
+			}
             else
             {
-                MyAgent.PoolNurses.Release(nurse);
-            }
-        }
+                if (!MyAgent.QuVaccination.IsEmpty())
+                {
+                    var messageFromQueue = MyAgent.QuVaccination.Dequeue();
+                    nurse.AcceptNext(((MessagePatient)messageFromQueue).Patient);
+                    ((MessagePatient)messageFromQueue).Nurse = nurse;
+                    messageFromQueue.Addressee = MyAgent.FindAssistant(SimId.ProcessVaccination);
+                    StartContinualAssistant(messageFromQueue);
+
+                    MyAgent.StatQuVaccinationTime.AddSample(MySim.CurrentTime -
+                                                            ((MessagePatient)messageFromQueue).Patient
+                                                            .VaccinationQuStartTime);
+                    MyAgent.StatQuVaccinationSize.AddSample(MyAgent.QuVaccination.Size);
+                }
+                else
+                {
+                    MyAgent.PoolNurses.Release(nurse);
+                }
+			}
+		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
 		}
 
-		override public void ProcessMessage(MessageForm message)
+		public override void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{
-			case Mc.RequestNurseBreak:
-				ProcessRequestNurseBreak(message);
-			break;
-
-			case Mc.RequestVaccination:
-				ProcessRequestVaccination(message);
-			break;
-
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
+				case SimId.ProcessMovingToFromColdStor:
+					ProcessFinishProcessMovingToFromColdStor(message);
+				break;
+
 				case SimId.SchedulerNurseBreak:
 					ProcessFinishSchedulerNurseBreak(message);
 				break;
@@ -162,6 +177,14 @@ namespace managers
 					ProcessFinishProcessVaccination(message);
 				break;
 				}
+			break;
+
+			case Mc.RequestNurseBreak:
+				ProcessRequestNurseBreak(message);
+			break;
+
+			case Mc.RequestVaccination:
+				ProcessRequestVaccination(message);
 			break;
 
 			case Mc.RequestFillSyringes:

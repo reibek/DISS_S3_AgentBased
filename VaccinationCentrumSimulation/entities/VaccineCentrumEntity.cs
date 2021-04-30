@@ -81,6 +81,13 @@ namespace entities
             State = EntityState.Free;
         }
 
+        public void GetBreak()
+        {
+            Patient = null;
+            IsBusy = false;
+            State = EntityState.Break;
+        }
+
         public virtual void Reset()
         {
             IsBusy = false;
@@ -95,6 +102,7 @@ namespace entities
     {
         Free,
         Working,
+        Moving,
         Preparing,
         Break
     }

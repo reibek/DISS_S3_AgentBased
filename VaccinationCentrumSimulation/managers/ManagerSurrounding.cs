@@ -72,7 +72,7 @@ namespace managers
             StartContinualAssistant(message);
         }
 
-        //meta! sender="AgentModel", id="85", type="Notice"
+		//meta! sender="AgentModel", id="85", type="Notice"
 		public void ProcessNoticePatientLeave(MessageForm message)
 		{
 		}

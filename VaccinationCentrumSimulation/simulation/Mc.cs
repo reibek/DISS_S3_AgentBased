@@ -30,5 +30,6 @@ namespace simulation
         public const int ProcessMovingExaToVacEnded = 17;
         public const int ProcessMovingVacToWaiEnded = 18;
         public const int ProcessMovingToFromCanEnded = 19;
+        public const int ProcessMovingToFromColdStorEnded = 20;
 	}
 }

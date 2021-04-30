@@ -56,6 +56,13 @@ namespace VaccineCentrum
             _busyEntitiesList.Remove(entity);
         }
 
+        public void GetBreak(E entity)
+        {
+            entity.GetBreak();
+            _freeEntitiesList.Remove(entity);
+            _busyEntitiesList.Add(entity);
+        }
+
         public double AverageUtilization()
         {
             double sum = 0.0;

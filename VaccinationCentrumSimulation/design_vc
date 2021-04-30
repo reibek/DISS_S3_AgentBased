@@ -85,10 +85,16 @@
       <UsePetriNet>false</UsePetriNet>
       <Components>
         <Process>
+          <SimId>1015</SimId>
+          <InternalId>88</InternalId>
+          <Name>ProcessMovingToFromColdStor</Name>
+          <Bounds>103,111,35,18</Bounds>
+        </Process>
+        <Process>
           <SimId>1004</SimId>
           <InternalId>25</InternalId>
           <Name>ProcessVaccination</Name>
-          <Bounds>102,98,35,18</Bounds>
+          <Bounds>103,84,35,18</Bounds>
         </Process>
         <Scheduler>
           <SimId>1008</SimId>
@@ -125,7 +131,7 @@
       <SimId>3</SimId>
       <InternalId>3</InternalId>
       <Name>AgentCentrum</Name>
-      <Bounds>1267,824,180,180</Bounds>
+      <Bounds>1267,827,180,180</Bounds>
       <Reasoner>ManagerCentrum</Reasoner>
       <ReasonerBounds>15,72,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
@@ -288,6 +294,12 @@
       <Destination>22</Destination>
     </Message>
     <Message>
+      <InternalId>89</InternalId>
+      <Type>StartFinish</Type>
+      <Source>6</Source>
+      <Destination>88</Destination>
+    </Message>
+    <Message>
       <InternalId>26</InternalId>
       <Type>StartFinish</Type>
       <Source>6</Source>
@@ -428,5 +440,5 @@
       <Destination>62</Destination>
     </Message>
   </Messages>
-  <IID>87</IID>
+  <IID>90</IID>
 </ABAsim>

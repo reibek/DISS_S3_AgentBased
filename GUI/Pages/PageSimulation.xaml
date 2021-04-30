@@ -506,6 +506,9 @@
                                                             <DataTrigger Binding="{Binding State}" Value="Free">
                                                                 <Setter Property="Fill" Value="Green"/>
                                                             </DataTrigger>
+                                                            <DataTrigger Binding="{Binding State}" Value="Moving">
+                                                                <Setter Property="Fill" Value="LightSkyBlue"/>
+                                                            </DataTrigger>
                                                             <DataTrigger Binding="{Binding State}" Value="Preparing">
                                                                 <Setter Property="Fill" Value="Orange"/>
                                                             </DataTrigger>
