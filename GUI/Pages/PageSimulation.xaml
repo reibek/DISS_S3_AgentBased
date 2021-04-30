@@ -421,6 +421,7 @@
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="30" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{Binding Id}" />
                                             <ProgressBar Grid.Column="1" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
@@ -439,6 +440,7 @@
                                                     </Style>
                                                 </Ellipse.Style>
                                             </Ellipse>
+                                            <TextBlock Grid.Column="4" Margin="5,0,0,0" Text="{Binding SyringesFullCount}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

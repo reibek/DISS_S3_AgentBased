@@ -33,6 +33,9 @@ namespace managers
 		{
 			switch (message.Code)
 			{
+				case Mc.NoticePatientGenerated:
+					ProcessNoticePatientGenerated(message);
+                    break;
 			}
 		}
 
@@ -43,7 +46,7 @@ namespace managers
 			StartContinualAssistant(message);
 		}
 
-		//meta! sender="SchedulerPatientsArrival", id="45", type="Notice"
+		//meta! userInfo="Removed from model"
 		public void ProcessNoticePatientGenerated(MessageForm message)
         {
             MyAgent.PatientsCount++;
@@ -53,14 +56,14 @@ namespace managers
             {
 				message.Code = Mc.NoticePatientLeave;
 				MyAgent.CanceledPatientsIds.RemoveAt(0);
-                Notice(new MyMessage(message));
+                Notice(new MessagePatient(message));
             } 
             else
             {
-                ((MyMessage)message).Patient = patient;
+                ((MessagePatient)message).Patient = patient;
                 message.Addressee = MySim.FindAgent(SimId.AgentModel);
                 message.Code = Mc.NoticePatientArrival;
-                Notice(new MyMessage(message));
+                Notice(new MessagePatient(message));
             }
 
             if (MyAgent.PatientsCount == ((MySimulation)MySim).OrderedPatientsNum) return;
@@ -69,7 +72,7 @@ namespace managers
             StartContinualAssistant(message);
         }
 
-		//meta! sender="AgentModel", id="47", type="Notice"
+        //meta! sender="AgentModel", id="85", type="Notice"
 		public void ProcessNoticePatientLeave(MessageForm message)
 		{
 		}
@@ -83,16 +86,12 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.NoticePatientLeave:
-				ProcessNoticePatientLeave(message);
-			break;
-
 			case Mc.Finish:
 				ProcessFinish(message);
 			break;
 
-			case Mc.NoticePatientGenerated:
-				ProcessNoticePatientGenerated(message);
+			case Mc.NoticePatientLeave:
+				ProcessNoticePatientLeave(message);
 			break;
 
 			case Mc.Initialization:

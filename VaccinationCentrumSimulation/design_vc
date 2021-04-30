@@ -2,28 +2,60 @@
 <ABAsim>
   <Agents>
     <Agent>
-      <SimId>1</SimId>
-      <InternalId>1</InternalId>
-      <Name>AgentModel</Name>
-      <Bounds>1262,228,180,180</Bounds>
-      <Reasoner>ManagerModel</Reasoner>
+      <SimId>8</SimId>
+      <InternalId>44</InternalId>
+      <Name>AgentColdStorage</Name>
+      <Bounds>1547,2054,180,180</Bounds>
+      <Reasoner>ManagerColdStorage</Reasoner>
+      <ReasonerBounds>22,73,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Process>
+          <SimId>1014</SimId>
+          <InternalId>80</InternalId>
+          <Name>ProcessFillingSyringes</Name>
+          <Bounds>107,75,35,18</Bounds>
+        </Process>
+      </Components>
+    </Agent>
+    <Agent>
+      <SimId>9</SimId>
+      <InternalId>47</InternalId>
+      <Name>AgentCanteen</Name>
+      <Bounds>566,826,180,180</Bounds>
+      <Reasoner>ManagerCanteen</Reasoner>
+      <ReasonerBounds>20,72,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Process>
+          <SimId>1009</SimId>
+          <InternalId>68</InternalId>
+          <Name>ProcessEating</Name>
+          <Bounds>105,76,35,18</Bounds>
+        </Process>
+      </Components>
     </Agent>
     <Agent>
       <SimId>4</SimId>
       <InternalId>4</InternalId>
       <Name>AgentRegistration</Name>
-      <Bounds>509,1343,180,180</Bounds>
+      <Bounds>530,1387,180,180</Bounds>
       <Reasoner>ManagerRegistration</Reasoner>
-      <ReasonerBounds>74,25,32,25</ReasonerBounds>
+      <ReasonerBounds>21,75,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
       <Components>
         <Process>
           <SimId>1002</SimId>
           <InternalId>19</InternalId>
           <Name>ProcessRegistration</Name>
-          <Bounds>22,82,35,18</Bounds>
+          <Bounds>104,100,35,18</Bounds>
         </Process>
+        <Scheduler>
+          <SimId>1006</SimId>
+          <InternalId>59</InternalId>
+          <Name>SchedulerAdminWorkerBreak</Name>
+          <Bounds>104,64,35,13</Bounds>
+        </Scheduler>
       </Components>
     </Agent>
     <Agent>
@@ -44,19 +76,48 @@
       </Components>
     </Agent>
     <Agent>
+      <SimId>6</SimId>
+      <InternalId>6</InternalId>
+      <Name>AgentVaccination</Name>
+      <Bounds>1546,1432,180,180</Bounds>
+      <Reasoner>ManagerVaccination</Reasoner>
+      <ReasonerBounds>19,78,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Process>
+          <SimId>1004</SimId>
+          <InternalId>25</InternalId>
+          <Name>ProcessVaccination</Name>
+          <Bounds>102,98,35,18</Bounds>
+        </Process>
+        <Scheduler>
+          <SimId>1008</SimId>
+          <InternalId>65</InternalId>
+          <Name>SchedulerNurseBreak</Name>
+          <Bounds>102,60,35,13</Bounds>
+        </Scheduler>
+      </Components>
+    </Agent>
+    <Agent>
       <SimId>5</SimId>
       <InternalId>5</InternalId>
       <Name>AgentExamination</Name>
       <Bounds>1032,1409,180,180</Bounds>
       <Reasoner>ManagerExamination</Reasoner>
-      <ReasonerBounds>74,25,32,25</ReasonerBounds>
+      <ReasonerBounds>26,74,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
       <Components>
+        <Scheduler>
+          <SimId>1007</SimId>
+          <InternalId>62</InternalId>
+          <Name>SchedulerDoctorBreak</Name>
+          <Bounds>103,52,35,13</Bounds>
+        </Scheduler>
         <Process>
           <SimId>1003</SimId>
           <InternalId>22</InternalId>
           <Name>ProcessExamination</Name>
-          <Bounds>30,87,35,18</Bounds>
+          <Bounds>103,94,35,18</Bounds>
         </Process>
       </Components>
     </Agent>
@@ -66,13 +127,40 @@
       <Name>AgentCentrum</Name>
       <Bounds>1267,824,180,180</Bounds>
       <Reasoner>ManagerCentrum</Reasoner>
+      <ReasonerBounds>15,72,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Process>
+          <SimId>1010</SimId>
+          <InternalId>71</InternalId>
+          <Name>ProcessMovingRegToExa</Name>
+          <Bounds>97,30,35,18</Bounds>
+        </Process>
+        <Process>
+          <SimId>1013</SimId>
+          <InternalId>77</InternalId>
+          <Name>ProcessMovingToFromCan</Name>
+          <Bounds>96,119,35,18</Bounds>
+        </Process>
+        <Process>
+          <SimId>1012</SimId>
+          <InternalId>75</InternalId>
+          <Name>ProcessMovingVacToWai</Name>
+          <Bounds>96,89,35,18</Bounds>
+        </Process>
+        <Process>
+          <SimId>1011</SimId>
+          <InternalId>73</InternalId>
+          <Name>ProcessMovingExaToVac</Name>
+          <Bounds>96,59,35,18</Bounds>
+        </Process>
+      </Components>
     </Agent>
     <Agent>
       <SimId>7</SimId>
       <InternalId>7</InternalId>
       <Name>AgentWaitingRoom</Name>
-      <Bounds>1983,1373,180,180</Bounds>
+      <Bounds>2033,1420,180,180</Bounds>
       <Reasoner>ManagerWaitingRoom</Reasoner>
       <ReasonerBounds>74,25,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
@@ -86,24 +174,147 @@
       </Components>
     </Agent>
     <Agent>
-      <SimId>6</SimId>
-      <InternalId>6</InternalId>
-      <Name>AgentVaccination</Name>
-      <Bounds>1546,1432,180,180</Bounds>
-      <Reasoner>ManagerVaccination</Reasoner>
-      <ReasonerBounds>74,25,32,25</ReasonerBounds>
+      <SimId>1</SimId>
+      <InternalId>1</InternalId>
+      <Name>AgentModel</Name>
+      <Bounds>1262,228,180,180</Bounds>
+      <Reasoner>ManagerModel</Reasoner>
       <UsePetriNet>false</UsePetriNet>
-      <Components>
-        <Process>
-          <SimId>1004</SimId>
-          <InternalId>25</InternalId>
-          <Name>ProcessVaccination</Name>
-          <Bounds>22,99,35,18</Bounds>
-        </Process>
-      </Components>
     </Agent>
   </Agents>
   <Messages>
+    <Message>
+      <InternalId>66</InternalId>
+      <Type>StartFinish</Type>
+      <Source>6</Source>
+      <Destination>65</Destination>
+    </Message>
+    <Message>
+      <InternalId>69</InternalId>
+      <Type>StartFinish</Type>
+      <Source>47</Source>
+      <Destination>68</Destination>
+    </Message>
+    <Message>
+      <InternalId>8</InternalId>
+      <Type>Parent</Type>
+      <Source>2</Source>
+      <Destination>1</Destination>
+    </Message>
+    <Message>
+      <InternalId>72</InternalId>
+      <Type>StartFinish</Type>
+      <Source>3</Source>
+      <Destination>71</Destination>
+    </Message>
+    <Message>
+      <InternalId>9</InternalId>
+      <Type>Parent</Type>
+      <Source>3</Source>
+      <Destination>1</Destination>
+    </Message>
+    <Message>
+      <InternalId>10</InternalId>
+      <Type>Parent</Type>
+      <Source>4</Source>
+      <Destination>3</Destination>
+    </Message>
+    <Message>
+      <InternalId>74</InternalId>
+      <Type>StartFinish</Type>
+      <Source>3</Source>
+      <Destination>73</Destination>
+    </Message>
+    <Message>
+      <InternalId>11</InternalId>
+      <Type>Parent</Type>
+      <Source>5</Source>
+      <Destination>3</Destination>
+    </Message>
+    <Message>
+      <InternalId>12</InternalId>
+      <Type>Parent</Type>
+      <Source>6</Source>
+      <Destination>3</Destination>
+    </Message>
+    <Message>
+      <InternalId>76</InternalId>
+      <Type>StartFinish</Type>
+      <Source>3</Source>
+      <Destination>75</Destination>
+    </Message>
+    <Message>
+      <InternalId>13</InternalId>
+      <Type>Parent</Type>
+      <Source>7</Source>
+      <Destination>3</Destination>
+    </Message>
+    <Message>
+      <InternalId>78</InternalId>
+      <Type>StartFinish</Type>
+      <Source>3</Source>
+      <Destination>77</Destination>
+    </Message>
+    <Message>
+      <InternalId>81</InternalId>
+      <Type>StartFinish</Type>
+      <Source>44</Source>
+      <Destination>80</Destination>
+    </Message>
+    <Message>
+      <InternalId>17</InternalId>
+      <Type>StartFinish</Type>
+      <Source>2</Source>
+      <Destination>16</Destination>
+    </Message>
+    <Message>
+      <InternalId>20</InternalId>
+      <Type>StartFinish</Type>
+      <Source>4</Source>
+      <Destination>19</Destination>
+    </Message>
+    <Message>
+      <SimId>1008</SimId>
+      <InternalId>85</InternalId>
+      <Name>NoticePatientLeave</Name>
+      <Type>Notice</Type>
+      <Source>1</Source>
+      <Destination>2</Destination>
+    </Message>
+    <Message>
+      <InternalId>23</InternalId>
+      <Type>StartFinish</Type>
+      <Source>5</Source>
+      <Destination>22</Destination>
+    </Message>
+    <Message>
+      <InternalId>26</InternalId>
+      <Type>StartFinish</Type>
+      <Source>6</Source>
+      <Destination>25</Destination>
+    </Message>
+    <Message>
+      <InternalId>29</InternalId>
+      <Type>StartFinish</Type>
+      <Source>7</Source>
+      <Destination>28</Destination>
+    </Message>
+    <Message>
+      <SimId>1001</SimId>
+      <InternalId>30</InternalId>
+      <Name>NoticePatientArrival</Name>
+      <Type>Notice</Type>
+      <Source>2</Source>
+      <Destination>1</Destination>
+    </Message>
+    <Message>
+      <SimId>1002</SimId>
+      <InternalId>31</InternalId>
+      <Name>NoticeNewPatient</Name>
+      <Type>Notice</Type>
+      <Source>1</Source>
+      <Destination>3</Destination>
+    </Message>
     <Message>
       <SimId>1003</SimId>
       <InternalId>32</InternalId>
@@ -145,24 +356,6 @@
       <Destination>1</Destination>
     </Message>
     <Message>
-      <InternalId>8</InternalId>
-      <Type>Parent</Type>
-      <Source>2</Source>
-      <Destination>1</Destination>
-    </Message>
-    <Message>
-      <InternalId>9</InternalId>
-      <Type>Parent</Type>
-      <Source>3</Source>
-      <Destination>1</Destination>
-    </Message>
-    <Message>
-      <InternalId>10</InternalId>
-      <Type>Parent</Type>
-      <Source>4</Source>
-      <Destination>3</Destination>
-    </Message>
-    <Message>
       <SimId>1010</SimId>
       <InternalId>42</InternalId>
       <Name>Initialization</Name>
@@ -171,69 +364,69 @@
       <Destination>2</Destination>
     </Message>
     <Message>
-      <InternalId>11</InternalId>
+      <InternalId>45</InternalId>
       <Type>Parent</Type>
+      <Source>44</Source>
+      <Destination>6</Destination>
+    </Message>
+    <Message>
+      <InternalId>48</InternalId>
+      <Type>Parent</Type>
+      <Source>47</Source>
+      <Destination>3</Destination>
+    </Message>
+    <Message>
+      <SimId>1011</SimId>
+      <InternalId>50</InternalId>
+      <Name>RequestFillSyringes</Name>
+      <Type>RequestResponse</Type>
+      <Source>6</Source>
+      <Destination>44</Destination>
+    </Message>
+    <Message>
+      <SimId>1013</SimId>
+      <InternalId>52</InternalId>
+      <Name>RequestAdminWorkerBreak</Name>
+      <Type>RequestResponse</Type>
+      <Source>4</Source>
+      <Destination>3</Destination>
+    </Message>
+    <Message>
+      <SimId>1014</SimId>
+      <InternalId>53</InternalId>
+      <Name>RequestDoctorBreak</Name>
+      <Type>RequestResponse</Type>
       <Source>5</Source>
       <Destination>3</Destination>
     </Message>
     <Message>
-      <InternalId>12</InternalId>
-      <Type>Parent</Type>
+      <SimId>1015</SimId>
+      <InternalId>54</InternalId>
+      <Name>RequestNurseBreak</Name>
+      <Type>RequestResponse</Type>
       <Source>6</Source>
       <Destination>3</Destination>
     </Message>
     <Message>
-      <InternalId>13</InternalId>
-      <Type>Parent</Type>
-      <Source>7</Source>
-      <Destination>3</Destination>
+      <SimId>1018</SimId>
+      <InternalId>57</InternalId>
+      <Name>RequestEmployeeLunch</Name>
+      <Type>RequestResponse</Type>
+      <Source>3</Source>
+      <Destination>47</Destination>
     </Message>
     <Message>
-      <InternalId>17</InternalId>
-      <Type>StartFinish</Type>
-      <Source>2</Source>
-      <Destination>16</Destination>
-    </Message>
-    <Message>
-      <InternalId>20</InternalId>
+      <InternalId>60</InternalId>
       <Type>StartFinish</Type>
       <Source>4</Source>
-      <Destination>19</Destination>
+      <Destination>59</Destination>
     </Message>
     <Message>
-      <InternalId>23</InternalId>
+      <InternalId>63</InternalId>
       <Type>StartFinish</Type>
       <Source>5</Source>
-      <Destination>22</Destination>
-    </Message>
-    <Message>
-      <InternalId>26</InternalId>
-      <Type>StartFinish</Type>
-      <Source>6</Source>
-      <Destination>25</Destination>
-    </Message>
-    <Message>
-      <InternalId>29</InternalId>
-      <Type>StartFinish</Type>
-      <Source>7</Source>
-      <Destination>28</Destination>
-    </Message>
-    <Message>
-      <SimId>1001</SimId>
-      <InternalId>30</InternalId>
-      <Name>NoticePatientArrival</Name>
-      <Type>Notice</Type>
-      <Source>2</Source>
-      <Destination>1</Destination>
-    </Message>
-    <Message>
-      <SimId>1002</SimId>
-      <InternalId>31</InternalId>
-      <Name>NoticeNewPatient</Name>
-      <Type>Notice</Type>
-      <Source>1</Source>
-      <Destination>3</Destination>
+      <Destination>62</Destination>
     </Message>
   </Messages>
-  <IID>43</IID>
+  <IID>87</IID>
 </ABAsim>

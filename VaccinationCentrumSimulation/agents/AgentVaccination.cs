@@ -55,6 +55,9 @@ namespace agents
 		{
 			new ManagerVaccination(SimId.ManagerVaccination, MySim, this);
 			new ProcessVaccination(SimId.ProcessVaccination, MySim, this);
+			new SchedulerNurseBreak(SimId.SchedulerNurseBreak, MySim, this);
+			AddOwnMessage(Mc.RequestNurseBreak);
+			AddOwnMessage(Mc.RequestFillSyringes);
 			AddOwnMessage(Mc.RequestVaccination);
 		}
 		//meta! tag="end"

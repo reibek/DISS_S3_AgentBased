@@ -28,21 +28,22 @@ namespace managers
 		}
 
 		//meta! sender="ProcessVaccination", id="26", type="Finish"
-		public void ProcessFinish(MessageForm message)
+		public void ProcessFinishProcessVaccination(MessageForm message)
         {
-            var nurse = ((MyMessage) message).Nurse;
+            var nurse = ((MessagePatient) message).Nurse;
+            nurse.SyringesFullCount--;
 
             if (MyAgent.PoolNurses.FreeCount == 0 
                 && MyAgent.QuVaccination.Count > 0)
             {
                 var messageFromQueue = MyAgent.QuVaccination.Dequeue();
-                nurse.AcceptNext(((MyMessage) messageFromQueue).Patient);
-                ((MyMessage)messageFromQueue).Nurse = nurse;
+                nurse.AcceptNext(((MessagePatient) messageFromQueue).Patient);
+                ((MessagePatient)messageFromQueue).Nurse = nurse;
 				messageFromQueue.Addressee = MyAgent.FindAssistant(SimId.ProcessVaccination);
                 StartContinualAssistant(messageFromQueue);
 
                 MyAgent.StatQuVaccinationTime.AddSample(MySim.CurrentTime -
-                                                         ((MyMessage)messageFromQueue).Patient
+                                                         ((MessagePatient)messageFromQueue).Patient
                                                          .VaccinationQuStartTime);
                 MyAgent.StatQuVaccinationSize.AddSample(MyAgent.QuVaccination.Size);
 			}
@@ -63,8 +64,8 @@ namespace managers
                 && MyAgent.QuVaccination.IsEmpty())
             {
                 int choiceNum = MyAgent.RandNurseChoice[MyAgent.PoolNurses.FreeCount - 1].Sample();
-                EntityNurse nurse = MyAgent.PoolNurses.Assign(choiceNum, ((MyMessage) message).Patient);
-                ((MyMessage) message).Nurse = nurse;
+                EntityNurse nurse = MyAgent.PoolNurses.Assign(choiceNum, ((MessagePatient) message).Patient);
+                ((MessagePatient) message).Nurse = nurse;
                 message.Addressee = MyAgent.FindAssistant(SimId.ProcessVaccination);
 				StartContinualAssistant(message);
 
@@ -72,7 +73,7 @@ namespace managers
 			}
             else
             {
-                ((MyMessage) message).Patient.VaccinationQuStartTime = MySim.CurrentTime;
+                ((MessagePatient) message).Patient.VaccinationQuStartTime = MySim.CurrentTime;
                 MyAgent.QuVaccination.Enqueue(message);
 
                 MyAgent.StatQuVaccinationSize.AddSample(MyAgent.QuVaccination.Size);
@@ -87,6 +88,21 @@ namespace managers
 			}
 		}
 
+		//meta! sender="AgentCentrum", id="54", type="Response"
+		public void ProcessRequestNurseBreak(MessageForm message)
+		{
+		}
+
+		//meta! sender="SchedulerNurseBreak", id="66", type="Finish"
+		public void ProcessFinishSchedulerNurseBreak(MessageForm message)
+		{
+		}
+
+		//meta! sender="AgentColdStorage", id="50", type="Response"
+		public void ProcessRequestFillSyringes(MessageForm message)
+		{
+		}
+
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
@@ -96,12 +112,29 @@ namespace managers
 		{
 			switch (message.Code)
 			{
+			case Mc.RequestNurseBreak:
+				ProcessRequestNurseBreak(message);
+			break;
+
 			case Mc.RequestVaccination:
 				ProcessRequestVaccination(message);
 			break;
 
 			case Mc.Finish:
-				ProcessFinish(message);
+				switch (message.Sender.Id)
+				{
+				case SimId.SchedulerNurseBreak:
+					ProcessFinishSchedulerNurseBreak(message);
+				break;
+
+				case SimId.ProcessVaccination:
+					ProcessFinishProcessVaccination(message);
+				break;
+				}
+			break;
+
+			case Mc.RequestFillSyringes:
+				ProcessRequestFillSyringes(message);
 			break;
 
 			default:

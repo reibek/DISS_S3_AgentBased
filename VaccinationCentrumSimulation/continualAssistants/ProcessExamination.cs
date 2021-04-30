@@ -20,10 +20,10 @@ namespace continualAssistants
 		//meta! sender="AgentExamination", id="23", type="Start"
 		public void ProcessStart(MessageForm message)
         {
-            ((MyMessage) message).Patient.WaitingRoomTime =
-                ((MyMessage) message).Doctor.RandWaitingRoomTimeDecision.Sample() < 0.95 ? 900 : 1800;
+            ((MessagePatient) message).Patient.WaitingRoomTime =
+                ((MessagePatient) message).Doctor.RandWaitingRoomTimeDecision.Sample() < 0.95 ? 900 : 1800;
             message.Code = Mc.ProcessExaminationEnded;
-            Hold(((MyMessage)message).Doctor.RandExaminationTime.Sample(), message);
+            Hold(((MessagePatient)message).Doctor.RandExaminationTime.Sample(), message);
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -38,7 +38,7 @@ namespace continualAssistants
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
-		public override void ProcessMessage(MessageForm message)
+		override public void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{

@@ -46,24 +46,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="agents\AgentCanteen.cs" />
     <Compile Include="agents\AgentCentrum.cs" />
+    <Compile Include="agents\AgentColdStorage.cs" />
     <Compile Include="agents\AgentExamination.cs" />
     <Compile Include="agents\AgentModel.cs" />
     <Compile Include="agents\AgentRegistration.cs" />
     <Compile Include="agents\AgentSurrounding.cs" />
     <Compile Include="agents\AgentVaccination.cs" />
     <Compile Include="agents\AgentWaitingRoom.cs" />
+    <Compile Include="continualAssistants\ProcessEating.cs" />
     <Compile Include="continualAssistants\ProcessExamination.cs" />
+    <Compile Include="continualAssistants\ProcessFillingSyringes.cs" />
+    <Compile Include="continualAssistants\ProcessMovingExaToVac.cs" />
+    <Compile Include="continualAssistants\ProcessMovingRegToExa.cs" />
+    <Compile Include="continualAssistants\ProcessMovingToFromCan.cs" />
+    <Compile Include="continualAssistants\ProcessMovingVacToWai.cs" />
     <Compile Include="continualAssistants\ProcessRegistration.cs" />
     <Compile Include="continualAssistants\ProcessVaccination.cs" />
     <Compile Include="continualAssistants\ProcessWaitingRoom.cs" />
+    <Compile Include="continualAssistants\SchedulerAdminWorkerBreak.cs" />
+    <Compile Include="continualAssistants\SchedulerDoctorBreak.cs" />
+    <Compile Include="continualAssistants\SchedulerNurseBreak.cs" />
     <Compile Include="continualAssistants\SchedulerPatientsArrival.cs" />
     <Compile Include="entities\EntityAdminWorker.cs" />
     <Compile Include="entities\EntityDoctor.cs" />
     <Compile Include="entities\EntityNurse.cs" />
     <Compile Include="entities\EntityPatient.cs" />
     <Compile Include="entities\VaccineCentrumEntity.cs" />
+    <Compile Include="managers\ManagerCanteen.cs" />
     <Compile Include="managers\ManagerCentrum.cs" />
+    <Compile Include="managers\ManagerColdStorage.cs" />
     <Compile Include="managers\ManagerExamination.cs" />
     <Compile Include="managers\ManagerModel.cs" />
     <Compile Include="managers\ManagerRegistration.cs" />
@@ -73,7 +86,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="simulation\Mc.cs" />
-    <Compile Include="simulation\MyMessage.cs" />
+    <Compile Include="simulation\MessagePatient.cs" />
     <Compile Include="simulation\MySimulation.cs" />
     <Compile Include="simulation\Pool.cs" />
     <Compile Include="simulation\SimId.cs" />

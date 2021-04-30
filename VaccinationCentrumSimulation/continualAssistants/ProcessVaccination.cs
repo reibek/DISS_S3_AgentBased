@@ -21,7 +21,7 @@ namespace continualAssistants
 		public void ProcessStart(MessageForm message)
         {
             message.Code = Mc.ProcessVaccinationEnded;
-			Hold(((MyMessage) message).Nurse.RandVaccinationTime.Sample(), message);
+			Hold(((MessagePatient) message).Nurse.RandVaccinationTime.Sample(), message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -36,7 +36,7 @@ namespace continualAssistants
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
-		public override void ProcessMessage(MessageForm message)
+		override public void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{

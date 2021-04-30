@@ -75,7 +75,7 @@ namespace entities
             IsBusy = false;
         }
 
-        public void Reset()
+        public virtual void Reset()
         {
             IsBusy = false;
             StatUtilizationLastChange = 0;

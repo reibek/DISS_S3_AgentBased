@@ -3,10 +3,10 @@ using simulation;
 using agents;
 namespace continualAssistants
 {
-	//meta! id="19"
-	public class ProcessRegistration : Process
+	//meta! id="65"
+	public class SchedulerNurseBreak : Scheduler
 	{
-		public ProcessRegistration(int id, Simulation mySim, CommonAgent myAgent) :
+		public SchedulerNurseBreak(int id, Simulation mySim, CommonAgent myAgent) :
 			base(id, mySim, myAgent)
 		{
 		}
@@ -17,11 +17,9 @@ namespace continualAssistants
 			// Setup component for the next replication
 		}
 
-		//meta! sender="AgentRegistration", id="20", type="Start"
+		//meta! sender="AgentVaccination", id="66", type="Start"
 		public void ProcessStart(MessageForm message)
-        {
-            message.Code = Mc.ProcessRegistrationEnded;
-			Hold(((MessagePatient)message).AdminWorker.RandRegistrationTime.Sample(), message);
+		{
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -29,9 +27,6 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-				case Mc.ProcessRegistrationEnded:
-					AssistantFinished(message);
-                    break;
 			}
 		}
 
@@ -50,11 +45,11 @@ namespace continualAssistants
 			}
 		}
 		//meta! tag="end"
-		public new AgentRegistration MyAgent
+		public new AgentVaccination MyAgent
 		{
 			get
 			{
-				return (AgentRegistration)base.MyAgent;
+				return (AgentVaccination)base.MyAgent;
 			}
 		}
 	}

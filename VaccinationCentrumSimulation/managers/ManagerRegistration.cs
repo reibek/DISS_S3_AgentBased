@@ -28,21 +28,21 @@ namespace managers
 		}
 
 		//meta! sender="ProcessRegistration", id="20", type="Finish"
-		public void ProcessFinish(MessageForm message)
+		public void ProcessFinishProcessRegistration(MessageForm message)
         {
-            var adminWorker = ((MyMessage) message).AdminWorker;
+            var adminWorker = ((MessagePatient) message).AdminWorker;
 
             if (MyAgent.PoolAdminWorkers.FreeCount == 0
                 && MyAgent.QuRegistration.Count > 0)
             {
                 var messageFromQueue = MyAgent.QuRegistration.Dequeue();
-                adminWorker.AcceptNext(((MyMessage) messageFromQueue).Patient);
-                ((MyMessage)messageFromQueue).AdminWorker = adminWorker;
+                adminWorker.AcceptNext(((MessagePatient) messageFromQueue).Patient);
+                ((MessagePatient)messageFromQueue).AdminWorker = adminWorker;
 				messageFromQueue.Addressee = MyAgent.FindAssistant(SimId.ProcessRegistration);
 				StartContinualAssistant(messageFromQueue);
 
                 MyAgent.StatQuRegistrationTime.AddSample(MySim.CurrentTime -
-                                                         ((MyMessage) messageFromQueue).Patient
+                                                         ((MessagePatient) messageFromQueue).Patient
                                                          .RegistrationQuStartTime);
 				MyAgent.StatQuRegistrationSize.AddSample(MyAgent.QuRegistration.Size);
 			} 
@@ -64,8 +64,8 @@ namespace managers
             {
                 int choiceNum = MyAgent.RandAdminWorkerChoice[MyAgent.PoolAdminWorkers.FreeCount - 1].Sample();
                 EntityAdminWorker adminWorker =
-                    MyAgent.PoolAdminWorkers.Assign(choiceNum, ((MyMessage) message).Patient);
-                ((MyMessage) message).AdminWorker = adminWorker;
+                    MyAgent.PoolAdminWorkers.Assign(choiceNum, ((MessagePatient) message).Patient);
+                ((MessagePatient) message).AdminWorker = adminWorker;
                 message.Addressee = MyAgent.FindAssistant(SimId.ProcessRegistration);
 				StartContinualAssistant(message);
 
@@ -73,7 +73,7 @@ namespace managers
             }
             else
             {
-                ((MyMessage) message).Patient.RegistrationQuStartTime = MySim.CurrentTime;
+                ((MessagePatient) message).Patient.RegistrationQuStartTime = MySim.CurrentTime;
 				MyAgent.QuRegistration.Enqueue(message);
 				
                 MyAgent.StatQuRegistrationSize.AddSample(MyAgent.QuRegistration.Size);
@@ -86,6 +86,16 @@ namespace managers
 			switch (message.Code)
 			{
 			}
+		}
+
+		//meta! sender="AgentCentrum", id="52", type="Response"
+		public void ProcessRequestAdminWorkerBreak(MessageForm message)
+		{
+		}
+
+		//meta! sender="SchedulerAdminWorkerBreak", id="60", type="Finish"
+		public void ProcessFinishSchedulerAdminWorkerBreak(MessageForm message)
+		{
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -102,7 +112,20 @@ namespace managers
 			break;
 
 			case Mc.Finish:
-				ProcessFinish(message);
+				switch (message.Sender.Id)
+				{
+				case SimId.ProcessRegistration:
+					ProcessFinishProcessRegistration(message);
+				break;
+
+				case SimId.SchedulerAdminWorkerBreak:
+					ProcessFinishSchedulerAdminWorkerBreak(message);
+				break;
+				}
+			break;
+
+			case Mc.RequestAdminWorkerBreak:
+				ProcessRequestAdminWorkerBreak(message);
 			break;
 
 			default:

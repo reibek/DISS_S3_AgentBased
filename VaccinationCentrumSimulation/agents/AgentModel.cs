@@ -18,7 +18,7 @@ namespace agents
 		{
 			base.PrepareReplication();
 
-            var message = new MyMessage(MySim)
+            var message = new MessagePatient(MySim)
             {
                 Addressee = MySim.FindAgent(SimId.AgentSurrounding),
                 Code = Mc.Initialization

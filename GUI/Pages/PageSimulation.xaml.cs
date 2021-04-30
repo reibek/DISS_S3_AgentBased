@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using entities;
 using simulation;
 using OSPABA;
 using GUI.Annotations;
@@ -41,6 +43,9 @@ namespace GUI.Pages
         private double _nursesUtilization;
         private int _quWaitingRoomSize;
         private double _quWaitingRoomAverageSize;
+        private ObservableCollection<EntityAdminWorker> _adminWorkers;
+        private ObservableCollection<EntityDoctor> _doctors;
+        private ObservableCollection<EntityNurse> _nurses;
 
         #region PROPERTIES
 
@@ -294,6 +299,36 @@ namespace GUI.Pages
             }
         }
 
+        public ObservableCollection<EntityAdminWorker> AdminWorkers
+        {
+            get => _adminWorkers;
+            set
+            {
+                _adminWorkers = value;
+                OnPropertyChanged(nameof(AdminWorkers));
+            }
+        }
+
+        public ObservableCollection<EntityDoctor> Doctors
+        {
+            get => _doctors;
+            set
+            {
+                _doctors = value;
+                OnPropertyChanged(nameof(Doctors));
+            }
+        }
+
+        public ObservableCollection<EntityNurse> Nurses
+        {
+            get => _nurses;
+            set
+            {
+                _nurses = value;
+                OnPropertyChanged(nameof(Nurses));
+            }
+        }
+
         #endregion
 
         public PageSimulation()
@@ -415,6 +450,10 @@ namespace GUI.Pages
 
                 QuWaitingRoomSize = simulation.AgentWaitingRoom.WaitingPatientsCount;
                 QuWaitingRoomAverageSize = simulation.AgentWaitingRoom.StatWaitingPatientsCount.Mean();
+
+                AdminWorkers = new ObservableCollection<EntityAdminWorker>(simulation.AgentRegistration.PoolAdminWorkers.Entities);
+                Doctors = new ObservableCollection<EntityDoctor>(simulation.AgentExamination.PoolDoctors.Entities);
+                Nurses = new ObservableCollection<EntityNurse>(simulation.AgentVaccination.PoolNurses.Entities);
             }
         }
 

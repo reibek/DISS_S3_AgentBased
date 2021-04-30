@@ -34,8 +34,8 @@ namespace managers
                 && MyAgent.QuExamination.IsEmpty())
             {
                 int choiceNum = MyAgent.RandDoctorChoice[MyAgent.PoolDoctors.FreeCount - 1].Sample();
-                EntityDoctor doctor = MyAgent.PoolDoctors.Assign(choiceNum, ((MyMessage) message).Patient);
-                ((MyMessage)message).Doctor = doctor;
+                EntityDoctor doctor = MyAgent.PoolDoctors.Assign(choiceNum, ((MessagePatient) message).Patient);
+                ((MessagePatient)message).Doctor = doctor;
                 message.Addressee = MyAgent.FindAssistant(SimId.ProcessExamination);
 				StartContinualAssistant(message);
 
@@ -43,7 +43,7 @@ namespace managers
 			}
             else
             {
-				((MyMessage)message).Patient.ExaminationQuStartTime = MySim.CurrentTime;
+				((MessagePatient)message).Patient.ExaminationQuStartTime = MySim.CurrentTime;
                 MyAgent.QuExamination.Enqueue(message);
 
                 MyAgent.StatQuExaminationSize.AddSample(MyAgent.QuExamination.Size);
@@ -51,21 +51,21 @@ namespace managers
 		}
 
 		//meta! sender="ProcessExamination", id="23", type="Finish"
-		public void ProcessFinish(MessageForm message)
+		public void ProcessFinishProcessExamination(MessageForm message)
         {
-            var doctor = ((MyMessage) message).Doctor;
+            var doctor = ((MessagePatient) message).Doctor;
 
             if (MyAgent.PoolDoctors.FreeCount == 0
                 && MyAgent.QuExamination.Count > 0)
             {
                 var messageFromQueue = MyAgent.QuExamination.Dequeue();
-                doctor.AcceptNext(((MyMessage) messageFromQueue).Patient);
-                ((MyMessage)messageFromQueue).Doctor = doctor;
+                doctor.AcceptNext(((MessagePatient) messageFromQueue).Patient);
+                ((MessagePatient)messageFromQueue).Doctor = doctor;
 				messageFromQueue.Addressee = MyAgent.FindAssistant(SimId.ProcessExamination);
                 StartContinualAssistant(messageFromQueue);
 
                 MyAgent.StatQuExaminationTime.AddSample(MySim.CurrentTime -
-                                                         ((MyMessage)messageFromQueue).Patient
+                                                         ((MessagePatient)messageFromQueue).Patient
                                                          .ExaminationQuStartTime);
                 MyAgent.StatQuExaminationSize.AddSample(MyAgent.QuExamination.Size);
 
@@ -88,21 +88,44 @@ namespace managers
 			}
 		}
 
+		//meta! sender="SchedulerDoctorBreak", id="63", type="Finish"
+		public void ProcessFinishSchedulerDoctorBreak(MessageForm message)
+		{
+		}
+
+		//meta! sender="AgentCentrum", id="53", type="Response"
+		public void ProcessRequestDoctorBreak(MessageForm message)
+		{
+		}
+
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
 		}
 
-        public override void ProcessMessage(MessageForm message)
+		override public void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{
+			case Mc.RequestDoctorBreak:
+				ProcessRequestDoctorBreak(message);
+			break;
+
 			case Mc.RequestExamination:
 				ProcessRequestExamination(message);
 			break;
 
 			case Mc.Finish:
-				ProcessFinish(message);
+				switch (message.Sender.Id)
+				{
+				case SimId.ProcessExamination:
+					ProcessFinishProcessExamination(message);
+				break;
+
+				case SimId.SchedulerDoctorBreak:
+					ProcessFinishSchedulerDoctorBreak(message);
+				break;
+				}
 			break;
 
 			default:

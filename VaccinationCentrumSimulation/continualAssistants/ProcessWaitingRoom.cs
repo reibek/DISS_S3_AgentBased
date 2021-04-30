@@ -21,7 +21,7 @@ namespace continualAssistants
 		public void ProcessStart(MessageForm message)
         {
             message.Code = Mc.ProcessWaitingRoomEnded;
-            Hold(((MyMessage) message).Patient.WaitingRoomTime, message);
+            Hold(((MessagePatient) message).Patient.WaitingRoomTime, message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"

@@ -113,6 +113,8 @@ namespace simulation
 			AgentExamination = new AgentExamination(SimId.AgentExamination, this, AgentCentrum);
 			AgentVaccination = new AgentVaccination(SimId.AgentVaccination, this, AgentCentrum);
 			AgentWaitingRoom = new AgentWaitingRoom(SimId.AgentWaitingRoom, this, AgentCentrum);
+			AgentColdStorage = new AgentColdStorage(SimId.AgentColdStorage, this, AgentVaccination);
+			AgentCanteen = new AgentCanteen(SimId.AgentCanteen, this, AgentCentrum);
 		}
 		public AgentModel AgentModel
 		{ get; set; }
@@ -127,6 +129,10 @@ namespace simulation
 		public AgentVaccination AgentVaccination
 		{ get; set; }
 		public AgentWaitingRoom AgentWaitingRoom
+		{ get; set; }
+		public AgentColdStorage AgentColdStorage
+		{ get; set; }
+		public AgentCanteen AgentCanteen
 		{ get; set; }
 		//meta! tag="end"
 	}

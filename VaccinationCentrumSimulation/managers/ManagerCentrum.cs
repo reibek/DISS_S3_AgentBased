@@ -81,15 +81,96 @@ namespace managers
 			}
 		}
 
+		//meta! sender="AgentVaccination", id="54", type="Request"
+		public void ProcessRequestNurseBreak(MessageForm message)
+		{
+		}
+
+		//meta! sender="AgentRegistration", id="52", type="Request"
+		public void ProcessRequestAdminWorkerBreak(MessageForm message)
+		{
+		}
+
+		//meta! sender="ProcessMovingRegToExa", id="72", type="Finish"
+		public void ProcessFinishProcessMovingRegToExa(MessageForm message)
+		{
+		}
+
+		//meta! sender="ProcessMovingVacToWai", id="76", type="Finish"
+		public void ProcessFinishProcessMovingVacToWai(MessageForm message)
+		{
+		}
+
+		//meta! sender="ProcessMovingExaToVac", id="74", type="Finish"
+		public void ProcessFinishProcessMovingExaToVac(MessageForm message)
+		{
+		}
+
+		//meta! sender="ProcessMovingToFromCan", id="78", type="Finish"
+		public void ProcessFinishProcessMovingToFromCan(MessageForm message)
+		{
+		}
+
+		//meta! sender="AgentCanteen", id="57", type="Response"
+		public void ProcessRequestEmployeeLunch(MessageForm message)
+		{
+		}
+
+		//meta! sender="AgentExamination", id="53", type="Request"
+		public void ProcessRequestDoctorBreak(MessageForm message)
+		{
+		}
+
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
 		}
 
-		public override void ProcessMessage(MessageForm message)
+		override public void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{
+			case Mc.RequestEmployeeLunch:
+				ProcessRequestEmployeeLunch(message);
+			break;
+
+			case Mc.RequestNurseBreak:
+				ProcessRequestNurseBreak(message);
+			break;
+
+			case Mc.Finish:
+				switch (message.Sender.Id)
+				{
+				case SimId.ProcessMovingRegToExa:
+					ProcessFinishProcessMovingRegToExa(message);
+				break;
+
+				case SimId.ProcessMovingVacToWai:
+					ProcessFinishProcessMovingVacToWai(message);
+				break;
+
+				case SimId.ProcessMovingExaToVac:
+					ProcessFinishProcessMovingExaToVac(message);
+				break;
+
+				case SimId.ProcessMovingToFromCan:
+					ProcessFinishProcessMovingToFromCan(message);
+				break;
+				}
+			break;
+
+			case Mc.RequestRegistration:
+				ProcessRequestRegistration(message);
+			break;
+
+			case Mc.RequestExamination:
+				ProcessRequestExamination(message);
+			break;
+
+			case Mc.RequestAdminWorkerBreak:
+				ProcessRequestAdminWorkerBreak(message);
+			break;
+
 			case Mc.RequestVaccination:
 				ProcessRequestVaccination(message);
 			break;
@@ -98,16 +179,12 @@ namespace managers
 				ProcessNoticeNewPatient(message);
 			break;
 
-			case Mc.RequestRegistration:
-				ProcessRequestRegistration(message);
-			break;
-
 			case Mc.RequestWaitingRoom:
 				ProcessRequestWaitingRoom(message);
 			break;
 
-			case Mc.RequestExamination:
-				ProcessRequestExamination(message);
+			case Mc.RequestDoctorBreak:
+				ProcessRequestDoctorBreak(message);
 			break;
 
 			default:

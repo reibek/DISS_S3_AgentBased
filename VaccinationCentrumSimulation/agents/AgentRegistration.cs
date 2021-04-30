@@ -56,6 +56,8 @@ namespace agents
 		{
 			new ManagerRegistration(SimId.ManagerRegistration, MySim, this);
 			new ProcessRegistration(SimId.ProcessRegistration, MySim, this);
+			new SchedulerAdminWorkerBreak(SimId.SchedulerAdminWorkerBreak, MySim, this);
+			AddOwnMessage(Mc.RequestAdminWorkerBreak);
 			AddOwnMessage(Mc.RequestRegistration);
 		}
 		//meta! tag="end"

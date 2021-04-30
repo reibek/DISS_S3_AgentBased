@@ -15,11 +15,20 @@ namespace entities
         /// </summary>
         public TriangularRNG RandVaccinationTime { get; set; }
 
+        public int SyringesFullCount { get; set; }
+
         public EntityNurse(int id, Simulation simRef, Random randomGenerator) : base(id, simRef)
         {
             Id = id;
             IsBusy = false;
             RandVaccinationTime = new TriangularRNG(20, 75, 100, randomGenerator);
+            SyringesFullCount = 20;
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            SyringesFullCount = 20;
         }
     }
 }
