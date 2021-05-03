@@ -33,10 +33,10 @@ namespace GUI
         #endregion
 
         private bool _windowIsMaximized;
-        private readonly Page _pageSim;
-        private readonly Page _pageRep;
-        private readonly Page _pageExp;
-        private readonly Page _pageSet;
+        public readonly Page PageSim;
+        public readonly Page PageRep;
+        public readonly Page PageExp;
+        public readonly Page PageSet;
         private TimeSpan _simulationTimeSpan;
         private int _replicationsNum;
         private int _simQuRegistrationCount;
@@ -720,10 +720,10 @@ namespace GUI
             RepQuWaitingRoomSizeCiLower = 0;
             RepQuWaitingRoomSizeCiUpper = 0;
 
-            _pageSim = new PageSimulation();
-            _pageRep = new PageReplications();
+            PageSim = new PageSimulation(this);
+            PageRep = new PageReplications(this);
             //_pageExp = new PageExperiment(this, _vaccineCentrum);
-            //_pageSet = new PageSettings(this, _vaccineCentrum);
+            PageSet = new PageSettings(this);
 
             AvgWaitingRoomCountSeries = new SeriesCollection
             {
@@ -793,22 +793,22 @@ namespace GUI
 
         private void ButtonSim_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = _pageSim;
+            ContentFrame.Content = PageSim;
         }
 
         private void ButtonRep_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = _pageRep;
+            ContentFrame.Content = PageRep;
         }
 
         private void ButtonExp_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = _pageExp;
+            ContentFrame.Content = PageExp;
         }
 
         private void ButtonSet_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = _pageSet;
+            ContentFrame.Content = PageSet;
         }
 
         //public void UpdateInSameInterval(ISubject subject)

@@ -158,29 +158,25 @@ namespace managers
 		{
 		}
 
-		public override void ProcessMessage(MessageForm message)
+		override public void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
-				case SimId.ProcessMovingToFromColdStor:
-					ProcessFinishProcessMovingToFromColdStor(message);
+				case SimId.ProcessVaccination:
+					ProcessFinishProcessVaccination(message);
 				break;
 
 				case SimId.SchedulerNurseBreak:
 					ProcessFinishSchedulerNurseBreak(message);
 				break;
 
-				case SimId.ProcessVaccination:
-					ProcessFinishProcessVaccination(message);
+				case SimId.ProcessMovingToFromColdStor:
+					ProcessFinishProcessMovingToFromColdStor(message);
 				break;
 				}
-			break;
-
-			case Mc.RequestNurseBreak:
-				ProcessRequestNurseBreak(message);
 			break;
 
 			case Mc.RequestVaccination:
@@ -189,6 +185,10 @@ namespace managers
 
 			case Mc.RequestFillSyringes:
 				ProcessRequestFillSyringes(message);
+			break;
+
+			case Mc.RequestNurseBreak:
+				ProcessRequestNurseBreak(message);
 			break;
 
 			default:

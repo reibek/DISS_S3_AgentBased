@@ -36,6 +36,9 @@
     <Reference Include="ABACore">
       <HintPath>..\ABACore.dll</HintPath>
     </Reference>
+    <Reference Include="PriorityQueue, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5e136dbf0437dacd, processorArchitecture=MSIL">
+      <HintPath>..\packages\OptimizedPriorityQueue.5.1.0\lib\net45\PriorityQueue.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -75,6 +78,7 @@
     <Compile Include="entities\EntityNurse.cs" />
     <Compile Include="entities\EntityPatient.cs" />
     <Compile Include="entities\VaccineCentrumEntity.cs" />
+    <Compile Include="instantAssistants\ActionCancelPatients.cs" />
     <Compile Include="managers\ManagerCanteen.cs" />
     <Compile Include="managers\ManagerCentrum.cs" />
     <Compile Include="managers\ManagerColdStorage.cs" />
@@ -95,10 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="instantAssistants\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\DataStructures\DataStructures.csproj">
       <Project>{6feafeab-0afe-4506-a407-3ed21f14a12d}</Project>

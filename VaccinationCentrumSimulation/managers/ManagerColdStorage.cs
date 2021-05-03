@@ -83,12 +83,12 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.RequestFillSyringes:
-				ProcessRequestFillSyringes(message);
-			break;
-
 			case Mc.Finish:
 				ProcessFinish(message);
+			break;
+
+			case Mc.RequestFillSyringes:
+				ProcessRequestFillSyringes(message);
 			break;
 
 			default:

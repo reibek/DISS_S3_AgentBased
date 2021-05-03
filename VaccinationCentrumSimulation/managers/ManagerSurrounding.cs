@@ -42,13 +42,18 @@ namespace managers
 		//meta! sender="AgentModel", id="42", type="Call"
 		public void ProcessInitialization(MessageForm message)
         {
+            message.Addressee = MyAgent.FindAssistant(SimId.ActionCancelPatients);
+			Execute(message);
+
             message.Addressee = MyAgent.FindAssistant(SimId.SchedulerPatientsArrival);
+            ((MessagePatient) message).IsFirst = true;
 			StartContinualAssistant(message);
 		}
 
 		//meta! userInfo="Removed from model"
 		public void ProcessNoticePatientGenerated(MessageForm message)
         {
+            ((MessagePatient)message).IsFirst = false;
             MyAgent.PatientsCount++;
             var patient = new EntityPatient(MyAgent.PatientsCount, MySim);
             if (MyAgent.CanceledPatientsIds.Count > 0 
@@ -90,12 +95,12 @@ namespace managers
 				ProcessFinish(message);
 			break;
 
-			case Mc.NoticePatientLeave:
-				ProcessNoticePatientLeave(message);
-			break;
-
 			case Mc.Initialization:
 				ProcessInitialization(message);
+			break;
+
+			case Mc.NoticePatientLeave:
+				ProcessNoticePatientLeave(message);
 			break;
 
 			default:

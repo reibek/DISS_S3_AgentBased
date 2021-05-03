@@ -2,23 +2,6 @@
 <ABAsim>
   <Agents>
     <Agent>
-      <SimId>8</SimId>
-      <InternalId>44</InternalId>
-      <Name>AgentColdStorage</Name>
-      <Bounds>1547,2054,180,180</Bounds>
-      <Reasoner>ManagerColdStorage</Reasoner>
-      <ReasonerBounds>22,73,32,25</ReasonerBounds>
-      <UsePetriNet>false</UsePetriNet>
-      <Components>
-        <Process>
-          <SimId>1014</SimId>
-          <InternalId>80</InternalId>
-          <Name>ProcessFillingSyringes</Name>
-          <Bounds>107,75,35,18</Bounds>
-        </Process>
-      </Components>
-    </Agent>
-    <Agent>
       <SimId>9</SimId>
       <InternalId>47</InternalId>
       <Name>AgentCanteen</Name>
@@ -36,98 +19,6 @@
       </Components>
     </Agent>
     <Agent>
-      <SimId>4</SimId>
-      <InternalId>4</InternalId>
-      <Name>AgentRegistration</Name>
-      <Bounds>530,1387,180,180</Bounds>
-      <Reasoner>ManagerRegistration</Reasoner>
-      <ReasonerBounds>21,75,32,25</ReasonerBounds>
-      <UsePetriNet>false</UsePetriNet>
-      <Components>
-        <Process>
-          <SimId>1002</SimId>
-          <InternalId>19</InternalId>
-          <Name>ProcessRegistration</Name>
-          <Bounds>104,100,35,18</Bounds>
-        </Process>
-        <Scheduler>
-          <SimId>1006</SimId>
-          <InternalId>59</InternalId>
-          <Name>SchedulerAdminWorkerBreak</Name>
-          <Bounds>104,64,35,13</Bounds>
-        </Scheduler>
-      </Components>
-    </Agent>
-    <Agent>
-      <SimId>2</SimId>
-      <InternalId>2</InternalId>
-      <Name>AgentSurrounding</Name>
-      <Bounds>628,230,180,180</Bounds>
-      <Reasoner>ManagerSurrounding</Reasoner>
-      <ReasonerBounds>74,25,32,25</ReasonerBounds>
-      <UsePetriNet>false</UsePetriNet>
-      <Components>
-        <Scheduler>
-          <SimId>1001</SimId>
-          <InternalId>16</InternalId>
-          <Name>SchedulerPatientsArrival</Name>
-          <Bounds>72,108,35,13</Bounds>
-        </Scheduler>
-      </Components>
-    </Agent>
-    <Agent>
-      <SimId>6</SimId>
-      <InternalId>6</InternalId>
-      <Name>AgentVaccination</Name>
-      <Bounds>1546,1432,180,180</Bounds>
-      <Reasoner>ManagerVaccination</Reasoner>
-      <ReasonerBounds>19,78,32,25</ReasonerBounds>
-      <UsePetriNet>false</UsePetriNet>
-      <Components>
-        <Process>
-          <SimId>1015</SimId>
-          <InternalId>88</InternalId>
-          <Name>ProcessMovingToFromColdStor</Name>
-          <Bounds>103,111,35,18</Bounds>
-        </Process>
-        <Process>
-          <SimId>1004</SimId>
-          <InternalId>25</InternalId>
-          <Name>ProcessVaccination</Name>
-          <Bounds>103,84,35,18</Bounds>
-        </Process>
-        <Scheduler>
-          <SimId>1008</SimId>
-          <InternalId>65</InternalId>
-          <Name>SchedulerNurseBreak</Name>
-          <Bounds>102,60,35,13</Bounds>
-        </Scheduler>
-      </Components>
-    </Agent>
-    <Agent>
-      <SimId>5</SimId>
-      <InternalId>5</InternalId>
-      <Name>AgentExamination</Name>
-      <Bounds>1032,1409,180,180</Bounds>
-      <Reasoner>ManagerExamination</Reasoner>
-      <ReasonerBounds>26,74,32,25</ReasonerBounds>
-      <UsePetriNet>false</UsePetriNet>
-      <Components>
-        <Scheduler>
-          <SimId>1007</SimId>
-          <InternalId>62</InternalId>
-          <Name>SchedulerDoctorBreak</Name>
-          <Bounds>103,52,35,13</Bounds>
-        </Scheduler>
-        <Process>
-          <SimId>1003</SimId>
-          <InternalId>22</InternalId>
-          <Name>ProcessExamination</Name>
-          <Bounds>103,94,35,18</Bounds>
-        </Process>
-      </Components>
-    </Agent>
-    <Agent>
       <SimId>3</SimId>
       <InternalId>3</InternalId>
       <Name>AgentCentrum</Name>
@@ -136,12 +27,6 @@
       <ReasonerBounds>15,72,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
       <Components>
-        <Process>
-          <SimId>1010</SimId>
-          <InternalId>71</InternalId>
-          <Name>ProcessMovingRegToExa</Name>
-          <Bounds>97,30,35,18</Bounds>
-        </Process>
         <Process>
           <SimId>1013</SimId>
           <InternalId>77</InternalId>
@@ -153,6 +38,12 @@
           <InternalId>75</InternalId>
           <Name>ProcessMovingVacToWai</Name>
           <Bounds>96,89,35,18</Bounds>
+        </Process>
+        <Process>
+          <SimId>1010</SimId>
+          <InternalId>71</InternalId>
+          <Name>ProcessMovingRegToExa</Name>
+          <Bounds>97,30,35,18</Bounds>
         </Process>
         <Process>
           <SimId>1011</SimId>
@@ -180,12 +71,127 @@
       </Components>
     </Agent>
     <Agent>
+      <SimId>6</SimId>
+      <InternalId>6</InternalId>
+      <Name>AgentVaccination</Name>
+      <Bounds>1546,1432,180,180</Bounds>
+      <Reasoner>ManagerVaccination</Reasoner>
+      <ReasonerBounds>19,78,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Scheduler>
+          <SimId>1008</SimId>
+          <InternalId>65</InternalId>
+          <Name>SchedulerNurseBreak</Name>
+          <Bounds>102,60,35,13</Bounds>
+        </Scheduler>
+        <Process>
+          <SimId>1015</SimId>
+          <InternalId>88</InternalId>
+          <Name>ProcessMovingToFromColdStor</Name>
+          <Bounds>103,111,35,18</Bounds>
+        </Process>
+        <Process>
+          <SimId>1004</SimId>
+          <InternalId>25</InternalId>
+          <Name>ProcessVaccination</Name>
+          <Bounds>103,84,35,18</Bounds>
+        </Process>
+      </Components>
+    </Agent>
+    <Agent>
       <SimId>1</SimId>
       <InternalId>1</InternalId>
       <Name>AgentModel</Name>
       <Bounds>1262,228,180,180</Bounds>
       <Reasoner>ManagerModel</Reasoner>
       <UsePetriNet>false</UsePetriNet>
+    </Agent>
+    <Agent>
+      <SimId>4</SimId>
+      <InternalId>4</InternalId>
+      <Name>AgentRegistration</Name>
+      <Bounds>530,1387,180,180</Bounds>
+      <Reasoner>ManagerRegistration</Reasoner>
+      <ReasonerBounds>21,75,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Scheduler>
+          <SimId>1006</SimId>
+          <InternalId>59</InternalId>
+          <Name>SchedulerAdminWorkerBreak</Name>
+          <Bounds>104,64,35,13</Bounds>
+        </Scheduler>
+        <Process>
+          <SimId>1002</SimId>
+          <InternalId>19</InternalId>
+          <Name>ProcessRegistration</Name>
+          <Bounds>104,100,35,18</Bounds>
+        </Process>
+      </Components>
+    </Agent>
+    <Agent>
+      <SimId>2</SimId>
+      <InternalId>2</InternalId>
+      <Name>AgentSurrounding</Name>
+      <Bounds>628,230,180,180</Bounds>
+      <Reasoner>ManagerSurrounding</Reasoner>
+      <ReasonerBounds>24,76,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Action>
+          <SimId>1016</SimId>
+          <InternalId>92</InternalId>
+          <Name>ActionCancelPatients</Name>
+          <Bounds>101,90,35,18</Bounds>
+        </Action>
+        <Scheduler>
+          <SimId>1001</SimId>
+          <InternalId>16</InternalId>
+          <Name>SchedulerPatientsArrival</Name>
+          <Bounds>101,56,35,13</Bounds>
+        </Scheduler>
+      </Components>
+    </Agent>
+    <Agent>
+      <SimId>5</SimId>
+      <InternalId>5</InternalId>
+      <Name>AgentExamination</Name>
+      <Bounds>1032,1409,180,180</Bounds>
+      <Reasoner>ManagerExamination</Reasoner>
+      <ReasonerBounds>26,74,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Scheduler>
+          <SimId>1007</SimId>
+          <InternalId>62</InternalId>
+          <Name>SchedulerDoctorBreak</Name>
+          <Bounds>103,52,35,13</Bounds>
+        </Scheduler>
+        <Process>
+          <SimId>1003</SimId>
+          <InternalId>22</InternalId>
+          <Name>ProcessExamination</Name>
+          <Bounds>103,94,35,18</Bounds>
+        </Process>
+      </Components>
+    </Agent>
+    <Agent>
+      <SimId>8</SimId>
+      <InternalId>44</InternalId>
+      <Name>AgentColdStorage</Name>
+      <Bounds>1547,2054,180,180</Bounds>
+      <Reasoner>ManagerColdStorage</Reasoner>
+      <ReasonerBounds>22,73,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Process>
+          <SimId>1014</SimId>
+          <InternalId>80</InternalId>
+          <Name>ProcessFillingSyringes</Name>
+          <Bounds>107,75,35,18</Bounds>
+        </Process>
+      </Components>
     </Agent>
   </Agents>
   <Messages>
@@ -310,6 +316,12 @@
       <Type>StartFinish</Type>
       <Source>7</Source>
       <Destination>28</Destination>
+    </Message>
+    <Message>
+      <InternalId>93</InternalId>
+      <Type>Execute</Type>
+      <Source>2</Source>
+      <Destination>92</Destination>
     </Message>
     <Message>
       <SimId>1001</SimId>
@@ -440,5 +452,5 @@
       <Destination>62</Destination>
     </Message>
   </Messages>
-  <IID>90</IID>
+  <IID>98</IID>
 </ABAsim>

@@ -16,6 +16,7 @@ namespace GUI.Pages
     public partial class PageReplications : Page, INotifyPropertyChanged
     {
         private readonly MySimulation _simRef;
+        private readonly MainWindow _mw;
         private int _replicationsCount;
         private double _registrationQuSize;
         private double _registrationQuTime;
@@ -131,9 +132,10 @@ namespace GUI.Pages
 
         #endregion
 
-        public PageReplications()
+        public PageReplications(MainWindow mw)
         {
             InitializeComponent();
+            _mw = mw;
             _simRef = new MySimulation();
             DataContext = this;
 
@@ -157,10 +159,10 @@ namespace GUI.Pages
 
         private void RunSimulation()
         {
-            //_simRef.OrderedPatientsNum = 2500;
-            //_simRef.ResAdminWorkersCount = 23;
-            //_simRef.ResDoctorsCount = 28;
-            //_simRef.ResNursesCount = 14;
+            _simRef.OrderedPatientsNum = _mw.SetOrderedPatients;
+            _simRef.ResAdminWorkersCount = _mw.SetAdminWorkersCount;
+            _simRef.ResDoctorsCount = _mw.SetDoctorsCount;
+            _simRef.ResNursesCount = _mw.SetNursesCount;
 
             _simRef.OnReplicationDidFinish(s =>
             {

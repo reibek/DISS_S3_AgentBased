@@ -28,14 +28,15 @@ namespace simulation
 		public const int ProcessMovingExaToVac = 1011;
 		public const int ProcessMovingVacToWai = 1012;
 		public const int ProcessMovingToFromCan = 1013;
-		public const int SchedulerPatientsArrival = 1001;
 		public const int ProcessFillingSyringes = 1014;
+		public const int SchedulerPatientsArrival = 1001;
 		public const int ProcessRegistration = 1002;
 		public const int ProcessExamination = 1003;
 		public const int ProcessMovingToFromColdStor = 1015;
 		public const int ProcessVaccination = 1004;
-		public const int SchedulerAdminWorkerBreak = 1006;
 		public const int ProcessWaitingRoom = 1005;
+		public const int ActionCancelPatients = 1016;
+		public const int SchedulerAdminWorkerBreak = 1006;
 		public const int SchedulerDoctorBreak = 1007;
 		//meta! tag="end"
 	}

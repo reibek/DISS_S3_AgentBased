@@ -19,6 +19,7 @@ namespace GUI.Pages
     {
         private readonly MySimulation _simRef;
         private Thread _simulationThread;
+        private MainWindow _mw;
         private bool _simPaused;
         private readonly double[] _speedValues;
         private int _orderedPatientsNum;
@@ -411,9 +412,10 @@ namespace GUI.Pages
 
         #endregion
 
-        public PageSimulation()
+        public PageSimulation(MainWindow mw)
         {
             InitializeComponent();
+            _mw = mw;
             _simRef = new MySimulation();
             _simRef.RegisterDelegate(this);
             DataContext = this;
@@ -467,7 +469,11 @@ namespace GUI.Pages
 
         private void RunSimulation()
         {
-            _simRef.SetSimSpeed(5, 0.1);
+            _simRef.SetSimSpeed(1, 1);
+            _simRef.OrderedPatientsNum = _mw.SetOrderedPatients;
+            _simRef.ResAdminWorkersCount = _mw.SetAdminWorkersCount;
+            _simRef.ResDoctorsCount = _mw.SetDoctorsCount;
+            _simRef.ResNursesCount = _mw.SetNursesCount;
             _simRef.Simulate(1, double.MaxValue);
         }
 

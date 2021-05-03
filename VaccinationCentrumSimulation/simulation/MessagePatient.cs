@@ -8,11 +8,13 @@ namespace simulation
 		public EntityAdminWorker AdminWorker { get; set; }
 		public EntityDoctor Doctor { get; set; }
 		public EntityNurse Nurse { get; set; }
+        public bool IsFirst { get; set; }
 
-		public MessagePatient(Simulation sim) :
+        public MessagePatient(Simulation sim) :
 			base(sim)
-		{
-		}
+        {
+            IsFirst = false;
+        }
 
 		public MessagePatient(MessageForm original) :
 			base(original)
@@ -35,6 +37,7 @@ namespace simulation
             AdminWorker = original.AdminWorker;
             Doctor = original.Doctor;
             Nurse = original.Nurse;
-		}
+            IsFirst = original.IsFirst;
+        }
 	}
 }

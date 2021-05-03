@@ -48,12 +48,12 @@ namespace agents
 		private void Init()
 		{
 			new ManagerCentrum(SimId.ManagerCentrum, MySim, this);
-			new ProcessMovingRegToExa(SimId.ProcessMovingRegToExa, MySim, this);
 			new ProcessMovingToFromCan(SimId.ProcessMovingToFromCan, MySim, this);
 			new ProcessMovingVacToWai(SimId.ProcessMovingVacToWai, MySim, this);
+			new ProcessMovingRegToExa(SimId.ProcessMovingRegToExa, MySim, this);
 			new ProcessMovingExaToVac(SimId.ProcessMovingExaToVac, MySim, this);
-			AddOwnMessage(Mc.RequestNurseBreak);
 			AddOwnMessage(Mc.RequestExamination);
+			AddOwnMessage(Mc.RequestNurseBreak);
 			AddOwnMessage(Mc.RequestWaitingRoom);
 			AddOwnMessage(Mc.RequestAdminWorkerBreak);
 			AddOwnMessage(Mc.NoticeNewPatient);

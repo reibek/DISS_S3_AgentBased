@@ -53,12 +53,12 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.RequestEmployeeLunch:
-				ProcessRequestEmployeeLunch(message);
-			break;
-
 			case Mc.Finish:
 				ProcessFinish(message);
+			break;
+
+			case Mc.RequestEmployeeLunch:
+				ProcessRequestEmployeeLunch(message);
 			break;
 
 			default:

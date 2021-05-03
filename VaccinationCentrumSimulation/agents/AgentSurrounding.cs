@@ -5,8 +5,7 @@ using simulation;
 using managers;
 using continualAssistants;
 using OSPRNG;
-
-//using instantAssistants;
+using instantAssistants;
 
 namespace agents
 {
@@ -37,28 +36,14 @@ namespace agents
             base.PrepareReplication();
 
             PatientsCount = 0;
-
             CanceledPatientsIds.Clear();
-            CanceledPatientsNum =
-                (int) Math.Round(
-                    RandCanceledPatientsNum.Sample() * ((double) ((MySimulation) MySim).OrderedPatientsNum / 540), 0);
-
-            for (int i = 0; i < CanceledPatientsNum; i++)
-            {
-                int id = RandCanceledPatientsIds.Sample();
-                while (CanceledPatientsIds.Contains(id))
-                    id = RandCanceledPatientsIds.Sample();
-
-                CanceledPatientsIds.Add(id);
-            }
-
-            CanceledPatientsIds.Sort();
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()
 		{
 			new ManagerSurrounding(SimId.ManagerSurrounding, MySim, this);
+			new ActionCancelPatients(SimId.ActionCancelPatients, MySim, this);
 			new SchedulerPatientsArrival(SimId.SchedulerPatientsArrival, MySim, this);
 			AddOwnMessage(Mc.Initialization);
 			AddOwnMessage(Mc.NoticePatientLeave);

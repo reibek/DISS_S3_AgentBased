@@ -22,8 +22,12 @@ namespace continualAssistants
         {
             message.Code = Mc.NoticePatientGenerated;
             message.Addressee = MyAgent;
-            Hold(32400.0 / ((MySimulation) MySim).OrderedPatientsNum, message);
-        }
+            
+            if (!((MessagePatient)message).IsFirst)
+                Hold(32400.0 / ((MySimulation) MySim).OrderedPatientsNum, message);
+			else
+                Hold(0, message);
+		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)

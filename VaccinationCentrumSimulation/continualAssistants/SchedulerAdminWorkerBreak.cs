@@ -20,6 +20,7 @@ namespace continualAssistants
 		//meta! sender="AgentRegistration", id="60", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
+			Hold(10800, message); // 3 hours (11:00)
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"

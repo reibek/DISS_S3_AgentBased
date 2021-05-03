@@ -15,6 +15,11 @@ namespace entities
         public bool IsBusy { get; set; }
 
         /// <summary>
+        /// Indicator, if nurse is busy.
+        /// </summary>
+        public bool HadBreak { get; set; }
+
+        /// <summary>
         /// Uniform random variable for registration time of entity.
         /// </summary>
         public double StatUtilizationLastChange { get; set; }
@@ -31,6 +36,9 @@ namespace entities
         /// </summary>
         public EntityPatient Patient { get; set; }
 
+        /// <summary>
+        /// Reference for patient.
+        /// </summary>
         public EntityState State { get; set; }
 
         public VaccineCentrumEntity(int id, Simulation simRef) : base(id, simRef)
@@ -50,6 +58,7 @@ namespace entities
 
             Patient = patient;
             IsBusy = true;
+            HadBreak = false;
             State = EntityState.Working;
         }
 
@@ -91,6 +100,7 @@ namespace entities
         public virtual void Reset()
         {
             IsBusy = false;
+            HadBreak = false;
             StatUtilizationLastChange = 0;
             WorkingTime = 0;
             Patient = null;

@@ -107,25 +107,25 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.RequestDoctorBreak:
-				ProcessRequestDoctorBreak(message);
+			case Mc.Finish:
+				switch (message.Sender.Id)
+				{
+				case SimId.SchedulerDoctorBreak:
+					ProcessFinishSchedulerDoctorBreak(message);
+				break;
+
+				case SimId.ProcessExamination:
+					ProcessFinishProcessExamination(message);
+				break;
+				}
 			break;
 
 			case Mc.RequestExamination:
 				ProcessRequestExamination(message);
 			break;
 
-			case Mc.Finish:
-				switch (message.Sender.Id)
-				{
-				case SimId.ProcessExamination:
-					ProcessFinishProcessExamination(message);
-				break;
-
-				case SimId.SchedulerDoctorBreak:
-					ProcessFinishSchedulerDoctorBreak(message);
-				break;
-				}
+			case Mc.RequestDoctorBreak:
+				ProcessRequestDoctorBreak(message);
 			break;
 
 			default:
