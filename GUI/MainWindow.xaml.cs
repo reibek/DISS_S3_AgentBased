@@ -70,7 +70,7 @@ namespace GUI
         private int _setDoctorsCount;
         private int _setNursesCount;
         private int _setOrderedPatients;
-        private bool _setCheckContSim;
+        private bool _setCheckEarlyArrivals;
         private int _repCount;
         private double _repQuRegistrationSize;
         private double _repQuExaminationSize;
@@ -92,6 +92,7 @@ namespace GUI
         private int _setMaxDoctors;
         private SeriesCollection _avgExpQuLengthSeries;
         private SeriesCollection _avgExpQuWaitTimeSeries;
+        private bool _setCheckLightModel;
 
         #region Simulation Properties
 
@@ -591,13 +592,23 @@ namespace GUI
             }
         }
 
-        public bool SetCheckContSim
+        public bool SetCheckEarlyArrivals
         {
-            get => _setCheckContSim;
+            get => _setCheckEarlyArrivals;
             set
             {
-                _setCheckContSim = value;
-                OnPropertyChanged(nameof(SetCheckContSim));
+                _setCheckEarlyArrivals = value;
+                OnPropertyChanged(nameof(SetCheckEarlyArrivals));
+            }
+        }
+
+        public bool SetCheckLightModel
+        {
+            get => _setCheckLightModel;
+            set
+            {
+                _setCheckLightModel = value;
+                OnPropertyChanged(nameof(SetCheckLightModel));
             }
         }
 
@@ -694,7 +705,8 @@ namespace GUI
             SetDoctorsCount = 8;
             SetNursesCount = 4;
             SetOrderedPatients = 1000;
-            SetCheckContSim = false;
+            SetCheckEarlyArrivals = false;
+            SetCheckLightModel = false;
             SetChartVisibleValuesNum = 100;
             SetNthObservation = 20;
             SetExpReplicationsNum = 5000;

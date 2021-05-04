@@ -30,8 +30,9 @@ namespace agents
 			AddOwnMessage(Mc.ProcessMovingRegToExaEnded);
 			AddOwnMessage(Mc.ProcessMovingExaToVacEnded);
 			AddOwnMessage(Mc.ProcessMovingVacToWaiEnded);
+			AddOwnMessage(Mc.ProcessMovingToFromCanEnded);
 
-			RandMovingRegToExaTime = new UniformContinuousRNG(40, 90, ((MySimulation)MySim).RandSeedGenerator);
+            RandMovingRegToExaTime = new UniformContinuousRNG(40, 90, ((MySimulation)MySim).RandSeedGenerator);
 			RandMovingExaToVacTime = new UniformContinuousRNG(20, 45, ((MySimulation)MySim).RandSeedGenerator);
 			RandMovingVacToWaiTime = new UniformContinuousRNG(45, 110, ((MySimulation)MySim).RandSeedGenerator);
 			RandMovingToFromCan = new UniformContinuousRNG(70, 200, ((MySimulation)MySim).RandSeedGenerator);
@@ -55,10 +56,11 @@ namespace agents
 		private void Init()
 		{
 			new ManagerCentrum(SimId.ManagerCentrum, MySim, this);
-			new ProcessMovingExaToVac(SimId.ProcessMovingExaToVac, MySim, this);
 			new ProcessMovingToFromCan(SimId.ProcessMovingToFromCan, MySim, this);
+			new ProcessMovingExaToVac(SimId.ProcessMovingExaToVac, MySim, this);
 			new ProcessMovingVacToWai(SimId.ProcessMovingVacToWai, MySim, this);
 			new ProcessMovingRegToExa(SimId.ProcessMovingRegToExa, MySim, this);
+			AddOwnMessage(Mc.Initialization);
 			AddOwnMessage(Mc.RequestExamination);
 			AddOwnMessage(Mc.RequestNurseBreak);
 			AddOwnMessage(Mc.RequestWaitingRoom);

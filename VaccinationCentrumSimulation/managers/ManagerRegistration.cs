@@ -33,11 +33,14 @@ namespace managers
             var adminWorker = ((MessagePatient) message).AdminWorker;
 
             if (MyAgent.PoolAdminWorkers.IsBreakTime
-                && MyAgent.PoolAdminWorkers.OnBreakCount < MyAgent.PoolAdminWorkers.Count / 2)
+                && MyAgent.PoolAdminWorkers.OnBreakCount < MyAgent.PoolAdminWorkers.Count / 2
+                && !adminWorker.HadBreak)
             {
                 MyAgent.PoolAdminWorkers.Release(adminWorker);
 				MyAgent.PoolAdminWorkers.GetBreak(adminWorker);
                 MyAgent.PoolAdminWorkers.OnBreakCount++;
+                
+                adminWorker.BreakStarted = MySim.CurrentTime;
 
                 var breakMessage = new MessageBreak(MySim)
                 {
@@ -107,22 +110,32 @@ namespace managers
 		//meta! sender="AgentCentrum", id="52", type="Response"
 		public void ProcessRequestAdminWorkerBreak(MessageForm message)
         {
-            EntityAdminWorker adminWorker = (EntityAdminWorker) ((MessageBreak) message).Entity;
+            MyAgent.PoolAdminWorkers.OnBreakCount--;
+            MyAgent.PoolAdminWorkers.BreaksCompleteCount++;
 
-            foreach (var aw in MyAgent.PoolAdminWorkers.HungryEntities)
+            EntityAdminWorker adminWorker = (EntityAdminWorker)((MessageBreak)message).Entity;
+            adminWorker.BreakEnded = MySim.CurrentTime;
+            adminWorker.BreakDuration = adminWorker.BreakEnded - adminWorker.BreakStarted;
+
+            if (MyAgent.PoolAdminWorkers.BreaksCompleteCount < MyAgent.PoolAdminWorkers.Count)
             {
-                if (aw.State == EntityState.Free)
+                foreach (var aw in MyAgent.PoolAdminWorkers.Entities)
                 {
-                    MyAgent.PoolAdminWorkers.GetBreak(aw);
-                    MyAgent.PoolAdminWorkers.OnBreakCount++;
+                    if (aw.State == EntityState.Free && !aw.HadBreak)
+                    {
+                        MyAgent.PoolAdminWorkers.GetBreak(aw);
+                        MyAgent.PoolAdminWorkers.OnBreakCount++;
 
-                    var breakMessage = new MessageBreak(message);
-                    breakMessage.Entity = aw;
-                    breakMessage.Addressee = MySim.FindAgent(SimId.AgentCentrum);
-                    breakMessage.Code = Mc.RequestAdminWorkerBreak;
-                    Request(breakMessage);
+                        aw.BreakStarted = MySim.CurrentTime;
 
-					break;
+                        var breakMessage = new MessageBreak(message);
+                        breakMessage.Entity = aw;
+                        breakMessage.Addressee = MySim.FindAgent(SimId.AgentCentrum);
+                        breakMessage.Code = Mc.RequestAdminWorkerBreak;
+                        Request(breakMessage);
+
+                        break;
+                    }
                 }
             }
 
@@ -153,23 +166,35 @@ namespace managers
             int halfCount = MyAgent.PoolAdminWorkers.Count / 2;
             int pickedCount = 0;
 
-            foreach (var aw in MyAgent.PoolAdminWorkers.HungryEntities)
+            for (int i = 0; i < halfCount; i++)
             {
-                if (aw.State == EntityState.Free)
+                foreach (var aw in MyAgent.PoolAdminWorkers.Entities)
                 {
-                    MyAgent.PoolAdminWorkers.GetBreak(aw);
-                    MyAgent.PoolAdminWorkers.OnBreakCount++;
-                    pickedCount++;
+                    if (aw.State == EntityState.Free && !aw.HadBreak)
+                    {
+                        MyAgent.PoolAdminWorkers.GetBreak(aw);
+                        MyAgent.PoolAdminWorkers.OnBreakCount++;
+                        pickedCount++;
 
-					var breakMessage = new MessageBreak(MySim);
-                    breakMessage.Entity = aw;
-                    breakMessage.Addressee = MySim.FindAgent(SimId.AgentCentrum);
-                    breakMessage.Code = Mc.RequestAdminWorkerBreak;
-					Request(breakMessage);
+                        aw.BreakStarted = MySim.CurrentTime;
+
+                        var breakMessage = new MessageBreak(MySim);
+                        breakMessage.Entity = aw;
+                        breakMessage.Addressee = MySim.FindAgent(SimId.AgentCentrum);
+                        breakMessage.Code = Mc.RequestAdminWorkerBreak;
+                        Request(breakMessage);
+
+                        break;
+                    }
                 }
-
-                if (pickedCount == halfCount) break;
             }
+        }
+
+		//meta! sender="AgentCentrum", id="107", type="Call"
+		public void ProcessInitialization(MessageForm message)
+        {
+            message.Addressee = MyAgent.FindAssistant(SimId.SchedulerAdminWorkerBreak);
+            StartContinualAssistant(message);
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -183,6 +208,10 @@ namespace managers
 			{
 			case Mc.RequestRegistration:
 				ProcessRequestRegistration(message);
+			break;
+
+			case Mc.Initialization:
+				ProcessInitialization(message);
 			break;
 
 			case Mc.Finish:

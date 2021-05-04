@@ -26,6 +26,7 @@ namespace agents
 			Init();
 
             AddOwnMessage(Mc.ProcessExaminationEnded);
+            AddOwnMessage(Mc.TimeForBreak);
 
 			QuExamination = new DataStructures.Queue<MessageForm>();
             StatQuExaminationSize = new WStat(MySim);
@@ -55,8 +56,9 @@ namespace agents
 		private void Init()
 		{
 			new ManagerExamination(SimId.ManagerExamination, MySim, this);
-			new SchedulerDoctorBreak(SimId.SchedulerDoctorBreak, MySim, this);
 			new ProcessExamination(SimId.ProcessExamination, MySim, this);
+			new SchedulerDoctorBreak(SimId.SchedulerDoctorBreak, MySim, this);
+			AddOwnMessage(Mc.Initialization);
 			AddOwnMessage(Mc.RequestExamination);
 			AddOwnMessage(Mc.RequestDoctorBreak);
 		}

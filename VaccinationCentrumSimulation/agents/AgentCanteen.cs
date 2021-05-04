@@ -17,15 +17,18 @@ namespace agents
 			base(id, mySim, parent)
 		{
 			Init();
-		}
+
+			AddOwnMessage(Mc.ProcessEatingEnded);
+
+            RandEatingTime = new TriangularRNG(300, 900, 1800, ((MySimulation)MySim).RandSeedGenerator);
+        }
 
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
 
             EatingEmployeesCount = 0;
-			RandEatingTime = new TriangularRNG(300, 900, 1800, ((MySimulation)MySim).RandSeedGenerator);
-		}
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()

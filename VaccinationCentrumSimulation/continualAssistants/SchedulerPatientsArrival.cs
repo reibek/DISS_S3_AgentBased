@@ -53,7 +53,7 @@ namespace continualAssistants
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
-		public override void ProcessMessage(MessageForm message)
+		override public void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{

@@ -23,9 +23,15 @@ namespace agents
                 Addressee = MySim.FindAgent(SimId.AgentSurrounding),
                 Code = Mc.Initialization
             };
-
             MyManager.Call(message);
-		}
+
+            var message2 = new MessagePatient(MySim)
+            {
+                Addressee = MySim.FindAgent(SimId.AgentCentrum),
+                Code = Mc.Initialization
+            };
+            MyManager.Call(message2);
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()

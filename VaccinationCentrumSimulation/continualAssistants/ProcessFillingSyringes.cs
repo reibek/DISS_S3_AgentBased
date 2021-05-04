@@ -29,7 +29,11 @@ namespace continualAssistants
             }
 
             message.Code = Mc.ProcessFillingSyringesEnded;
-			Hold(fillingTime, message);
+            
+            if (((MySimulation)MySim).EnableLightModel)
+                Hold(0, message);
+            else
+                Hold(fillingTime, message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"

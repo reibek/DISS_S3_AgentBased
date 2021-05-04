@@ -10,14 +10,29 @@ namespace entities
     public class VaccineCentrumEntity : Entity
     {
         /// <summary>
-        /// Indicator, if nurse is busy.
+        /// Indicator, if entity is busy.
         /// </summary>
         public bool IsBusy { get; set; }
 
         /// <summary>
-        /// Indicator, if nurse is busy.
+        /// Indicator, if entity had break.
         /// </summary>
         public bool HadBreak { get; set; }
+
+        /// <summary>
+        /// Time, when entity started break.
+        /// </summary>
+        public double BreakStarted { get; set; }
+
+        /// <summary>
+        /// Time, when entity ended break.
+        /// </summary>
+        public double BreakEnded { get; set; }
+
+        /// <summary>
+        /// Duration of break.
+        /// </summary>
+        public double BreakDuration { get; set; }
 
         /// <summary>
         /// Uniform random variable for registration time of entity.
@@ -29,7 +44,7 @@ namespace entities
         /// </summary>
         public double WorkingTime { get; set; }
 
-        public double AverageUtilization => WorkingTime / MySim.CurrentTime;
+        public double AverageUtilization => WorkingTime / (MySim.CurrentTime - BreakDuration);
 
         /// <summary>
         /// Reference for patient.
@@ -43,8 +58,14 @@ namespace entities
 
         public VaccineCentrumEntity(int id, Simulation simRef) : base(id, simRef)
         {
+            IsBusy = false;
+            HadBreak = false;
             StatUtilizationLastChange = 0;
             WorkingTime = 0;
+            BreakStarted = -1;
+            BreakEnded = -1;
+            BreakDuration = 0;
+            Patient = null;
             State = EntityState.Free;
         }
 
@@ -58,7 +79,6 @@ namespace entities
 
             Patient = patient;
             IsBusy = true;
-            HadBreak = false;
             State = EntityState.Working;
         }
 
@@ -82,7 +102,6 @@ namespace entities
             WorkingTime += MySim.CurrentTime - StatUtilizationLastChange;
             StatUtilizationLastChange = MySim.CurrentTime;
 
-
             #endregion
 
             Patient = null;
@@ -103,6 +122,9 @@ namespace entities
             HadBreak = false;
             StatUtilizationLastChange = 0;
             WorkingTime = 0;
+            BreakStarted = -1;
+            BreakEnded = -1;
+            BreakDuration = 0;
             Patient = null;
             State = EntityState.Free;
         }

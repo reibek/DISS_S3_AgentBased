@@ -57,9 +57,9 @@ namespace agents
 		private void Init()
 		{
 			new ManagerSurrounding(SimId.ManagerSurrounding, MySim, this);
-			new ActionPatientsWithEarlyArrival(SimId.ActionPatientsWithEarlyArrival, MySim, this);
 			new ActionCancelPatients(SimId.ActionCancelPatients, MySim, this);
 			new SchedulerPatientsArrival(SimId.SchedulerPatientsArrival, MySim, this);
+			new ActionPatientsWithEarlyArrival(SimId.ActionPatientsWithEarlyArrival, MySim, this);
 			AddOwnMessage(Mc.Initialization);
 			AddOwnMessage(Mc.NoticePatientLeave);
 		}

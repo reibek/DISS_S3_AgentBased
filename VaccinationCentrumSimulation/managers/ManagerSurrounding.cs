@@ -127,20 +127,20 @@ namespace managers
 		{
 		}
 
-		public override void ProcessMessage(MessageForm message)
+		override public void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{
-			case Mc.Finish:
-				ProcessFinish(message);
-			break;
-
 			case Mc.Initialization:
 				ProcessInitialization(message);
 			break;
 
 			case Mc.NoticePatientLeave:
 				ProcessNoticePatientLeave(message);
+			break;
+
+			case Mc.Finish:
+				ProcessFinish(message);
 			break;
 
 			default:

@@ -21,8 +21,7 @@ namespace continualAssistants
 		public void ProcessStart(MessageForm message)
         {
             message.Code = Mc.TimeForBreak;
-            Hold(300, message); // 3 hours (11:00)
-            //Hold(10800, message); // 3 hours (11:00)
+            Hold(10800, message); // 3 hours (11:00)
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"

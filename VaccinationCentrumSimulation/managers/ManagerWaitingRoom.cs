@@ -64,12 +64,12 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.RequestWaitingRoom:
-				ProcessRequestWaitingRoom(message);
-			break;
-
 			case Mc.Finish:
 				ProcessFinish(message);
+			break;
+
+			case Mc.RequestWaitingRoom:
+				ProcessRequestWaitingRoom(message);
 			break;
 
 			default:

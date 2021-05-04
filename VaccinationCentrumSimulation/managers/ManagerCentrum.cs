@@ -83,6 +83,11 @@ namespace managers
 		//meta! sender="AgentVaccination", id="54", type="Request"
 		public void ProcessRequestNurseBreak(MessageForm message)
 		{
+            ((MessageBreak)message).Entity.State = EntityState.Moving;
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingToFromCan);
+            StartContinualAssistant(message);
+
+            MyAgent.MovingEmployeesToCan++;
 		}
 
 		//meta! sender="AgentRegistration", id="52", type="Request"
@@ -132,8 +137,22 @@ namespace managers
             
             if (entity.HadBreak)
             {
-                message.Code = Mc.RequestAdminWorkerBreak;
-                message.Addressee = MySim.FindAgent(SimId.AgentRegistration);
+                switch (entity.GetType().Name)
+                {
+					case nameof(EntityAdminWorker):
+                        message.Code = Mc.RequestAdminWorkerBreak;
+                        message.Addressee = MySim.FindAgent(SimId.AgentRegistration);
+						break;
+                    case nameof(EntityDoctor):
+                        message.Code = Mc.RequestDoctorBreak;
+                        message.Addressee = MySim.FindAgent(SimId.AgentExamination);
+						break;
+                    case nameof(EntityNurse):
+                        message.Code = Mc.RequestNurseBreak;
+                        message.Addressee = MySim.FindAgent(SimId.AgentVaccination);
+						break;
+				}
+
 				Response(message);
 
                 MyAgent.MovingEmployeesFromCan--;
@@ -161,6 +180,29 @@ namespace managers
 		//meta! sender="AgentExamination", id="53", type="Request"
 		public void ProcessRequestDoctorBreak(MessageForm message)
 		{
+            ((MessageBreak)message).Entity.State = EntityState.Moving;
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingToFromCan);
+            StartContinualAssistant(message);
+
+            MyAgent.MovingEmployeesToCan++;
+		}
+
+		//meta! sender="AgentModel", id="106", type="Call"
+		public void ProcessInitialization(MessageForm message)
+        {
+            message.Code = Mc.Initialization;
+            message.Addressee = MySim.FindAgent(SimId.AgentRegistration);
+			Call(message);
+
+			var message2 = new MessagePatient(MySim);
+            message2.Code = Mc.Initialization;
+			message2.Addressee = MySim.FindAgent(SimId.AgentExamination);
+			Call(message2);
+
+			var message3 = new MessagePatient(MySim);
+            message3.Code = Mc.Initialization;
+			message3.Addressee = MySim.FindAgent(SimId.AgentVaccination);
+            Call(message3);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -172,12 +214,8 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.RequestExamination:
-				ProcessRequestExamination(message);
-			break;
-
-			case Mc.RequestWaitingRoom:
-				ProcessRequestWaitingRoom(message);
+			case Mc.RequestRegistration:
+				ProcessRequestRegistration(message);
 			break;
 
 			case Mc.Finish:
@@ -191,42 +229,50 @@ namespace managers
 					ProcessFinishProcessMovingVacToWai(message);
 				break;
 
-				case SimId.ProcessMovingToFromCan:
-					ProcessFinishProcessMovingToFromCan(message);
-				break;
-
 				case SimId.ProcessMovingRegToExa:
 					ProcessFinishProcessMovingRegToExa(message);
 				break;
-				}
-			break;
 
-			case Mc.RequestEmployeeLunch:
-				ProcessRequestEmployeeLunch(message);
+				case SimId.ProcessMovingToFromCan:
+					ProcessFinishProcessMovingToFromCan(message);
+				break;
+				}
 			break;
 
 			case Mc.RequestVaccination:
 				ProcessRequestVaccination(message);
 			break;
 
-			case Mc.RequestNurseBreak:
-				ProcessRequestNurseBreak(message);
-			break;
-
-			case Mc.NoticeNewPatient:
-				ProcessNoticeNewPatient(message);
-			break;
-
-			case Mc.RequestRegistration:
-				ProcessRequestRegistration(message);
+			case Mc.RequestEmployeeLunch:
+				ProcessRequestEmployeeLunch(message);
 			break;
 
 			case Mc.RequestDoctorBreak:
 				ProcessRequestDoctorBreak(message);
 			break;
 
+			case Mc.RequestExamination:
+				ProcessRequestExamination(message);
+			break;
+
+			case Mc.Initialization:
+				ProcessInitialization(message);
+			break;
+
 			case Mc.RequestAdminWorkerBreak:
 				ProcessRequestAdminWorkerBreak(message);
+			break;
+
+			case Mc.RequestWaitingRoom:
+				ProcessRequestWaitingRoom(message);
+			break;
+
+			case Mc.NoticeNewPatient:
+				ProcessNoticeNewPatient(message);
+			break;
+
+			case Mc.RequestNurseBreak:
+				ProcessRequestNurseBreak(message);
 			break;
 
 			default:

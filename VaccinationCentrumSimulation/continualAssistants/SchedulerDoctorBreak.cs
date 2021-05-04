@@ -20,13 +20,18 @@ namespace continualAssistants
 		//meta! sender="AgentExamination", id="63", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
-		}
+            message.Code = Mc.TimeForBreak;
+            Hold(13500, message); // 3:45 hours (11:45)
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
 			switch (message.Code)
 			{
+                case Mc.TimeForBreak:
+                    AssistantFinished(message);
+                    break;
 			}
 		}
 

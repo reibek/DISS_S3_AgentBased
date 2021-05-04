@@ -21,8 +21,13 @@ namespace continualAssistants
 		public void ProcessStart(MessageForm message)
 		{
             message.Code = Mc.ProcessEatingEnded;
-            Hold(MyAgent.RandEatingTime.Sample(), message);
-		}
+
+            if (((MySimulation)MySim).EnableLightModel)
+                Hold(0, message);
+			else
+                Hold(MyAgent.RandEatingTime.Sample(), message);
+
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)

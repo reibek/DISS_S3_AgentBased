@@ -344,6 +344,7 @@
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="40" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{Binding Id}" />
                                             <ProgressBar Grid.Column="1" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
@@ -368,6 +369,7 @@
                                                     </Style>
                                                 </Ellipse.Style>
                                             </Ellipse>
+                                            <TextBlock Grid.Column="4" Margin="5,0,0,0" Text="{Binding HadBreak, Mode=OneWay}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -424,6 +426,7 @@
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="40" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{Binding Id}" />
                                             <ProgressBar Grid.Column="1" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
@@ -438,10 +441,17 @@
                                                             <DataTrigger Binding="{Binding State}" Value="Free">
                                                                 <Setter Property="Fill" Value="Green"/>
                                                             </DataTrigger>
+                                                            <DataTrigger Binding="{Binding State}" Value="Moving">
+                                                                <Setter Property="Fill" Value="LightSkyBlue"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding State}" Value="Eating">
+                                                                <Setter Property="Fill" Value="Yellow"/>
+                                                            </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Ellipse.Style>
                                             </Ellipse>
+                                            <TextBlock Grid.Column="4" Margin="5,0,0,0" Text="{Binding HadBreak, Mode=OneWay}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -498,6 +508,7 @@
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="30" />
+                                                <ColumnDefinition Width="40" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{Binding Id}" />
                                             <ProgressBar Grid.Column="1" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
@@ -515,6 +526,9 @@
                                                             <DataTrigger Binding="{Binding State}" Value="Moving">
                                                                 <Setter Property="Fill" Value="LightSkyBlue"/>
                                                             </DataTrigger>
+                                                            <DataTrigger Binding="{Binding State}" Value="Eating">
+                                                                <Setter Property="Fill" Value="Yellow"/>
+                                                            </DataTrigger>
                                                             <DataTrigger Binding="{Binding State}" Value="Preparing">
                                                                 <Setter Property="Fill" Value="Orange"/>
                                                             </DataTrigger>
@@ -523,6 +537,7 @@
                                                 </Ellipse.Style>
                                             </Ellipse>
                                             <TextBlock Grid.Column="4" Margin="5,0,0,0" Text="{Binding SyringesFullCount}"/>
+                                            <TextBlock Grid.Column="5" Margin="5,0,0,0" Text="{Binding HadBreak, Mode=OneWay}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

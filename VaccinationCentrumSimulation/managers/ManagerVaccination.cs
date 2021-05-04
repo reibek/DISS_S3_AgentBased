@@ -27,7 +27,7 @@ namespace managers
 			}
 		}
 
-		//meta! sender="ProcessVaccination", id="26", type="Finish"
+        //meta! sender="ProcessVaccination", id="26", type="Finish"
 		public void ProcessFinishProcessVaccination(MessageForm message)
         {
             var nurse = ((MessagePatient) message).Nurse;
@@ -44,6 +44,25 @@ namespace managers
                 nurseMessage.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingToFromColdStor);
 				StartContinualAssistant(nurseMessage);
             } 
+            else if (MyAgent.PoolNurses.IsBreakTime
+                     && MyAgent.PoolNurses.OnBreakCount < MyAgent.PoolNurses.Count / 2
+                     && !nurse.HadBreak)
+            {
+                MyAgent.PoolNurses.Release(nurse);
+                MyAgent.PoolNurses.GetBreak(nurse);
+                MyAgent.PoolNurses.OnBreakCount++;
+
+                nurse.BreakStarted = MySim.CurrentTime;
+
+                var breakMessage = new MessageBreak(MySim)
+                {
+                    Entity = nurse,
+                    Addressee = MySim.FindAgent(SimId.AgentCentrum),
+                    Code = Mc.RequestNurseBreak
+                };
+
+                Request(breakMessage);
+            }
             else if (MyAgent.PoolNurses.FreeCount == 0 
                      && MyAgent.QuVaccination.Count > 0)
             {
@@ -102,11 +121,84 @@ namespace managers
 		//meta! sender="AgentCentrum", id="54", type="Response"
 		public void ProcessRequestNurseBreak(MessageForm message)
 		{
-		}
+            MyAgent.PoolNurses.OnBreakCount--;
+            MyAgent.PoolNurses.BreaksCompleteCount++;
+
+            EntityNurse nurse = (EntityNurse)((MessageBreak)message).Entity;
+            nurse.BreakEnded = MySim.CurrentTime;
+            nurse.BreakDuration = nurse.BreakEnded - nurse.BreakStarted;
+
+            if (MyAgent.PoolNurses.BreaksCompleteCount < MyAgent.PoolNurses.Count)
+            {
+                foreach (var n in MyAgent.PoolNurses.Entities)
+                {
+                    if (n.State == EntityState.Free && !n.HadBreak)
+                    {
+                        MyAgent.PoolNurses.GetBreak(n);
+                        MyAgent.PoolNurses.OnBreakCount++;
+
+                        n.BreakStarted = MySim.CurrentTime;
+
+                        var breakMessage = new MessageBreak(message);
+                        breakMessage.Entity = n;
+                        breakMessage.Addressee = MySim.FindAgent(SimId.AgentCentrum);
+                        breakMessage.Code = Mc.RequestNurseBreak;
+                        Request(breakMessage);
+
+                        break;
+                    }
+                }
+            }
+
+            if (MyAgent.PoolNurses.FreeCount == 0
+                && MyAgent.QuVaccination.Count > 0)
+            {
+                var messageFromQueue = MyAgent.QuVaccination.Dequeue();
+                nurse.Assign(((MessagePatient)messageFromQueue).Patient);
+                ((MessagePatient)messageFromQueue).Nurse = nurse;
+                messageFromQueue.Addressee = MyAgent.FindAssistant(SimId.ProcessVaccination);
+                StartContinualAssistant(messageFromQueue);
+
+                MyAgent.StatQuVaccinationTime.AddSample(MySim.CurrentTime -
+                                                        ((MessagePatient)messageFromQueue).Patient
+                                                        .VaccinationQuStartTime);
+                MyAgent.StatQuVaccinationSize.AddSample(MyAgent.QuVaccination.Size);
+            }
+            else if (MyAgent.QuVaccination.IsEmpty())
+            {
+                MyAgent.PoolNurses.Release(nurse);
+            }
+        }
 
 		//meta! sender="SchedulerNurseBreak", id="66", type="Finish"
 		public void ProcessFinishSchedulerNurseBreak(MessageForm message)
 		{
+            MyAgent.PoolNurses.IsBreakTime = true;
+            int halfCount = MyAgent.PoolNurses.Count / 2;
+            int pickedCount = 0;
+
+            for (int i = 0; i < halfCount; i++)
+            {
+                foreach (var n in MyAgent.PoolNurses.Entities)
+                {
+                    if (n.State == EntityState.Free && !n.HadBreak)
+                    {
+                        MyAgent.PoolNurses.GetBreak(n);
+                        MyAgent.PoolNurses.OnBreakCount++;
+                        pickedCount++;
+
+                        n.BreakStarted = MySim.CurrentTime;
+
+                        var breakMessage = new MessageBreak(MySim);
+                        breakMessage.Entity = n;
+                        breakMessage.Addressee = MySim.FindAgent(SimId.AgentCentrum);
+                        breakMessage.Code = Mc.RequestNurseBreak;
+                        Request(breakMessage);
+
+                        break;
+                    }
+                }
+            }
 		}
 
 		//meta! sender="AgentColdStorage", id="50", type="Response"
@@ -133,7 +225,26 @@ namespace managers
 			}
             else
             {
-                if (!MyAgent.QuVaccination.IsEmpty())
+                if (MyAgent.PoolNurses.IsBreakTime
+                    && MyAgent.PoolNurses.OnBreakCount < MyAgent.PoolNurses.Count / 2
+                    && !nurse.HadBreak)
+                {
+                    MyAgent.PoolNurses.Release(nurse);
+                    MyAgent.PoolNurses.GetBreak(nurse);
+                    MyAgent.PoolNurses.OnBreakCount++;
+
+                    nurse.BreakStarted = MySim.CurrentTime;
+
+                    var breakMessage = new MessageBreak(MySim)
+                    {
+                        Entity = nurse,
+                        Addressee = MySim.FindAgent(SimId.AgentCentrum),
+                        Code = Mc.RequestNurseBreak
+                    };
+
+                    Request(breakMessage);
+                }
+                else if (!MyAgent.QuVaccination.IsEmpty())
                 {
                     var messageFromQueue = MyAgent.QuVaccination.Dequeue();
                     nurse.AcceptNext(((MessagePatient)messageFromQueue).Patient);
@@ -153,6 +264,13 @@ namespace managers
 			}
 		}
 
+		//meta! sender="AgentCentrum", id="112", type="Call"
+		public void ProcessInitialization(MessageForm message)
+		{
+            message.Addressee = MyAgent.FindAssistant(SimId.SchedulerNurseBreak);
+            StartContinualAssistant(message);
+		}
+
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
@@ -165,16 +283,16 @@ namespace managers
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
-				case SimId.ProcessVaccination:
-					ProcessFinishProcessVaccination(message);
+				case SimId.ProcessMovingToFromColdStor:
+					ProcessFinishProcessMovingToFromColdStor(message);
 				break;
 
 				case SimId.SchedulerNurseBreak:
 					ProcessFinishSchedulerNurseBreak(message);
 				break;
 
-				case SimId.ProcessMovingToFromColdStor:
-					ProcessFinishProcessMovingToFromColdStor(message);
+				case SimId.ProcessVaccination:
+					ProcessFinishProcessVaccination(message);
 				break;
 				}
 			break;
@@ -183,12 +301,16 @@ namespace managers
 				ProcessRequestVaccination(message);
 			break;
 
-			case Mc.RequestNurseBreak:
-				ProcessRequestNurseBreak(message);
+			case Mc.Initialization:
+				ProcessInitialization(message);
 			break;
 
 			case Mc.RequestFillSyringes:
 				ProcessRequestFillSyringes(message);
+			break;
+
+			case Mc.RequestNurseBreak:
+				ProcessRequestNurseBreak(message);
 			break;
 
 			default:

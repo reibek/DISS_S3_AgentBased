@@ -15,6 +15,7 @@ namespace simulation
         public int ResDoctorsCount { get; set; }
         public int ResNursesCount { get; set; }
         public bool EnableEarlyArrivals { get; set; }
+        public bool EnableLightModel { get; set; }
         public SimplePriorityQueue<EntityPatient> PreGeneratedPatients { get; set; }
 
         #region STATISTICS
@@ -41,6 +42,7 @@ namespace simulation
             ResDoctorsCount = 6;
             ResNursesCount = 3;
             EnableEarlyArrivals = false;
+            EnableLightModel = false;
             PreGeneratedPatients = new SimplePriorityQueue<EntityPatient>();
 			
             Init();
@@ -142,6 +144,7 @@ namespace simulation
 		{ get; set; }
 		public AgentCanteen AgentCanteen
 		{ get; set; }
-		//meta! tag="end"
+
+        //meta! tag="end"
 	}
 }

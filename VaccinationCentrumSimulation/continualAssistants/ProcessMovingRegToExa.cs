@@ -21,7 +21,11 @@ namespace continualAssistants
 		public void ProcessStart(MessageForm message)
         {
             message.Code = Mc.ProcessMovingRegToExaEnded;
-			Hold(MyAgent.RandMovingRegToExaTime.Sample(), message);
+
+            if (((MySimulation)MySim).EnableLightModel)
+                Hold(0, message);
+            else
+				Hold(MyAgent.RandMovingRegToExaTime.Sample(), message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
