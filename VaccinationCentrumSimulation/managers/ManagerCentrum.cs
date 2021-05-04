@@ -2,6 +2,8 @@ using OSPABA;
 using simulation;
 using agents;
 using continualAssistants;
+using entities;
+
 //using instantAssistants;
 namespace managers
 {
@@ -41,12 +43,6 @@ namespace managers
 			message.Addressee = MySim.FindAgent(SimId.AgentModel);
             message.Code = Mc.NoticePatientLeave;
 			Notice(message);
-
-            if (MyAgent.VaccinatedPatientsCount == MyAgent.ArrivedPatientsCount)
-            {
-                ((MySimulation) MySim).CurrentReplicationDuration = MySim.CurrentTime;
-                MySim.StopReplication();
-            }
         }
 
 		//meta! sender="AgentModel", id="31", type="Notice"
@@ -91,8 +87,13 @@ namespace managers
 
 		//meta! sender="AgentRegistration", id="52", type="Request"
 		public void ProcessRequestAdminWorkerBreak(MessageForm message)
-		{
-		}
+        {
+            ((MessageBreak) message).Entity.State = EntityState.Moving;
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingToFromCan);
+			StartContinualAssistant(message);
+
+            MyAgent.MovingEmployeesToCan++;
+        }
 
 		//meta! sender="ProcessMovingRegToExa", id="72", type="Finish"
 		public void ProcessFinishProcessMovingRegToExa(MessageForm message)
@@ -126,12 +127,35 @@ namespace managers
 
 		//meta! sender="ProcessMovingToFromCan", id="78", type="Finish"
 		public void ProcessFinishProcessMovingToFromCan(MessageForm message)
-		{
-		}
+        {
+            VaccineCentrumEntity entity = ((MessageBreak) message).Entity;
+            
+            if (entity.HadBreak)
+            {
+                message.Code = Mc.RequestAdminWorkerBreak;
+                message.Addressee = MySim.FindAgent(SimId.AgentRegistration);
+				Response(message);
+
+                MyAgent.MovingEmployeesFromCan--;
+            }
+            else
+            {
+				message.Code = Mc.RequestEmployeeLunch;
+                message.Addressee = MySim.FindAgent(SimId.AgentCanteen);
+                Request(message);
+
+                MyAgent.MovingEmployeesToCan--;
+			}
+        }
 
 		//meta! sender="AgentCanteen", id="57", type="Response"
 		public void ProcessRequestEmployeeLunch(MessageForm message)
 		{
+            ((MessageBreak)message).Entity.State = EntityState.Moving;
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessMovingToFromCan);
+            StartContinualAssistant(message);
+
+            MyAgent.MovingEmployeesFromCan++;
 		}
 
 		//meta! sender="AgentExamination", id="53", type="Request"
@@ -148,21 +172,21 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.NoticeNewPatient:
-				ProcessNoticeNewPatient(message);
+			case Mc.RequestExamination:
+				ProcessRequestExamination(message);
 			break;
 
 			case Mc.RequestWaitingRoom:
 				ProcessRequestWaitingRoom(message);
 			break;
 
-			case Mc.RequestRegistration:
-				ProcessRequestRegistration(message);
-			break;
-
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
+				case SimId.ProcessMovingExaToVac:
+					ProcessFinishProcessMovingExaToVac(message);
+				break;
+
 				case SimId.ProcessMovingVacToWai:
 					ProcessFinishProcessMovingVacToWai(message);
 				break;
@@ -171,38 +195,38 @@ namespace managers
 					ProcessFinishProcessMovingToFromCan(message);
 				break;
 
-				case SimId.ProcessMovingExaToVac:
-					ProcessFinishProcessMovingExaToVac(message);
-				break;
-
 				case SimId.ProcessMovingRegToExa:
 					ProcessFinishProcessMovingRegToExa(message);
 				break;
 				}
 			break;
 
-			case Mc.RequestExamination:
-				ProcessRequestExamination(message);
-			break;
-
-			case Mc.RequestAdminWorkerBreak:
-				ProcessRequestAdminWorkerBreak(message);
+			case Mc.RequestEmployeeLunch:
+				ProcessRequestEmployeeLunch(message);
 			break;
 
 			case Mc.RequestVaccination:
 				ProcessRequestVaccination(message);
 			break;
 
-			case Mc.RequestEmployeeLunch:
-				ProcessRequestEmployeeLunch(message);
+			case Mc.RequestNurseBreak:
+				ProcessRequestNurseBreak(message);
+			break;
+
+			case Mc.NoticeNewPatient:
+				ProcessNoticeNewPatient(message);
+			break;
+
+			case Mc.RequestRegistration:
+				ProcessRequestRegistration(message);
 			break;
 
 			case Mc.RequestDoctorBreak:
 				ProcessRequestDoctorBreak(message);
 			break;
 
-			case Mc.RequestNurseBreak:
-				ProcessRequestNurseBreak(message);
+			case Mc.RequestAdminWorkerBreak:
+				ProcessRequestAdminWorkerBreak(message);
 			break;
 
 			default:

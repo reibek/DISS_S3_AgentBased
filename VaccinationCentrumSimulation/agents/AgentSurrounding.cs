@@ -12,11 +12,15 @@ namespace agents
 	//meta! id="2"
 	public class AgentSurrounding : Agent
     {
-        public int PatientsCount { get; set; }
+        public int InPatientsCount { get; set; }
+        public int OutPatientsCount { get; set; }
         public int CanceledPatientsNum { get; set; }
         public List<int> CanceledPatientsIds { get; set; }
         public UniformDiscreteRNG RandCanceledPatientsNum { get; set; }
         public UniformDiscreteRNG RandCanceledPatientsIds { get; set; }
+        public UniformContinuousRNG RandArrivalDecision { get; set; }
+        public UniformContinuousRNG RandEarlyArrivalDecision { get; set; }
+        public List<UniformContinuousRNG> RandEarlierTimes { get; set; }
 
         public AgentSurrounding(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
@@ -24,18 +28,28 @@ namespace agents
 			Init();
 
             AddOwnMessage(Mc.NoticePatientGenerated);
+            AddOwnMessage(Mc.NoticePickedPreGeneratedPatient);
 
             CanceledPatientsIds = new List<int>();
 			RandCanceledPatientsNum = new UniformDiscreteRNG(5, 25, ((MySimulation) MySim).RandSeedGenerator);
             RandCanceledPatientsIds = new UniformDiscreteRNG(1, ((MySimulation) MySim).OrderedPatientsNum,
                 ((MySimulation) MySim).RandSeedGenerator);
+            RandArrivalDecision = new UniformContinuousRNG(0, 1, ((MySimulation) MySim).RandSeedGenerator);
+            RandEarlyArrivalDecision = new UniformContinuousRNG(0, 1, ((MySimulation) MySim).RandSeedGenerator);
+            
+            RandEarlierTimes = new List<UniformContinuousRNG>(4);
+            RandEarlierTimes.Add(new UniformContinuousRNG(60, 1200, ((MySimulation)MySim).RandSeedGenerator));
+            RandEarlierTimes.Add(new UniformContinuousRNG(1200, 3600, ((MySimulation)MySim).RandSeedGenerator));
+            RandEarlierTimes.Add(new UniformContinuousRNG(3600, 4800, ((MySimulation)MySim).RandSeedGenerator));
+            RandEarlierTimes.Add(new UniformContinuousRNG(4800, 14400, ((MySimulation)MySim).RandSeedGenerator));
         }
 
         public override void PrepareReplication()
         {
             base.PrepareReplication();
 
-            PatientsCount = 0;
+            InPatientsCount = 0;
+            OutPatientsCount = 0;
             CanceledPatientsIds.Clear();
         }
 
@@ -43,6 +57,7 @@ namespace agents
 		private void Init()
 		{
 			new ManagerSurrounding(SimId.ManagerSurrounding, MySim, this);
+			new ActionPatientsWithEarlyArrival(SimId.ActionPatientsWithEarlyArrival, MySim, this);
 			new ActionCancelPatients(SimId.ActionCancelPatients, MySim, this);
 			new SchedulerPatientsArrival(SimId.SchedulerPatientsArrival, MySim, this);
 			AddOwnMessage(Mc.Initialization);

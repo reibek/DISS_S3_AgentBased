@@ -12,18 +12,25 @@ namespace VaccineCentrum
         private List<E> _entitiesList;
         private List<E> _freeEntitiesList;
         private List<E> _busyEntitiesList;
+        private List<E> _hungryEntitiesList;
 
         public List<E> Entities => _entitiesList;
+        public List<E> HungryEntities => _hungryEntitiesList;
         public E this[int i] => _entitiesList[i];
         public int Count => _entitiesList.Count;
         public int FreeCount => _freeEntitiesList.Count;
         public int BusyCount => _busyEntitiesList.Count;
+        public bool IsBreakTime { get; set; }
+        public int OnBreakCount { get; set; }
 
         public Pool()
         {
             _entitiesList = new List<E>(4);
             _freeEntitiesList = new List<E>(4);
             _busyEntitiesList = new List<E>(4);
+            _hungryEntitiesList = new List<E>(4);
+            IsBreakTime = false;
+            OnBreakCount = 0;
         }
 
         public Pool(int capacity)
@@ -31,12 +38,16 @@ namespace VaccineCentrum
             _entitiesList = new List<E>(capacity);
             _freeEntitiesList = new List<E>(capacity);
             _busyEntitiesList = new List<E>(capacity);
+            _hungryEntitiesList = new List<E>(capacity);
+            IsBreakTime = false;
+            OnBreakCount = 0;
         }
 
         public void Add(E entity)
         {
             _entitiesList.Add(entity);
             _freeEntitiesList.Add(entity);
+            _hungryEntitiesList.Add(entity);
         }
 
         public E Assign(int indexOfFreeEntity, EntityPatient patient)
@@ -60,6 +71,7 @@ namespace VaccineCentrum
         {
             entity.GetBreak();
             _freeEntitiesList.Remove(entity);
+            _hungryEntitiesList.Remove(entity);
             _busyEntitiesList.Add(entity);
         }
 
@@ -82,6 +94,9 @@ namespace VaccineCentrum
             Entities.ForEach(e => e.Reset());
             _freeEntitiesList = new List<E>(_entitiesList);
             _busyEntitiesList.Clear();
+            _hungryEntitiesList = new List<E>(_entitiesList);
+            IsBreakTime = false;
+            OnBreakCount = 0;
         }
     }
 }

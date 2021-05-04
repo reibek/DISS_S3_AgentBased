@@ -44,5 +44,15 @@ namespace entities
             VaccinationQuStartTime = -1;
             WaitingRoomTime = -1;
         }
+
+        public EntityPatient(int id, Simulation mySim, double arrivalTime) : base(id, mySim)
+        {
+            Id = id;
+            ArrivalTime = arrivalTime;
+            RegistrationQuStartTime = -1;
+            ExaminationQuStartTime = -1;
+            VaccinationQuStartTime = -1;
+            WaitingRoomTime = -1;
+        }
     }
 }

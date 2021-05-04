@@ -32,8 +32,24 @@ namespace managers
         {
             var adminWorker = ((MessagePatient) message).AdminWorker;
 
-            if (MyAgent.PoolAdminWorkers.FreeCount == 0
-                && MyAgent.QuRegistration.Count > 0)
+            if (MyAgent.PoolAdminWorkers.IsBreakTime
+                && MyAgent.PoolAdminWorkers.OnBreakCount < MyAgent.PoolAdminWorkers.Count / 2)
+            {
+                MyAgent.PoolAdminWorkers.Release(adminWorker);
+				MyAgent.PoolAdminWorkers.GetBreak(adminWorker);
+                MyAgent.PoolAdminWorkers.OnBreakCount++;
+
+                var breakMessage = new MessageBreak(MySim)
+                {
+                    Entity = adminWorker,
+                    Addressee = MySim.FindAgent(SimId.AgentCentrum),
+                    Code = Mc.RequestAdminWorkerBreak
+                };
+
+                Request(breakMessage);
+			}
+            else if (MyAgent.PoolAdminWorkers.FreeCount == 0
+                    && MyAgent.QuRegistration.Count > 0)
             {
                 var messageFromQueue = MyAgent.QuRegistration.Dequeue();
                 adminWorker.AcceptNext(((MessagePatient) messageFromQueue).Patient);
@@ -90,13 +106,71 @@ namespace managers
 
 		//meta! sender="AgentCentrum", id="52", type="Response"
 		public void ProcessRequestAdminWorkerBreak(MessageForm message)
-		{
-		}
+        {
+            EntityAdminWorker adminWorker = (EntityAdminWorker) ((MessageBreak) message).Entity;
+
+            foreach (var aw in MyAgent.PoolAdminWorkers.HungryEntities)
+            {
+                if (aw.State == EntityState.Free)
+                {
+                    MyAgent.PoolAdminWorkers.GetBreak(aw);
+                    MyAgent.PoolAdminWorkers.OnBreakCount++;
+
+                    var breakMessage = new MessageBreak(message);
+                    breakMessage.Entity = aw;
+                    breakMessage.Addressee = MySim.FindAgent(SimId.AgentCentrum);
+                    breakMessage.Code = Mc.RequestAdminWorkerBreak;
+                    Request(breakMessage);
+
+					break;
+                }
+            }
+
+            if (MyAgent.PoolAdminWorkers.FreeCount == 0
+                     && MyAgent.QuRegistration.Count > 0)
+            {
+                var messageFromQueue = MyAgent.QuRegistration.Dequeue();
+                adminWorker.Assign(((MessagePatient)messageFromQueue).Patient);
+                ((MessagePatient)messageFromQueue).AdminWorker = adminWorker;
+                messageFromQueue.Addressee = MyAgent.FindAssistant(SimId.ProcessRegistration);
+                StartContinualAssistant(messageFromQueue);
+
+                MyAgent.StatQuRegistrationTime.AddSample(MySim.CurrentTime -
+                                                         ((MessagePatient)messageFromQueue).Patient
+                                                         .RegistrationQuStartTime);
+                MyAgent.StatQuRegistrationSize.AddSample(MyAgent.QuRegistration.Size);
+            }
+            else if (MyAgent.QuRegistration.IsEmpty())
+            {
+                MyAgent.PoolAdminWorkers.Release(adminWorker);
+            }
+        }
 
 		//meta! sender="SchedulerAdminWorkerBreak", id="60", type="Finish"
 		public void ProcessFinishSchedulerAdminWorkerBreak(MessageForm message)
-		{
-		}
+        {
+            MyAgent.PoolAdminWorkers.IsBreakTime = true;
+            int halfCount = MyAgent.PoolAdminWorkers.Count / 2;
+            int pickedCount = 0;
+
+            foreach (var aw in MyAgent.PoolAdminWorkers.HungryEntities)
+            {
+                if (aw.State == EntityState.Free)
+                {
+                    MyAgent.PoolAdminWorkers.GetBreak(aw);
+                    MyAgent.PoolAdminWorkers.OnBreakCount++;
+                    pickedCount++;
+
+					var breakMessage = new MessageBreak(MySim);
+                    breakMessage.Entity = aw;
+                    breakMessage.Addressee = MySim.FindAgent(SimId.AgentCentrum);
+                    breakMessage.Code = Mc.RequestAdminWorkerBreak;
+					Request(breakMessage);
+                }
+
+                if (pickedCount == halfCount) break;
+            }
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
@@ -114,12 +188,12 @@ namespace managers
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
-				case SimId.ProcessRegistration:
-					ProcessFinishProcessRegistration(message);
-				break;
-
 				case SimId.SchedulerAdminWorkerBreak:
 					ProcessFinishSchedulerAdminWorkerBreak(message);
+				break;
+
+				case SimId.ProcessRegistration:
+					ProcessFinishProcessRegistration(message);
 				break;
 				}
 			break;

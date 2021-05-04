@@ -114,6 +114,7 @@ namespace entities
         Working,
         Moving,
         Preparing,
-        Break
+        Break,
+        Eating
     }
 }

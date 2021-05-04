@@ -20,14 +20,23 @@ namespace continualAssistants
 		//meta! sender="AgentSurrounding", id="17", type="Start"
 		public void ProcessStart(MessageForm message)
         {
-            message.Code = Mc.NoticePatientGenerated;
-            message.Addressee = MyAgent;
-            
-            if (!((MessagePatient)message).IsFirst)
-                Hold(32400.0 / ((MySimulation) MySim).OrderedPatientsNum, message);
-			else
-                Hold(0, message);
-		}
+            if (((MySimulation) MySim).EnableEarlyArrivals)
+            {
+                message.Code = Mc.NoticePickedPreGeneratedPatient;
+                message.Addressee = MyAgent;
+                Hold(((MySimulation) MySim).PreGeneratedPatients.First.ArrivalTime - MySim.CurrentTime, message);
+            }
+            else
+            {
+                message.Code = Mc.NoticePatientGenerated;
+                message.Addressee = MyAgent;
+
+				if (!((MessagePatient)message).IsFirst)
+                    Hold(32400.0 / ((MySimulation)MySim).OrderedPatientsNum, message);
+                else
+                    Hold(0, message);
+			}
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
@@ -37,11 +46,14 @@ namespace continualAssistants
 				case Mc.NoticePatientGenerated:
                     Notice(message);
                     break;
+				case Mc.NoticePickedPreGeneratedPatient:
+					Notice(message);
+                    break;
 			}
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
-		override public void ProcessMessage(MessageForm message)
+		public override void ProcessMessage(MessageForm message)
 		{
 			switch (message.Code)
 			{

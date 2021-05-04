@@ -183,12 +183,12 @@ namespace managers
 				ProcessRequestVaccination(message);
 			break;
 
-			case Mc.RequestFillSyringes:
-				ProcessRequestFillSyringes(message);
-			break;
-
 			case Mc.RequestNurseBreak:
 				ProcessRequestNurseBreak(message);
+			break;
+
+			case Mc.RequestFillSyringes:
+				ProcessRequestFillSyringes(message);
 			break;
 
 			default:

@@ -20,6 +20,8 @@ namespace continualAssistants
 		//meta! sender="AgentCanteen", id="69", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
+            message.Code = Mc.ProcessEatingEnded;
+            Hold(MyAgent.RandEatingTime.Sample(), message);
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -27,6 +29,9 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+				case Mc.ProcessEatingEnded:
+                    AssistantFinished(message);
+					break;
 			}
 		}
 

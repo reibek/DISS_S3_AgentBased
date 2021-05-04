@@ -107,6 +107,10 @@ namespace managers
 		{
 			switch (message.Code)
 			{
+			case Mc.RequestExamination:
+				ProcessRequestExamination(message);
+			break;
+
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
@@ -118,10 +122,6 @@ namespace managers
 					ProcessFinishProcessExamination(message);
 				break;
 				}
-			break;
-
-			case Mc.RequestExamination:
-				ProcessRequestExamination(message);
 			break;
 
 			case Mc.RequestDoctorBreak:

@@ -474,6 +474,7 @@ namespace GUI.Pages
             _simRef.ResAdminWorkersCount = _mw.SetAdminWorkersCount;
             _simRef.ResDoctorsCount = _mw.SetDoctorsCount;
             _simRef.ResNursesCount = _mw.SetNursesCount;
+            _simRef.EnableEarlyArrivals = true;
             _simRef.Simulate(1, double.MaxValue);
         }
 

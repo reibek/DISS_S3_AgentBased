@@ -2,6 +2,8 @@ using OSPABA;
 using simulation;
 using managers;
 using continualAssistants;
+using OSPRNG;
+
 //using instantAssistants;
 
 namespace agents
@@ -9,6 +11,8 @@ namespace agents
 	//meta! id="47"
 	public class AgentCanteen : Agent
 	{
+        public int EatingEmployeesCount { get; set; }
+        public TriangularRNG RandEatingTime { get; set; }
 		public AgentCanteen(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
@@ -18,7 +22,9 @@ namespace agents
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
-			// Setup component for the next replication
+
+            EatingEmployeesCount = 0;
+			RandEatingTime = new TriangularRNG(300, 900, 1800, ((MySimulation)MySim).RandSeedGenerator);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

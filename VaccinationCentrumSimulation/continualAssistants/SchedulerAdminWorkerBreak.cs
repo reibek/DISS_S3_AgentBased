@@ -19,8 +19,10 @@ namespace continualAssistants
 
 		//meta! sender="AgentRegistration", id="60", type="Start"
 		public void ProcessStart(MessageForm message)
-		{
-			Hold(10800, message); // 3 hours (11:00)
+        {
+            message.Code = Mc.TimeForBreak;
+            Hold(300, message); // 3 hours (11:00)
+            //Hold(10800, message); // 3 hours (11:00)
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -28,6 +30,9 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+				case Mc.TimeForBreak:
+                    AssistantFinished(message);
+                    break;
 			}
 		}
 

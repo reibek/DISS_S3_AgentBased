@@ -79,6 +79,7 @@
     <Compile Include="entities\EntityPatient.cs" />
     <Compile Include="entities\VaccineCentrumEntity.cs" />
     <Compile Include="instantAssistants\ActionCancelPatients.cs" />
+    <Compile Include="instantAssistants\ActionPatientsWithEarlyArrival.cs" />
     <Compile Include="managers\ManagerCanteen.cs" />
     <Compile Include="managers\ManagerCentrum.cs" />
     <Compile Include="managers\ManagerColdStorage.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="simulation\Mc.cs" />
+    <Compile Include="simulation\MessageBreak.cs" />
     <Compile Include="simulation\MessageNurse.cs" />
     <Compile Include="simulation\MessagePatient.cs" />
     <Compile Include="simulation\MySimulation.cs" />

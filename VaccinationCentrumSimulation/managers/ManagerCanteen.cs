@@ -2,6 +2,8 @@ using OSPABA;
 using simulation;
 using agents;
 using continualAssistants;
+using entities;
+
 //using instantAssistants;
 
 namespace managers
@@ -28,12 +30,23 @@ namespace managers
 
 		//meta! sender="ProcessEating", id="69", type="Finish"
 		public void ProcessFinish(MessageForm message)
-		{
+        {
+            ((MessageBreak) message).Entity.HadBreak = true;
+			message.Addressee = MySim.FindAgent(SimId.AgentCentrum);
+            message.Code = Mc.RequestEmployeeLunch;
+            Response(message);
+
+			MyAgent.EatingEmployeesCount--;
 		}
 
 		//meta! sender="AgentCentrum", id="57", type="Request"
 		public void ProcessRequestEmployeeLunch(MessageForm message)
 		{
+            ((MessageBreak)message).Entity.State = EntityState.Eating;
+			message.Addressee = MyAgent.FindAssistant(SimId.ProcessEating);
+            StartContinualAssistant(message);
+
+            MyAgent.EatingEmployeesCount++;
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -53,12 +66,12 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.Finish:
-				ProcessFinish(message);
-			break;
-
 			case Mc.RequestEmployeeLunch:
 				ProcessRequestEmployeeLunch(message);
+			break;
+
+			case Mc.Finish:
+				ProcessFinish(message);
 			break;
 
 			default:

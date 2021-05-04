@@ -1,7 +1,9 @@
 using System;
 using OSPABA;
 using agents;
+using entities;
 using OSPStat;
+using Priority_Queue;
 
 namespace simulation
 {
@@ -12,6 +14,8 @@ namespace simulation
         public int ResAdminWorkersCount { get; set; }
         public int ResDoctorsCount { get; set; }
         public int ResNursesCount { get; set; }
+        public bool EnableEarlyArrivals { get; set; }
+        public SimplePriorityQueue<EntityPatient> PreGeneratedPatients { get; set; }
 
         #region STATISTICS
 
@@ -36,6 +40,8 @@ namespace simulation
             ResAdminWorkersCount = 5;
             ResDoctorsCount = 6;
             ResNursesCount = 3;
+            EnableEarlyArrivals = false;
+            PreGeneratedPatients = new SimplePriorityQueue<EntityPatient>();
 			
             Init();
 
@@ -56,6 +62,8 @@ namespace simulation
         protected override void PrepareSimulation()
         {
             base.PrepareSimulation();
+
+            PreGeneratedPatients.Clear();
 
             RegistrationQuSize.Clear();
             RegistrationQuTime.Clear();

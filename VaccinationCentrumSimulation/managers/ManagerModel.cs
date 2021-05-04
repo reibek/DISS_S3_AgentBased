@@ -52,12 +52,12 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.NoticePatientLeave:
-				ProcessNoticePatientLeave(message);
-			break;
-
 			case Mc.NoticePatientArrival:
 				ProcessNoticePatientArrival(message);
+			break;
+
+			case Mc.NoticePatientLeave:
+				ProcessNoticePatientLeave(message);
 			break;
 
 			default:

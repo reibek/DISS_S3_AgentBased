@@ -31,5 +31,8 @@ namespace simulation
         public const int ProcessMovingVacToWaiEnded = 18;
         public const int ProcessMovingToFromCanEnded = 19;
         public const int ProcessMovingToFromColdStorEnded = 20;
-	}
+        public const int NoticePickedPreGeneratedPatient = 21;
+        public const int TimeForBreak = 22;
+        public const int ProcessEatingEnded = 23;
+    }
 }
