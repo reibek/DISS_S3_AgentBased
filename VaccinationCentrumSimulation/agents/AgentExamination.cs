@@ -63,5 +63,10 @@ namespace agents
 			AddOwnMessage(Mc.RequestDoctorBreak);
 		}
 		//meta! tag="end"
+
+        public void FinalUpdateStatistics()
+        {
+            StatQuExaminationSize.AddSample(QuExamination.Size);
+        }
 	}
 }

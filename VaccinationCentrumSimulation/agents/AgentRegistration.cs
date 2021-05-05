@@ -63,5 +63,9 @@ namespace agents
 			AddOwnMessage(Mc.RequestRegistration);
 		}
 		//meta! tag="end"
-	}
+        public void FinalUpdateStatistics()
+        {
+            StatQuRegistrationSize.AddSample(QuRegistration.Size);
+        }
+    }
 }

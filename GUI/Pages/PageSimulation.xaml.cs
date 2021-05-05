@@ -57,6 +57,9 @@ namespace GUI.Pages
         private int _patientsRegToExaCount;
         private int _patientsExaToVacCount;
         private int _patientsVacToWaiCount;
+        private int _employeesMovingToCanteenCount;
+        private int _employeesMovingFromCanteenCount;
+        private int _employeesEatingCount;
 
         #region PROPERTIES
 
@@ -410,6 +413,36 @@ namespace GUI.Pages
             }
         }
 
+        public int EmployeesMovingToCanteenCount
+        {
+            get => _employeesMovingToCanteenCount;
+            set
+            {
+                _employeesMovingToCanteenCount = value;
+                OnPropertyChanged(nameof(EmployeesMovingToCanteenCount));
+            }
+        }
+
+        public int EmployeesMovingFromCanteenCount
+        {
+            get => _employeesMovingFromCanteenCount;
+            set
+            {
+                _employeesMovingFromCanteenCount = value;
+                OnPropertyChanged(nameof(EmployeesMovingFromCanteenCount));
+            }
+        }
+
+        public int EmployeesEatingCount
+        {
+            get => _employeesEatingCount;
+            set
+            {
+                _employeesEatingCount = value;
+                OnPropertyChanged(nameof(EmployeesEatingCount));
+            }
+        }
+
         #endregion
 
         public PageSimulation(MainWindow mw)
@@ -465,11 +498,14 @@ namespace GUI.Pages
             PatientsRegToExaCount = 0;
             PatientsExaToVacCount = 0;
             PatientsVacToWaiCount = 0;
+
+            EmployeesMovingToCanteenCount = 0;
+            EmployeesMovingFromCanteenCount = 0;
+            EmployeesEatingCount = 0;
         }
 
         private void RunSimulation()
         {
-            _simRef.SetSimSpeed(1, 1);
             _simRef.OrderedPatientsNum = _mw.SetOrderedPatients;
             _simRef.ResAdminWorkersCount = _mw.SetAdminWorkersCount;
             _simRef.ResDoctorsCount = _mw.SetDoctorsCount;
@@ -486,6 +522,13 @@ namespace GUI.Pages
             _simulationThread = new Thread(RunSimulation);
             _simulationThread.Start();
             _simPaused = false;
+
+            if (ComboSpeed.SelectedIndex < 4)
+                _simRef?.SetSimSpeed(1, 1.0 / _speedValues[ComboSpeed.SelectedIndex]);
+            else if (ComboSpeed.SelectedIndex < 10)
+                _simRef?.SetSimSpeed(_speedValues[ComboSpeed.SelectedIndex] / 10, 0.1);
+            else
+                _simRef?.SetSimSpeed(_speedValues[ComboSpeed.SelectedIndex], 1);
         }
 
         private void ButtonSimPause_Click(object sender, RoutedEventArgs e)
@@ -513,8 +556,10 @@ namespace GUI.Pages
         {
             if (ComboSpeed.SelectedIndex < 4)
                 _simRef?.SetSimSpeed(1, 1.0 / _speedValues[ComboSpeed.SelectedIndex]);
-            else
+            else if (ComboSpeed.SelectedIndex < 10)
                 _simRef?.SetSimSpeed(_speedValues[ComboSpeed.SelectedIndex] / 10, 0.1);
+            else
+                _simRef?.SetSimSpeed(_speedValues[ComboSpeed.SelectedIndex], 1);
         }
 
         public void SimStateChanged(Simulation sim, SimState state)
@@ -566,6 +611,10 @@ namespace GUI.Pages
                 PatientsRegToExaCount = simulation.AgentCentrum.MovingPatientsRegToExa;
                 PatientsExaToVacCount = simulation.AgentCentrum.MovingPatientsExaToVac;
                 PatientsVacToWaiCount = simulation.AgentCentrum.MovingPatientsVacToWai;
+
+                EmployeesMovingToCanteenCount = simulation.AgentCentrum.MovingEmployeesToCan;
+                EmployeesMovingFromCanteenCount = simulation.AgentCentrum.MovingEmployeesFromCan;
+                EmployeesEatingCount = simulation.AgentCanteen.EatingEmployeesCount;
 
                 AdminWorkers = new ObservableCollection<EntityAdminWorker>(simulation.AgentRegistration.PoolAdminWorkers.Entities);
                 Doctors = new ObservableCollection<EntityDoctor>(simulation.AgentExamination.PoolDoctors.Entities);

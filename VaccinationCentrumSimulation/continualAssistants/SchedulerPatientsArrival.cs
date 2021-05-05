@@ -24,7 +24,11 @@ namespace continualAssistants
             {
                 message.Code = Mc.NoticePickedPreGeneratedPatient;
                 message.Addressee = MyAgent;
-                Hold(((MySimulation) MySim).PreGeneratedPatients.First.ArrivalTime - MySim.CurrentTime, message);
+                double holdTime = ((MySimulation) MySim).PreGeneratedPatients.First.ArrivalTime - MySim.CurrentTime < 0
+                    ? 0
+                    : ((MySimulation) MySim).PreGeneratedPatients.First.ArrivalTime - MySim.CurrentTime;
+
+				Hold(holdTime, message);
             }
             else
             {

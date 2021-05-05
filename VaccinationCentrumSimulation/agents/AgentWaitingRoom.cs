@@ -38,5 +38,10 @@ namespace agents
 			AddOwnMessage(Mc.RequestWaitingRoom);
 		}
 		//meta! tag="end"
+
+        public void FinalUpdateStatistics()
+        {
+            StatWaitingPatientsCount.AddSample(WaitingPatientsCount);
+        }
 	}
 }

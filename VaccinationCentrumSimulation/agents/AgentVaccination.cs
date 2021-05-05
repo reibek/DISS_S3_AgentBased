@@ -67,5 +67,10 @@ namespace agents
 			AddOwnMessage(Mc.RequestVaccination);
 		}
 		//meta! tag="end"
+
+        public void FinalUpdateStatistics()
+        {
+            StatQuVaccinationSize.AddSample(QuVaccination.Size);
+        }
 	}
 }

@@ -43,5 +43,10 @@ namespace agents
 			AddOwnMessage(Mc.RequestFillSyringes);
 		}
 		//meta! tag="end"
+
+        public void FinalUpdateStatistics()
+        {
+            StatQuNursesSize.AddSample(QuNurses.Size);
+        }
 	}
 }

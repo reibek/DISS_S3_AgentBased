@@ -88,6 +88,12 @@ namespace simulation
 
         protected override void ReplicationFinished()
         {
+            AgentRegistration.FinalUpdateStatistics();
+            AgentExamination.FinalUpdateStatistics();
+            AgentVaccination.FinalUpdateStatistics();
+            AgentColdStorage.FinalUpdateStatistics();
+            AgentWaitingRoom.FinalUpdateStatistics();
+
             RegistrationQuSize.AddSample(AgentRegistration.StatQuRegistrationSize.Mean());
             RegistrationQuTime.AddSample(AgentRegistration.StatQuRegistrationTime.Mean());
             AdminWorkersUtilization.AddSample(AgentRegistration.PoolAdminWorkers.AverageWorkingTime() /

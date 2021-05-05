@@ -8,7 +8,7 @@
       xmlns:uc="clr-namespace:GUI.UserControls"
       xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="1000"
+      d:DesignHeight="900" d:DesignWidth="1000"
       Title="PageSimulation">
 
     <Grid>
@@ -141,7 +141,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30,10">
+                <StackPanel Margin="20,10">
                     <TextBlock Text="Patients ordered"/>
                     <TextBlock Text="{Binding OrderedPatientsNum}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -155,7 +155,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30,10">
+                <StackPanel Margin="20,10">
                     <TextBlock Text="Patients canceled"/>
                     <TextBlock Text="{Binding CanceledPatientsNum}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -169,7 +169,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30,10">
+                <StackPanel Margin="20,10">
                     <TextBlock Text="Patients arrived"/>
                     <TextBlock Text="{Binding ArrivedPatientsCount}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -183,7 +183,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30,10">
+                <StackPanel Margin="20,10">
                     <TextBlock Text="Patients vaccinated"/>
                     <TextBlock Text="{Binding VaccinatedPatientsCount}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -197,7 +197,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30,10">
+                <StackPanel Margin="20,10">
                     <TextBlock Text="Simulation speed"/>
                     <ComboBox Name="ComboSpeed" Margin="0,5,0,0" SelectedIndex="0" 
                               SelectionChanged="ComboSpeed_SelectionChanged"
@@ -235,7 +235,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30,10">
+                <StackPanel Margin="20,10">
                     <TextBlock Text="Current patients in centre" TextWrapping="Wrap"/>
                     <TextBlock Text="{Binding CurrentCentrumPatients}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -249,7 +249,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30,10">
+                <StackPanel Margin="20,10">
                     <TextBlock Text="Patients moving for examination" TextWrapping="Wrap"/>
                     <TextBlock Text="{Binding PatientsRegToExaCount}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -263,7 +263,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30,10">
+                <StackPanel Margin="20,10">
                     <TextBlock Text="Patients moving for vaccination" TextWrapping="Wrap"/>
                     <TextBlock Text="{Binding PatientsExaToVacCount}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -277,7 +277,7 @@
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <StackPanel Margin="30,10">
+                <StackPanel Margin="20,10">
                     <TextBlock Text="Patients moving for waiting" TextWrapping="Wrap"/>
                     <TextBlock Text="{Binding PatientsVacToWaiCount}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
@@ -289,8 +289,9 @@
         <!-- ROOMS CONTENT -->
         <Grid Grid.Row="3" Grid.Column="0" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -299,13 +300,13 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+            <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
                     Background="#fafafa" Margin="10" CornerRadius="3">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <Grid Margin="30">
+                <Grid Margin="20,10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="1*"/>
@@ -340,7 +341,7 @@
                                     <DataTemplate>
                                         <Grid Margin="0,5">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="20" />
+                                                <ColumnDefinition Width="15" />
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="10" />
@@ -376,18 +377,18 @@
                             </ItemsControl>
                         </ScrollViewer>
                     </DockPanel>
-                    
+
                 </Grid>
 
             </Border>
 
-            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="3"
                     Background="#fafafa" Margin="10" CornerRadius="3">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <Grid Margin="30">
+                <Grid Margin="20,10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="1*"/>
@@ -422,7 +423,7 @@
                                     <DataTemplate>
                                         <Grid Margin="0,5">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="15" />
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="10" />
@@ -462,13 +463,13 @@
 
             </Border>
 
-            <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"
+            <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="3"
                     Background="#fafafa" Margin="10" CornerRadius="3">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
-                <Grid Margin="30">
+                <Grid Margin="20,10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="1*"/>
@@ -503,11 +504,11 @@
                                     <DataTemplate>
                                         <Grid Margin="0,5">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="15" />
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="30" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="40" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{Binding Id}" />
@@ -553,30 +554,54 @@
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
-                <Border.Resources>
-                    <Style TargetType="lvc:LineSeries">
-                        <Setter Property="StrokeThickness" Value="2"></Setter>
-                        <Setter Property="Stroke" Value="#FFB3FD"></Setter>
-                        <Setter Property="Fill" Value="#4EFFB3FD"></Setter>
-                        <Setter Property="PointGeometrySize" Value="0"></Setter>
-                        <Setter Property="LineSmoothness" Value="0"></Setter>
-                    </Style>
-                    <Style TargetType="lvc:Axis">
-                        <Setter Property="IsEnabled" Value="False"></Setter>
-                    </Style>
-                </Border.Resources>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Margin="30" Grid.Row="0" Grid.Column="0">
+                    <Grid Margin="20,10" Grid.Row="0" Grid.Column="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        
+
+                        <TextBlock Text="Canteen" 
+                                   Grid.Row="0" Grid.Column="0"
+                                   FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0">
+                            <TextBlock Text="Employees" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                            <TextBlock Text="Currently moving to / from canteen" TextWrapping="Wrap" FontFamily="/GUI;component/src/fonts/#Poppins" Opacity=".6" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding EmployeesMovingToCanteenCount, Mode=OneWay}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                                <TextBlock Text=" / " FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                                <TextBlock Text="{Binding EmployeesMovingFromCanteenCount, Mode=OneWay}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                            </StackPanel>
+                            <TextBlock Text="Currently eating" FontFamily="/GUI;component/src/fonts/#Poppins" Opacity=".6" />
+                            <TextBlock Text="{Binding EmployeesEatingCount, Mode=OneWay}" FontSize="20" FontFamily="/GUI;component/src/fonts/#Poppins"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="3"
+                    Background="#fafafa" Margin="10" CornerRadius="3">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Margin="20,10" Grid.Row="0" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+
                         <TextBlock Text="Waiting room" 
                                    Grid.Row="0" Grid.Column="0"
                                    FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
@@ -592,30 +617,18 @@
                 </Grid>
             </Border>
 
-            <Border Grid.Row="1" Grid.Column="3"
+            <Border Grid.Row="2" Grid.Column="3"
                     Background="#fafafa" Margin="10" CornerRadius="3">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
-                <Border.Resources>
-                    <Style TargetType="lvc:LineSeries">
-                        <Setter Property="StrokeThickness" Value="2"></Setter>
-                        <Setter Property="Stroke" Value="#FFB3FD"></Setter>
-                        <Setter Property="Fill" Value="#4EFFB3FD"></Setter>
-                        <Setter Property="PointGeometrySize" Value="0"></Setter>
-                        <Setter Property="LineSmoothness" Value="0"></Setter>
-                    </Style>
-                    <Style TargetType="lvc:Axis">
-                        <Setter Property="IsEnabled" Value="False"></Setter>
-                    </Style>
-                </Border.Resources>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Margin="30" Grid.Row="0" Grid.Column="0">
+                    <Grid Margin="20,10" Grid.Row="0" Grid.Column="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="1*"/>
