@@ -734,7 +734,7 @@ namespace GUI
 
             PageSim = new PageSimulation(this);
             PageRep = new PageReplications(this);
-            //_pageExp = new PageExperiment(this, _vaccineCentrum);
+            PageExp = new PageExperiment(this);
             PageSet = new PageSettings(this);
 
             AvgWaitingRoomCountSeries = new SeriesCollection

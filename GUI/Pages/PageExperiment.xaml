@@ -12,7 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.ColumnDefinitions>
@@ -30,7 +30,7 @@
             <!-- REPLICATIONS EVALUATED -->
             <StackPanel Grid.Row="0" Grid.Column="1">
                 <TextBlock Text="Replications count from current setting"/>
-                <TextBlock Text="{Binding RepCount, Mode=OneWay}" 
+                <TextBlock Text="{Binding ReplicationsCount, Mode=OneWay}" 
                            FontFamily="JetBrains Mono ExtraLight" FontSize="36"/>
             </StackPanel>
 
@@ -121,13 +121,17 @@
         </Grid>
 
         <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0" Background="#fafafa" Margin="10" 
-                    CornerRadius="3" >
+                    CornerRadius="3" Grid.RowSpan="2" >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
@@ -140,8 +144,8 @@
                     <Grid.Resources>
                         <Style TargetType="lvc:LineSeries">
                             <Setter Property="StrokeThickness" Value="2"></Setter>
-                            <Setter Property="Stroke" Value="#FFA500"></Setter>
-                            <Setter Property="Fill" Value="#4EFFA500"></Setter>
+                            <Setter Property="Stroke" Value="#f4a261"></Setter>
+                            <Setter Property="Fill" Value="#4Ef4a261"></Setter>
                             <Setter Property="PointGeometrySize" Value="10"></Setter>
                             <Setter Property="LineSmoothness" Value="0"></Setter>
                         </Style>
@@ -157,10 +161,47 @@
 
                     <lvc:CartesianChart Grid.Row="1"
                         Series="{Binding AvgExpQuLengthSeries}">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Number of doctors" LabelFormatter="{Binding XFormatterExp}" ></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1" Background="#fafafa" Margin="10" 
+                    CornerRadius="3">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="lvc:LineSeries">
+                            <Setter Property="StrokeThickness" Value="2"></Setter>
+                            <Setter Property="Stroke" Value="#e9c46a"></Setter>
+                            <Setter Property="Fill" Value="#4Ee9c46a"></Setter>
+                            <Setter Property="PointGeometrySize" Value="10"></Setter>
+                            <Setter Property="LineSmoothness" Value="0"></Setter>
+                        </Style>
+                        <Style TargetType="lvc:Axis">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                        </Style>
+                    </Grid.Resources>
+
+                    <TextBlock Grid.Row="0" Margin="10"
+                               Text="Average waiting time for all procedures" 
+                               HorizontalAlignment="Center" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
+
+                    <lvc:CartesianChart Grid.Row="1"
+                                        Series="{Binding AvgSumQuWaitTimeSeries}">
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis>
                                 <lvc:Axis.Sections>
-                                    <lvc:AxisSection Value="12" StrokeThickness="3" Stroke="#FF2600">
+                                    <lvc:AxisSection Value="900" StrokeThickness="3" Stroke="#e76f51">
                                         <lvc:AxisSection.Fill>
                                             <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
                                         </lvc:AxisSection.Fill>
@@ -175,8 +216,8 @@
                 </Grid>
             </Border>
 
-            <Border Grid.Column="1" Background="#fafafa" Margin="10" 
-                    CornerRadius="3" >
+            <Border Grid.Column="1" Grid.Row="1" Background="#fafafa" Margin="10" 
+                    CornerRadius="3">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
@@ -188,8 +229,8 @@
                     <Grid.Resources>
                         <Style TargetType="lvc:LineSeries">
                             <Setter Property="StrokeThickness" Value="2"></Setter>
-                            <Setter Property="Stroke" Value="#005AFF"></Setter>
-                            <Setter Property="Fill" Value="#4E005AFF"></Setter>
+                            <Setter Property="Stroke" Value="#2a9d8f"></Setter>
+                            <Setter Property="Fill" Value="#4E2a9d8f"></Setter>
                             <Setter Property="PointGeometrySize" Value="10"></Setter>
                             <Setter Property="LineSmoothness" Value="0"></Setter>
                         </Style>
@@ -199,16 +240,16 @@
                     </Grid.Resources>
 
                     <TextBlock Grid.Row="0" Margin="10"
-                               Text="Average examination waiting time" 
+                               Text="Average utilization of all employees" 
                                HorizontalAlignment="Center" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
 
                     <lvc:CartesianChart Grid.Row="1"
-                                        Series="{Binding AvgExpQuWaitTimeSeries}">
+                                        Series="{Binding AvgSumUtilSeries}">
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis>
                                 <lvc:Axis.Sections>
-                                    <lvc:AxisSection Value="900" StrokeThickness="3" Stroke="#FF2600">
+                                    <lvc:AxisSection Value="0.7" StrokeThickness="3" Stroke="#e76f51">
                                         <lvc:AxisSection.Fill>
                                             <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
                                         </lvc:AxisSection.Fill>
@@ -223,7 +264,7 @@
                 </Grid>
             </Border>
         </Grid>
-            
-        
+
+
     </Grid>
 </Page>

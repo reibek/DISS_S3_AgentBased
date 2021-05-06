@@ -117,6 +117,7 @@ namespace managers
             if (MyAgent.InPatientsCount == MyAgent.OutPatientsCount
                 && MySim.CurrentTime > 32400.0)
             {
+                ((MySimulation)MySim).FinalUpdateStatistics();
                 ((MySimulation)MySim).CurrentReplicationDuration = MySim.CurrentTime;
                 MySim.StopReplication();
             }

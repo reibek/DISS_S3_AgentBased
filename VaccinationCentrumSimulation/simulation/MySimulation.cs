@@ -30,6 +30,9 @@ namespace simulation
         public Stat VaccinationQuTime { get; set; }
         public Stat NursesUtilization { get; set; }
         public Stat WaitingRoomQuSize { get; set; }
+        public Stat ColdStorageQuSize { get; set; }
+        public Stat CentreOvertime { get; set; }
+        public Stat EmployeeUtilization { get; set; }
         public double CurrentReplicationDuration { get; set; }
 
         #endregion
@@ -57,6 +60,9 @@ namespace simulation
             VaccinationQuTime = new Stat();
             NursesUtilization = new Stat();
             WaitingRoomQuSize = new Stat();
+            ColdStorageQuSize = new Stat();
+            CentreOvertime = new Stat();
+            EmployeeUtilization = new Stat();
 
             CurrentReplicationDuration = 0;
         }
@@ -77,6 +83,9 @@ namespace simulation
             VaccinationQuTime.Clear();
             NursesUtilization.Clear();
             WaitingRoomQuSize.Clear();
+            ColdStorageQuSize.Clear();
+            CentreOvertime.Clear();
+            EmployeeUtilization.Clear();
 
             CurrentReplicationDuration = 0;
         }
@@ -88,28 +97,28 @@ namespace simulation
 
         protected override void ReplicationFinished()
         {
-            AgentRegistration.FinalUpdateStatistics();
-            AgentExamination.FinalUpdateStatistics();
-            AgentVaccination.FinalUpdateStatistics();
-            AgentColdStorage.FinalUpdateStatistics();
-            AgentWaitingRoom.FinalUpdateStatistics();
-
             RegistrationQuSize.AddSample(AgentRegistration.StatQuRegistrationSize.Mean());
             RegistrationQuTime.AddSample(AgentRegistration.StatQuRegistrationTime.Mean());
-            AdminWorkersUtilization.AddSample(AgentRegistration.PoolAdminWorkers.AverageWorkingTime() /
-                                              CurrentReplicationDuration);
+            double adminUtil = AgentRegistration.PoolAdminWorkers.AverageWorkingTime() / CurrentReplicationDuration;
+            AdminWorkersUtilization.AddSample(adminUtil);
             
             ExaminationQuSize.AddSample(AgentExamination.StatQuExaminationSize.Mean());
             ExaminationQuTime.AddSample(AgentExamination.StatQuExaminationTime.Mean());
-            DoctorsUtilization.AddSample(AgentExamination.PoolDoctors.AverageWorkingTime() /
-                                         CurrentReplicationDuration);
+            double doctorUtil = AgentExamination.PoolDoctors.AverageWorkingTime() / CurrentReplicationDuration;
+            DoctorsUtilization.AddSample(doctorUtil);
             
             VaccinationQuSize.AddSample(AgentVaccination.StatQuVaccinationSize.Mean());
             VaccinationQuTime.AddSample(AgentVaccination.StatQuVaccinationTime.Mean());
-            NursesUtilization.AddSample(AgentVaccination.PoolNurses.AverageWorkingTime() / 
-                                        CurrentReplicationDuration);
+            double nurseUtil = AgentVaccination.PoolNurses.AverageWorkingTime() / CurrentReplicationDuration;
+            NursesUtilization.AddSample(nurseUtil);
 
             WaitingRoomQuSize.AddSample(AgentWaitingRoom.StatWaitingPatientsCount.Mean());
+
+            ColdStorageQuSize.AddSample(AgentColdStorage.StatQuNursesSize.Mean());
+
+            CentreOvertime.AddSample(CurrentReplicationDuration - 32400.0);
+
+            EmployeeUtilization.AddSample((adminUtil + doctorUtil + nurseUtil) / 3);
 
             base.ReplicationFinished();
 		}
@@ -152,5 +161,13 @@ namespace simulation
 		{ get; set; }
 
         //meta! tag="end"
-	}
+        public void FinalUpdateStatistics()
+        {
+            AgentRegistration.FinalUpdateStatistics();
+            AgentExamination.FinalUpdateStatistics();
+            AgentVaccination.FinalUpdateStatistics();
+            AgentColdStorage.FinalUpdateStatistics();
+            AgentWaitingRoom.FinalUpdateStatistics();
+        }
+    }
 }

@@ -6,7 +6,7 @@
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:local="clr-namespace:GUI.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="1000"
+      d:DesignHeight="900" d:DesignWidth="1000"
       Title="PageReplications">
 
     <Grid>
@@ -132,124 +132,230 @@
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0" Background="#fafafa" Margin="10" 
-                    CornerRadius="3" VerticalAlignment="Center">
+                    CornerRadius="3" VerticalAlignment="Top">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
                 <StackPanel Margin="10">
-                    <TextBlock Text="Registration room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
-                    <TextBlock Text="Average queue length"/>
+                    <TextBlock Text="Registration room" TextAlignment="Center"
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold" FontSize="18"/>
+                    <TextBlock Text="Average queue length" Margin="0,15,0,0"/>
                     <TextBlock Text="{Binding RegistrationQuSize, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="Average waiting time"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding RegistrationQuSize95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding RegistrationQuSize95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                    <TextBlock Text="Average waiting time" Margin="0,15,0,0"/>
                     <TextBlock Text="{Binding RegistrationQuTime, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="Average utilization of entities"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding RegistrationQuTime95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding RegistrationQuTime95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                    <TextBlock Text="Average utilization of entities" Margin="0,15,0,0"/>
                     <TextBlock Text="{Binding AdminWorkersUtilization, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding AdminWorkersUtilization95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding AdminWorkersUtilization95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
 
             <Border Grid.Column="1" Background="#fafafa" Margin="10" 
-                    CornerRadius="3" VerticalAlignment="Center">
+                    CornerRadius="3" VerticalAlignment="Top">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
                 <StackPanel Margin="10">
-                    <TextBlock Text="Examination room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
-                    <TextBlock Text="Average queue length"/>
+                    <TextBlock Text="Examination room" TextAlignment="Center"
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold" FontSize="18"/>
+                    <TextBlock Text="Average queue length" Margin="0,15,0,0"/>
                     <TextBlock Text="{Binding ExaminationQuSize, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="Average waiting time"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding ExaminationQuSize95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding ExaminationQuSize95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                    <TextBlock Text="Average waiting time" Margin="0,15,0,0"/>
                     <TextBlock Text="{Binding ExaminationQuTime, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="Average utilization of entities"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding ExaminationQuTime95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding ExaminationQuTime95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                    <TextBlock Text="Average utilization of entities" Margin="0,15,0,0"/>
                     <TextBlock Text="{Binding DoctorsUtilization, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding DoctorsUtilization95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding DoctorsUtilization95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
 
             <Border Grid.Column="2" Background="#fafafa" Margin="10" 
-                    CornerRadius="3" VerticalAlignment="Center">
+                    CornerRadius="3" VerticalAlignment="Top">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
                 </Border.Effect>
 
                 <StackPanel Margin="10">
-                    <TextBlock Text="Vaccination room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
-                    <TextBlock Text="Average queue length"/>
+                    <TextBlock Text="Vaccination room" TextAlignment="Center"
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold" FontSize="18"/>
+                    <TextBlock Text="Average queue length" Margin="0,15,0,0"/>
                     <TextBlock Text="{Binding VaccinationQuSize, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="Average waiting time"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding VaccinationQuSize95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding VaccinationQuSize95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                    <TextBlock Text="Average waiting time" Margin="0,15,0,0"/>
                     <TextBlock Text="{Binding VaccinationQuTime, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="Average utilization of entities"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding VaccinationQuTime95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding VaccinationQuTime95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                    <TextBlock Text="Average utilization of entities" Margin="0,15,0,0"/>
                     <TextBlock Text="{Binding NursesUtilization, StringFormat={}{0:F6}}" 
                                FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
                                HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding NursesUtilization95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding NursesUtilization95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </Grid>
 
-        <Border Grid.Row="2" Grid.Column="0" Background="#fafafa" Margin="10" 
-                CornerRadius="3" >
-            <Border.Effect>
-                <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
-            </Border.Effect>
+        <!-- STATISTICS ROW 2 -->
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
 
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.Resources>
-                    <Style TargetType="lvc:LineSeries">
-                        <Setter Property="StrokeThickness" Value="2"></Setter>
-                        <Setter Property="Stroke" Value="#7DB700"></Setter>
-                        <Setter Property="Fill" Value="#4E7DB700"></Setter>
-                        <Setter Property="PointGeometrySize" Value="0"></Setter>
-                        <Setter Property="LineSmoothness" Value="0"></Setter>
-                    </Style>
-                    <Style TargetType="lvc:Axis">
-                        <Setter Property="IsEnabled" Value="False"></Setter>
-                    </Style>
-                </Grid.Resources>
+            <Border Grid.Column="0" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Top">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
 
-                <TextBlock Grid.Row="0" Text="Waiting room" FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold"/>
-
-                <lvc:CartesianChart Grid.Row="1"
-                                    Series="{Binding AvgWaitingRoomCountSeries}" Hoverable="False" DataTooltip="{x:Null}" DisableAnimations="True">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Number of replications" LabelFormatter="{Binding XFormatter}" ></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                </lvc:CartesianChart>
-
-                <StackPanel Grid.Row="2">
-                    <TextBlock Text="Average number of patients in waiting room"/>
-                    <TextBlock Text="{Binding RepQuWaitingRoomSize, StringFormat={}{0:F6}}" 
-                           FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
-                           HorizontalAlignment="Center"/>
+                <StackPanel Margin="10">
+                    <TextBlock Text="Centre" TextAlignment="Center"
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold" FontSize="18"/>
+                    <TextBlock Text="Average overtime" Margin="0,15,0,0"/>
+                    <TextBlock Text="{Binding CentreOvertime}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="("/>
-                        <TextBlock Text="{Binding RepQuWaitingRoomSizeCiLower, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="{Binding CentreOvertime95Lo}"/>
                         <TextBlock Text="; "/>
-                        <TextBlock Text="{Binding RepQuWaitingRoomSizeCiUpper, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="{Binding CentreOvertime95Up}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                    <TextBlock Text="Average employee utilization" Margin="0,15,0,0"/>
+                    <TextBlock Text="{Binding EmployeeUtilization, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding EmployeeUtilization95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding EmployeeUtilization95Up, StringFormat={}{0:F6}}"/>
                         <TextBlock Text=")"/>
                     </StackPanel>
                 </StackPanel>
-            </Grid>
-        </Border>
+            </Border>
+
+            <Border Grid.Column="1" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Top">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="10">
+                    <TextBlock Text="Waiting room" TextAlignment="Center"
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold" FontSize="18"/>
+                    <TextBlock Text="Average number of waiting patients" Margin="0,15,0,0"/>
+                    <TextBlock Text="{Binding WaitingPatientsCount, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding WaitingPatientsCount95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding WaitingPatientsCount95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Top">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="10">
+                    <TextBlock Text="Cold storage room" TextAlignment="Center"
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontWeight="Bold" FontSize="18"/>
+                    <TextBlock Text="Average queue length" Margin="0,15,0,0"/>
+                    <TextBlock Text="{Binding ColdStorageQuSize, StringFormat={}{0:F6}}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding ColdStorageQuSize95Lo, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding ColdStorageQuSize95Up, StringFormat={}{0:F6}}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </Grid>
 
     </Grid>
 </Page>
