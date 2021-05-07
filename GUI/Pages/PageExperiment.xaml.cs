@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
@@ -108,6 +109,8 @@ namespace GUI.Pages
                     Values = new ChartValues<double>()
                 }
             };
+
+            XFormatterExp = value => (_mw.SetMinDoctors + value).ToString(CultureInfo.CurrentCulture);
         }
 
         private void RunSimulation()

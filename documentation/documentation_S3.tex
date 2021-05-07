@@ -573,7 +573,167 @@
 	
 	Oproti pôvodným 540 pacientom znamená 1700 pacientov za deň približne \textbf{3,15 násobný nárast}. Navýšením počtov zamestnancov 3,15 násobne (16 administratívnych pracovníkov, 19 doktorov, 9 zdravotných sestier) dostaneme vyťaženie blízke pôvodnému stavu. Toto slúži ako bod, od ktorého môžme pokračovať v znižovaní stavov pracovníkov pre dosiahnutie žiadaných výsledkov.
 	
-	Pre zvýšenie celkovej priemernej vyťaženosti zamestnancov z pôvodných 56,5\% na požadovaných 70\% je potrebné znížiť kapacity personálu na úroveň približne 80\%. Pre personál to znamená zníženie stavov na 13 administratívnych pracovníkov, 15 doktorov a 7 zdravotných sestier, čo znamená aj proporcionálne zvýšenie ich vlastne vyťaženosti. Pre počet doktorov vykonáme experiment, ktorý ukáže závislosť celkového vyťaženia všetkých pracovníkov, počte ľudí v rade pred vyšetrením a celkovom čase strávenom čakaním vo všetkých radoch od počtu doktorov v centre.
+	Pre zvýšenie celkovej priemernej vyťaženosti zamestnancov z pôvodných 56,5\% na požadovaných 70\% je potrebné znížiť kapacity personálu na úroveň približne 80\%. Pre personál to znamená zníženie stavov na \textbf{13 administratívnych pracovníkov}, \textbf{15 doktorov} a \textbf{7 zdravotných sestier}, čo znamená aj proporcionálne zvýšenie ich vlastne vyťaženosti. Pre počet doktorov vykonáme experiment, ktorý ukáže závislosť celkového vyťaženia všetkých pracovníkov, počte ľudí v rade pred vyšetrením a celkovom čase strávenom čakaním vo všetkých radoch od počtu doktorov v centre.
+	
+	Modelované rozpätie bolo od 10 do 20 doktorov.
+	
+	\begin{figure}[hbt!]
+		\centering
+		\includegraphics[width=\textwidth]{src/QuExa}
+		\caption{Závislosť počtu ľudí v rade pred vyšetrením od počtu doktorov}
+	\end{figure}
+
+	\begin{figure}[hbt!]
+		\centering
+		\includegraphics[width=\textwidth]{src/Time}
+		\caption{Závislosť celkového času stráveného čakaním vo všetkých radoch od počtu doktorov}
+	\end{figure}
+
+	\begin{figure}[hbt!]
+		\centering
+		\includegraphics[width=\textwidth]{src/Util}
+		\caption{Závislosť celkového vyťaženia všetkých pracovníkov od počtu doktorov}
+	\end{figure}
+	
+	Z grafov je možné vidieť, že najmenší počet doktorov, pri ktorých sú splnené obe podmienky je 15.
+	
+	\subsection*{Vyhodnotenie (10 000 replikácií)}
+	
+	\subsubsection*{Dĺžka radu}
+	
+	\begin{table}[hbt!]
+		\begin{tabular}{p{6cm}|p{4.5cm}p{4.5cm}}
+			& \textbf{Výsledná hodnota} & \textbf{95\% interval spoľahlivosti} \\
+			\hline\hline
+			\textbf{Registrácia} 	& 2,315477            & (2,308401; 2,322553)			
+			\\\hline
+			\textbf{Vyšetrenie}  	& 25,167205           & (25,006469; 25,373091)	
+			\\\hline
+			\textbf{Vakcinácia}  	& 2,724015            & (2,698375; 2,749655)
+		\end{tabular}
+	\end{table}
+	
+	\subsubsection*{Čas čakania v rade (s)}
+	
+	\begin{table}[hbt!]
+		\begin{tabular}{p{6cm}|p{4.5cm}p{4.5cm}}
+			& \textbf{Výsledná hodnota} & \textbf{95\% interval spoľahlivosti} \\
+			\hline\hline
+			\textbf{Registrácia} 	& 49,092829           & (48,94872; 49,242787)			
+			\\\hline
+			\textbf{Vyšetrenie}  	& 534,866213          & (531,359336; 538,373091)	
+			\\\hline
+			\textbf{Vakcinácia}  	& 57,667013           & (57,127714; 58,206312)
+		\end{tabular}
+	\end{table}
+	
+	\subsubsection*{Vyťaženosť zamestnancov centra}
+	
+	\begin{table}[hbt!]
+		\begin{tabular}{p{6cm}|p{4.5cm}p{4.5cm}}
+			& \textbf{Výsledná hodnota} & \textbf{95\% interval spoľahlivosti} \\
+			\hline\hline
+			\textbf{Administratívny pracovníci} 	& 0,653161            & (0,652930; 0,653393)			
+			\\\hline
+			\textbf{Doktori}  						& 0,817460            & (0,817078; 0,817843)	
+			\\\hline
+			\textbf{Zdravotné sestry}  				& 0,583587            & (0,583359; 0,583814)
+		\end{tabular}
+	\end{table}
+	
+	\subsubsection*{Ďalšie štatistiky}
+	
+	\begin{table}[hbt!]
+		\begin{tabular}{p{6cm}|p{4.5cm}p{4.5cm}}
+			& \textbf{Výsledná hodnota} & \textbf{95\% interval spoľahlivosti} \\
+			\hline\hline
+			\textbf{Počet pacientov v čakárni} 								& 44,579085           & (44,562988; 44,595182)			
+			\\\hline
+			\textbf{Dĺžka radu pred miestnosťou s chladiacim zariadením}	& 0,098274            & (0,097768; 0,098781)	
+			\\\hline
+			\textbf{Nadčas (hh:mm:ss)}										& 00:43:54,434        & (00:43:45,037; 00:44:03,831)
+			\\\hline
+			\textbf{Priemerná vyťaženosť všetkých zamestnancov}  			& 0,684736            & (0,684511; 0,684961)
+			\\\hline
+			\textbf{Priemerný čas čakania vo všetkých radoch (hh:mm:ss)}	& 00:10:41,626        & (00:10:38,263; 00:10:44,989)
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Experiment: 1700 pacientov za deň so skoršími príchodmi}
+	
+	Upravte model tak, aby vakcinačné centrum obsluhovalo denne \textbf{1700 ľudí}. Stanovte také počty jednotlivých typov personálu, aby priemerné \textbf{vyťaženie} personálu neprekračovalo \textbf{70\%} a \textbf{sumárna priemerná doba čakania} osoby na jednotlivé úkony nepresiahla \textbf{15 minút}. Niektorí ľudia prichádzajú na očkovanie z väčšej vzdialenosti a najmä z tohto dôvodu príde časť osôb skôr ako je objednaná. Bolo zistené, že iba \textbf{10\% osôb} sa dostaví na očkovanie \textbf{v presne stanovenom} čase. Ostatní sa dostavia vopred pričom čas o koľko skôr prídu môžeme modelovať pomocou spojitého empirického rozdelenia pravdepodobnosti: 
+	\begin{itemize}
+		\item $ \left\langle 1, 20 \right) $ min; $ p = 0.3 $
+		\item $ \left\langle 20, 60 \right) $ min; $ p = 0.4 $
+		\item $ \left\langle 60, 80 \right) $ min; $ p = 0.2 $
+		\item $ \left\langle 80, 240 \right) $ min; $ p = 0.1 $
+	\end{itemize}
+
+	Minimálne počty personálu pre objednaných 1700 pacientov boli určené v predchádzajúcom experimente (\textbf{13 administratívnych pracovníkov}, \textbf{15 doktorov} a \textbf{7 zdravotných sestier}). Pri modelovaní centra aj so skoršími príchodmi pacientov však takáto konfigurácia je nedostačujúca pre splnenie podmienok 70\% maximálnej vyťaženosti zamestnancov (cca 70,5\%) a celkový priemerný čas čakania vo všetkých radoch maximálne 15 minút (cca 20 minút). Pridanie akéhokoľvek zamestnanca síce vyriešilo podmienku s vyťaženosťou, avšak podmienku s maximálnym časom v radoch vyriešilo jedine navýšenie zamestnancov o jedného doktora. Výsledná konfigurácia, zabezpečujúca splnenie oboch podmienok je teda \textbf{13 administratívnych pracovníkov}, \textbf{16 doktorov} a \textbf{7 zdravotných sestier}.
+	
+	\subsection*{Vyhodnotenie (10 000 replikácií)}
+	
+	\subsubsection*{Dĺžka radu}
+	
+	\begin{table}[hbt!]
+		\begin{tabular}{p{6cm}|p{4.5cm}p{4.5cm}}
+			& \textbf{Výsledná hodnota} & \textbf{95\% interval spoľahlivosti} \\
+			\hline\hline
+			\textbf{Registrácia} 	& 11,692926           & (11,655561; 11,730291)			
+			\\\hline
+			\textbf{Vyšetrenie}  	& 21,814283           & (21,683905; 21,944661)	
+			\\\hline
+			\textbf{Vakcinácia}  	& 4,185923            & (4,156949; 4,214897)
+		\end{tabular}
+	\end{table}
+	
+	\newpage
+	
+	\subsubsection*{Čas čakania v rade (s)}
+	
+	\begin{table}[hbt!]
+		\begin{tabular}{p{6cm}|p{4.5cm}p{4.5cm}}
+			& \textbf{Výsledná hodnota} & \textbf{95\% interval spoľahlivosti} \\
+			\hline\hline
+			\textbf{Registrácia} 	& 241,698781          & (240,966233; 242,431328)			
+			\\\hline
+			\textbf{Vyšetrenie}  	& 450,980723          & (448,325128; 453,636318)	
+			\\\hline
+			\textbf{Vakcinácia}  	& 86,627619           & (86,029056; 87,226181)
+		\end{tabular}
+	\end{table}
+	
+	\subsubsection*{Vyťaženosť zamestnancov centra}
+	
+	\begin{table}[hbt!]
+		\begin{tabular}{p{6cm}|p{4.5cm}p{4.5cm}}
+			& \textbf{Výsledná hodnota} & \textbf{95\% interval spoľahlivosti} \\
+			\hline\hline
+			\textbf{Administratívny pracovníci} 	& 0,669173            & (0,668957; 0,669389)			
+			\\\hline
+			\textbf{Doktori}  						& 0,785328            & (0,784882; 0,785773)	
+			\\\hline
+			\textbf{Zdravotné sestry}  				& 0,598462            & (0,598248; 0,598675)
+		\end{tabular}
+	\end{table}
+	
+	\subsubsection*{Ďalšie štatistiky}
+	
+	\begin{table}[hbt!]
+		\begin{tabular}{p{6cm}|p{4.5cm}p{4.5cm}}
+			& \textbf{Výsledná hodnota} & \textbf{95\% interval spoľahlivosti} \\
+			\hline\hline
+			\textbf{Počet pacientov v čakárni} 								& 45,662995           & (45,647972; 45,678018)			
+			\\\hline
+			\textbf{Dĺžka radu pred miestnosťou s chladiacim zariadením}	& 0,112555            & (0,112075; 0,113034)	
+			\\\hline
+			\textbf{Nadčas (hh:mm:ss)}										& 00:30:09,035        & (00:30:01,471; 00:30:16,599)
+			\\\hline
+			\textbf{Priemerná vyťaženosť všetkých zamestnancov}  			& 0,684321            & (0,684072; 0,684570)
+			\\\hline
+			\textbf{Priemerný čas čakania vo všetkých radoch (hh:mm:ss)}	& 00:12:59,307        & (00:12:56,281; 00:13:02,334)
+		\end{tabular}
+	\end{table}
 	
 	\section{Použité knižnice}
 	

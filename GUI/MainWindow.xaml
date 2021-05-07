@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="Semestral project 2 - Event-oriented Simulation" 
+        Title="Semestral project 3 - Agent-oriented Simulation" 
         Height="800" Width="1200"
         WindowStyle="None"
         Background="#eeeeee"
