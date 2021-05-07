@@ -27,9 +27,6 @@ namespace agents
 		{
 			Init();
 
-            AddOwnMessage(Mc.NoticePatientGenerated);
-            AddOwnMessage(Mc.NoticePickedPreGeneratedPatient);
-
             CanceledPatientsIds = new List<int>();
 			RandCanceledPatientsNum = new UniformDiscreteRNG(5, 25, ((MySimulation) MySim).RandSeedGenerator);
             RandCanceledPatientsIds = new UniformDiscreteRNG(1, ((MySimulation) MySim).OrderedPatientsNum,
@@ -57,11 +54,15 @@ namespace agents
 		private void Init()
 		{
 			new ManagerSurrounding(SimId.ManagerSurrounding, MySim, this);
-			new ActionCancelPatients(SimId.ActionCancelPatients, MySim, this);
 			new SchedulerPatientsArrival(SimId.SchedulerPatientsArrival, MySim, this);
+			new ActionCancelPatients(SimId.ActionCancelPatients, MySim, this);
 			new ActionPatientsWithEarlyArrival(SimId.ActionPatientsWithEarlyArrival, MySim, this);
 			AddOwnMessage(Mc.Initialization);
+			AddOwnMessage(Mc.NoticePatientGeneratingEnded);
 			AddOwnMessage(Mc.NoticePatientLeave);
+			AddOwnMessage(Mc.NoticePatientGenerated);
+			AddOwnMessage(Mc.NoticePreGeneratedPatientPicked);
+			AddOwnMessage(Mc.NoticePreGeneratedPatientHoldEnded);
 		}
 		//meta! tag="end"
 	}

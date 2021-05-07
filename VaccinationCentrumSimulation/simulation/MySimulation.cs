@@ -33,6 +33,7 @@ namespace simulation
         public Stat ColdStorageQuSize { get; set; }
         public Stat CentreOvertime { get; set; }
         public Stat EmployeeUtilization { get; set; }
+        public Stat SumWaitingTime { get; set; }
         public double CurrentReplicationDuration { get; set; }
 
         #endregion
@@ -63,6 +64,7 @@ namespace simulation
             ColdStorageQuSize = new Stat();
             CentreOvertime = new Stat();
             EmployeeUtilization = new Stat();
+            SumWaitingTime = new Stat();
 
             CurrentReplicationDuration = 0;
         }
@@ -86,6 +88,7 @@ namespace simulation
             ColdStorageQuSize.Clear();
             CentreOvertime.Clear();
             EmployeeUtilization.Clear();
+            SumWaitingTime.Clear();
 
             CurrentReplicationDuration = 0;
         }
@@ -119,6 +122,10 @@ namespace simulation
             CentreOvertime.AddSample(CurrentReplicationDuration - 32400.0);
 
             EmployeeUtilization.AddSample((adminUtil + doctorUtil + nurseUtil) / 3);
+
+            SumWaitingTime.AddSample(AgentRegistration.StatQuRegistrationTime.Mean() 
+                                     + AgentExamination.StatQuExaminationTime.Mean()
+                                     + AgentVaccination.StatQuVaccinationTime.Mean());
 
             base.ReplicationFinished();
 		}
@@ -159,8 +166,7 @@ namespace simulation
 		{ get; set; }
 		public AgentCanteen AgentCanteen
 		{ get; set; }
-
-        //meta! tag="end"
+		//meta! tag="end"
         public void FinalUpdateStatistics()
         {
             AgentRegistration.FinalUpdateStatistics();

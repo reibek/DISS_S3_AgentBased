@@ -27,7 +27,7 @@ namespace managers
 			}
 		}
 
-        //meta! sender="ProcessVaccination", id="26", type="Finish"
+		//meta! sender="ProcessVaccination", id="26", type="Finish"
 		public void ProcessFinishProcessVaccination(MessageForm message)
         {
             var nurse = ((MessagePatient) message).Nurse;
@@ -301,16 +301,16 @@ namespace managers
 				ProcessRequestVaccination(message);
 			break;
 
-			case Mc.Initialization:
-				ProcessInitialization(message);
-			break;
-
 			case Mc.RequestFillSyringes:
 				ProcessRequestFillSyringes(message);
 			break;
 
 			case Mc.RequestNurseBreak:
 				ProcessRequestNurseBreak(message);
+			break;
+
+			case Mc.Initialization:
+				ProcessInitialization(message);
 			break;
 
 			default:

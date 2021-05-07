@@ -22,7 +22,7 @@ namespace continualAssistants
         {
             ((MessagePatient) message).Patient.WaitingRoomTime =
                 ((MessagePatient) message).Doctor.RandWaitingRoomTimeDecision.Sample() < 0.95 ? 900 : 1800;
-            message.Code = Mc.ProcessExaminationEnded;
+            message.Code = Mc.NoticeProcessExaminationEnded;
             Hold(((MessagePatient)message).Doctor.RandExaminationTime.Sample(), message);
 		}
 
@@ -31,10 +31,13 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-                case Mc.ProcessExaminationEnded:
-                    AssistantFinished(message);
-                    break;
-			}
+            }
+		}
+
+		//meta! sender="AgentExamination", id="147", type="Notice"
+		public void ProcessNoticeProcessExaminationEnded(MessageForm message)
+		{
+            AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -42,6 +45,10 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+			case Mc.NoticeProcessExaminationEnded:
+				ProcessNoticeProcessExaminationEnded(message);
+			break;
+
 			case Mc.Start:
 				ProcessStart(message);
 			break;

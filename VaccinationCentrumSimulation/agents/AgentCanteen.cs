@@ -18,8 +18,6 @@ namespace agents
 		{
 			Init();
 
-			AddOwnMessage(Mc.ProcessEatingEnded);
-
             RandEatingTime = new TriangularRNG(300, 900, 1800, ((MySimulation)MySim).RandSeedGenerator);
         }
 
@@ -35,6 +33,7 @@ namespace agents
 		{
 			new ManagerCanteen(SimId.ManagerCanteen, MySim, this);
 			new ProcessEating(SimId.ProcessEating, MySim, this);
+			AddOwnMessage(Mc.NoticeProcessEatingEnded);
 			AddOwnMessage(Mc.RequestEmployeeLunch);
 		}
 		//meta! tag="end"

@@ -33,12 +33,6 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-				case Mc.NoticePatientGenerated:
-					ProcessNoticePatientGenerated(message);
-                    break;
-                case Mc.NoticePickedPreGeneratedPatient:
-                    ProcessNoticePickedPreGeneratedPatient(message);
-					break;
             }
 		}
 
@@ -58,41 +52,31 @@ namespace managers
 			StartContinualAssistant(message);
 		}
 
-		//meta! userInfo="Removed from model"
-		public void ProcessNoticePatientGenerated(MessageForm message)
+		//meta! sender="AgentModel", id="85", type="Notice"
+		public void ProcessNoticePatientLeave(MessageForm message)
         {
+            MyAgent.OutPatientsCount++;
+
+            if (MyAgent.InPatientsCount == MyAgent.OutPatientsCount
+                && MySim.CurrentTime > 32400.0)
+            {
+                ((MySimulation)MySim).FinalUpdateStatistics();
+                ((MySimulation)MySim).CurrentReplicationDuration = MySim.CurrentTime;
+                MySim.StopReplication();
+            }
+		}
+
+		//meta! sender="SchedulerPatientsArrival", id="133", type="Notice"
+		public void ProcessNoticePatientGenerated(MessageForm message)
+		{
             ((MessagePatient)message).IsFirst = false;
             MyAgent.InPatientsCount++;
             var patient = new EntityPatient(MyAgent.InPatientsCount, MySim);
-            if (MyAgent.CanceledPatientsIds.Count > 0 
+            if (MyAgent.CanceledPatientsIds.Count > 0
                 && patient.Id == MyAgent.CanceledPatientsIds.First())
             {
-				message.Code = Mc.NoticePatientLeave;
-				MyAgent.CanceledPatientsIds.RemoveAt(0);
-                Notice(new MessagePatient(message));
-            } 
-            else
-            {
-                ((MessagePatient)message).Patient = patient;
-                message.Addressee = MySim.FindAgent(SimId.AgentModel);
-                message.Code = Mc.NoticePatientArrival;
-                Notice(new MessagePatient(message));
-            }
-
-            if (MyAgent.InPatientsCount == ((MySimulation)MySim).OrderedPatientsNum) return;
-
-            message.Addressee = MyAgent.FindAssistant(SimId.SchedulerPatientsArrival);
-            StartContinualAssistant(message);
-        }
-
-        public void ProcessNoticePickedPreGeneratedPatient(MessageForm message)
-        {
-			MyAgent.InPatientsCount++;
-            var patient = ((MySimulation) MySim).PreGeneratedPatients.Dequeue();
-            if (MyAgent.CanceledPatientsIds.Count > 0
-                && MyAgent.CanceledPatientsIds.Contains(patient.Id))
-            {
-                message.Code = Mc.NoticePatientLeave; 
+                message.Code = Mc.NoticePatientLeave;
+                MyAgent.CanceledPatientsIds.RemoveAt(0);
                 Notice(new MessagePatient(message));
             }
             else
@@ -109,18 +93,29 @@ namespace managers
             StartContinualAssistant(message);
 		}
 
-		//meta! sender="AgentModel", id="85", type="Notice"
-		public void ProcessNoticePatientLeave(MessageForm message)
-        {
-            MyAgent.OutPatientsCount++;
-
-            if (MyAgent.InPatientsCount == MyAgent.OutPatientsCount
-                && MySim.CurrentTime > 32400.0)
+		//meta! sender="SchedulerPatientsArrival", id="134", type="Notice"
+		public void ProcessNoticePreGeneratedPatientPicked(MessageForm message)
+		{
+            MyAgent.InPatientsCount++;
+            var patient = ((MySimulation)MySim).PreGeneratedPatients.Dequeue();
+            if (MyAgent.CanceledPatientsIds.Count > 0
+                && MyAgent.CanceledPatientsIds.Contains(patient.Id))
             {
-                ((MySimulation)MySim).FinalUpdateStatistics();
-                ((MySimulation)MySim).CurrentReplicationDuration = MySim.CurrentTime;
-                MySim.StopReplication();
+                message.Code = Mc.NoticePatientLeave;
+                Notice(new MessagePatient(message));
             }
+            else
+            {
+                ((MessagePatient)message).Patient = patient;
+                message.Addressee = MySim.FindAgent(SimId.AgentModel);
+                message.Code = Mc.NoticePatientArrival;
+                Notice(new MessagePatient(message));
+            }
+
+            if (MyAgent.InPatientsCount == ((MySimulation)MySim).OrderedPatientsNum) return;
+
+            message.Addressee = MyAgent.FindAssistant(SimId.SchedulerPatientsArrival);
+            StartContinualAssistant(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -136,12 +131,20 @@ namespace managers
 				ProcessInitialization(message);
 			break;
 
+			case Mc.NoticePatientGenerated:
+				ProcessNoticePatientGenerated(message);
+			break;
+
 			case Mc.NoticePatientLeave:
 				ProcessNoticePatientLeave(message);
 			break;
 
 			case Mc.Finish:
 				ProcessFinish(message);
+			break;
+
+			case Mc.NoticePreGeneratedPatientPicked:
+				ProcessNoticePreGeneratedPatientPicked(message);
 			break;
 
 			default:

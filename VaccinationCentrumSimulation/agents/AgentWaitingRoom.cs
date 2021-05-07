@@ -17,9 +17,7 @@ namespace agents
 		{
 			Init();
 
-            AddOwnMessage(Mc.ProcessWaitingRoomEnded);
-
-			StatWaitingPatientsCount = new WStat(MySim);
+            StatWaitingPatientsCount = new WStat(MySim);
 		}
 
 		override public void PrepareReplication()
@@ -36,6 +34,7 @@ namespace agents
 			new ManagerWaitingRoom(SimId.ManagerWaitingRoom, MySim, this);
 			new ProcessWaitingRoom(SimId.ProcessWaitingRoom, MySim, this);
 			AddOwnMessage(Mc.RequestWaitingRoom);
+			AddOwnMessage(Mc.NoticeProcessWaitingRoomEnded);
 		}
 		//meta! tag="end"
 

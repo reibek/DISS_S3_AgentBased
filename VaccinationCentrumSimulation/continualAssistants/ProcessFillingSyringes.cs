@@ -28,7 +28,7 @@ namespace continualAssistants
                 fillingTime += nurse.RandFillSyringeTime.Sample();
             }
 
-            message.Code = Mc.ProcessFillingSyringesEnded;
+            message.Code = Mc.NoticeProcessFillingSyringesEnded;
             
             if (((MySimulation)MySim).EnableLightModel)
                 Hold(0, message);
@@ -41,10 +41,13 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-				case Mc.ProcessFillingSyringesEnded:
-					AssistantFinished(message);
-                    break;
-			}
+            }
+		}
+
+		//meta! sender="AgentColdStorage", id="153", type="Notice"
+		public void ProcessNoticeProcessFillingSyringesEnded(MessageForm message)
+		{
+            AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -54,6 +57,10 @@ namespace continualAssistants
 			{
 			case Mc.Start:
 				ProcessStart(message);
+			break;
+
+			case Mc.NoticeProcessFillingSyringesEnded:
+				ProcessNoticeProcessFillingSyringesEnded(message);
 			break;
 
 			default:

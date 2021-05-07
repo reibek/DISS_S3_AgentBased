@@ -20,7 +20,7 @@ namespace continualAssistants
 		//meta! sender="AgentRegistration", id="20", type="Start"
 		public void ProcessStart(MessageForm message)
         {
-            message.Code = Mc.ProcessRegistrationEnded;
+            message.Code = Mc.NoticeProcessRegistrationEnded;
 			Hold(((MessagePatient)message).AdminWorker.RandRegistrationTime.Sample(), message);
 		}
 
@@ -29,10 +29,13 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-				case Mc.ProcessRegistrationEnded:
-					AssistantFinished(message);
-                    break;
-			}
+            }
+		}
+
+		//meta! sender="AgentRegistration", id="144", type="Notice"
+		public void ProcessNoticeProcessRegistrationEnded(MessageForm message)
+		{
+            AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -40,6 +43,10 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+			case Mc.NoticeProcessRegistrationEnded:
+				ProcessNoticeProcessRegistrationEnded(message);
+			break;
+
 			case Mc.Start:
 				ProcessStart(message);
 			break;

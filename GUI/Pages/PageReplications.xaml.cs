@@ -59,6 +59,9 @@ namespace GUI.Pages
         private double _employeeUtilization;
         private double _employeeUtilization95Lo;
         private double _employeeUtilization95Up;
+        private TimeSpan _sumWaitingTime;
+        private TimeSpan _sumWaitingTime95Lo;
+        private TimeSpan _sumWaitingTime95Up;
 
         #region PROPERTIES
 
@@ -462,6 +465,36 @@ namespace GUI.Pages
             }
         }
 
+        public TimeSpan SumWaitingTime
+        {
+            get => _sumWaitingTime;
+            set
+            {
+                _sumWaitingTime = value;
+                OnPropertyChanged(nameof(SumWaitingTime));
+            }
+        }
+
+        public TimeSpan SumWaitingTime95Lo
+        {
+            get => _sumWaitingTime95Lo;
+            set
+            {
+                _sumWaitingTime95Lo = value;
+                OnPropertyChanged(nameof(SumWaitingTime95Lo));
+            }
+        }
+
+        public TimeSpan SumWaitingTime95Up
+        {
+            get => _sumWaitingTime95Up;
+            set
+            {
+                _sumWaitingTime95Up = value;
+                OnPropertyChanged(nameof(SumWaitingTime95Up));
+            }
+        }
+
         #endregion
 
         public PageReplications(MainWindow mw)
@@ -529,6 +562,10 @@ namespace GUI.Pages
             EmployeeUtilization = 0;
             EmployeeUtilization95Lo = 0;
             EmployeeUtilization95Up = 0;
+
+            SumWaitingTime = TimeSpan.Zero;
+            SumWaitingTime95Lo = TimeSpan.Zero;
+            SumWaitingTime95Up = TimeSpan.Zero;
         }
 
         private void RunSimulation()
@@ -603,6 +640,14 @@ namespace GUI.Pages
                     EmployeeUtilization = sim.EmployeeUtilization.Mean();
                     EmployeeUtilization95Lo = sim.EmployeeUtilization.SampleSize > 2 ? sim.EmployeeUtilization.ConfidenceInterval95[0] : 0;
                     EmployeeUtilization95Up = sim.EmployeeUtilization.SampleSize > 2 ? sim.EmployeeUtilization.ConfidenceInterval95[1] : 0;
+
+                    SumWaitingTime = TimeSpan.FromSeconds(sim.SumWaitingTime.Mean());
+                    SumWaitingTime95Lo = TimeSpan.FromSeconds(sim.SumWaitingTime.SampleSize > 2
+                        ? sim.SumWaitingTime.ConfidenceInterval95[0]
+                        : 0);
+                    SumWaitingTime95Up = TimeSpan.FromSeconds(sim.SumWaitingTime.SampleSize > 2
+                        ? sim.SumWaitingTime.ConfidenceInterval95[1]
+                        : 0);
                 });
             });
 

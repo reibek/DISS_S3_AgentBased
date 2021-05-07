@@ -20,9 +20,7 @@ namespace agents
 		{
 			Init();
 
-			AddOwnMessage(Mc.ProcessFillingSyringesEnded);
-
-			QuNurses = new DataStructures.Queue<MessageForm>();
+            QuNurses = new DataStructures.Queue<MessageForm>();
 			StatQuNursesSize = new WStat(MySim);
 		}
 
@@ -40,6 +38,7 @@ namespace agents
 		{
 			new ManagerColdStorage(SimId.ManagerColdStorage, MySim, this);
 			new ProcessFillingSyringes(SimId.ProcessFillingSyringes, MySim, this);
+			AddOwnMessage(Mc.NoticeProcessFillingSyringesEnded);
 			AddOwnMessage(Mc.RequestFillSyringes);
 		}
 		//meta! tag="end"

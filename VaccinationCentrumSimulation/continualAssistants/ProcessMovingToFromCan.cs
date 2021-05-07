@@ -20,7 +20,7 @@ namespace continualAssistants
 		//meta! sender="AgentCentrum", id="78", type="Start"
 		public void ProcessStart(MessageForm message)
         {
-            message.Code = Mc.ProcessMovingToFromCanEnded;
+            message.Code = Mc.NoticeProcessMovingToFromCanEnded;
 
             if (((MySimulation)MySim).EnableLightModel)
                 Hold(0, message);
@@ -33,10 +33,13 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-				case Mc.ProcessMovingToFromCanEnded:
-					AssistantFinished(message);
-                    break;
-			}
+            }
+		}
+
+		//meta! sender="AgentCentrum", id="140", type="Notice"
+		public void ProcessNoticeProcessMovingToFromCanEnded(MessageForm message)
+		{
+            AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -46,6 +49,10 @@ namespace continualAssistants
 			{
 			case Mc.Start:
 				ProcessStart(message);
+			break;
+
+			case Mc.NoticeProcessMovingToFromCanEnded:
+				ProcessNoticeProcessMovingToFromCanEnded(message);
 			break;
 
 			default:

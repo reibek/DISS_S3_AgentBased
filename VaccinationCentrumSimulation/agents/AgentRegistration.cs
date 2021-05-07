@@ -25,10 +25,7 @@ namespace agents
 		{
 			Init();
 
-            AddOwnMessage(Mc.ProcessRegistrationEnded);
-            AddOwnMessage(Mc.TimeForBreak);
-
-			QuRegistration = new DataStructures.Queue<MessageForm>();
+            QuRegistration = new DataStructures.Queue<MessageForm>();
 			StatQuRegistrationSize = new WStat(MySim);
 			StatQuRegistrationTime = new Stat();
         }
@@ -59,7 +56,9 @@ namespace agents
 			new ProcessRegistration(SimId.ProcessRegistration, MySim, this);
 			new SchedulerAdminWorkerBreak(SimId.SchedulerAdminWorkerBreak, MySim, this);
 			AddOwnMessage(Mc.Initialization);
+			AddOwnMessage(Mc.NoticeTimeForBreak);
 			AddOwnMessage(Mc.RequestAdminWorkerBreak);
+			AddOwnMessage(Mc.NoticeProcessRegistrationEnded);
 			AddOwnMessage(Mc.RequestRegistration);
 		}
 		//meta! tag="end"

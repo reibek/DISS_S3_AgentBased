@@ -20,7 +20,7 @@ namespace continualAssistants
 		//meta! sender="AgentVaccination", id="26", type="Start"
 		public void ProcessStart(MessageForm message)
         {
-            message.Code = Mc.ProcessVaccinationEnded;
+            message.Code = Mc.NoticeProcessVaccinationEnded;
 			Hold(((MessagePatient) message).Nurse.RandVaccinationTime.Sample(), message);
         }
 
@@ -29,10 +29,13 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-                case Mc.ProcessVaccinationEnded:
-                    AssistantFinished(message);
-                    break;
-			}
+            }
+		}
+
+		//meta! sender="AgentVaccination", id="149", type="Notice"
+		public void ProcessNoticeProcessVaccinationEnded(MessageForm message)
+		{
+            AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -40,6 +43,10 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+			case Mc.NoticeProcessVaccinationEnded:
+				ProcessNoticeProcessVaccinationEnded(message);
+			break;
+
 			case Mc.Start:
 				ProcessStart(message);
 			break;

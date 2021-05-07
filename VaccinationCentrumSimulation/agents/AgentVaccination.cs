@@ -25,11 +25,7 @@ namespace agents
 		{
 			Init();
 
-            AddOwnMessage(Mc.ProcessVaccinationEnded);
-			AddOwnMessage(Mc.ProcessMovingToFromColdStorEnded);
-            AddOwnMessage(Mc.TimeForBreak);
-
-			QuVaccination = new DataStructures.Queue<MessageForm>();
+            QuVaccination = new DataStructures.Queue<MessageForm>();
             StatQuVaccinationSize = new WStat(MySim);
             StatQuVaccinationTime = new Stat();
 			RandMovingToFromColdStorTime = new UniformContinuousRNG(10, 18, ((MySimulation)MySim).RandSeedGenerator);
@@ -54,14 +50,17 @@ namespace agents
             }
 		}
 
-        //meta! userInfo="Generated code: do not modify", tag="begin"
+		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()
 		{
 			new ManagerVaccination(SimId.ManagerVaccination, MySim, this);
-			new ProcessVaccination(SimId.ProcessVaccination, MySim, this);
 			new SchedulerNurseBreak(SimId.SchedulerNurseBreak, MySim, this);
 			new ProcessMovingToFromColdStor(SimId.ProcessMovingToFromColdStor, MySim, this);
+			new ProcessVaccination(SimId.ProcessVaccination, MySim, this);
 			AddOwnMessage(Mc.Initialization);
+			AddOwnMessage(Mc.NoticeTimeForBreak);
+			AddOwnMessage(Mc.NoticeProcessMovingToFromColdStorEnded);
+			AddOwnMessage(Mc.NoticeProcessVaccinationEnded);
 			AddOwnMessage(Mc.RequestNurseBreak);
 			AddOwnMessage(Mc.RequestFillSyringes);
 			AddOwnMessage(Mc.RequestVaccination);

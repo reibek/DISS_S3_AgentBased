@@ -20,7 +20,7 @@ namespace continualAssistants
 		//meta! sender="AgentExamination", id="63", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
-            message.Code = Mc.TimeForBreak;
+            message.Code = Mc.NoticeTimeForBreak;
             Hold(13500, message); // 3:45 hours (11:45)
         }
 
@@ -29,10 +29,13 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-                case Mc.TimeForBreak:
-                    AssistantFinished(message);
-                    break;
-			}
+            }
+		}
+
+		//meta! sender="AgentExamination", id="146", type="Notice"
+		public void ProcessNoticeTimeForBreak(MessageForm message)
+		{
+            AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -40,6 +43,10 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+			case Mc.NoticeTimeForBreak:
+				ProcessNoticeTimeForBreak(message);
+			break;
+
 			case Mc.Start:
 				ProcessStart(message);
 			break;

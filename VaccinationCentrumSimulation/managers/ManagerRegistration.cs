@@ -210,10 +210,6 @@ namespace managers
 				ProcessRequestRegistration(message);
 			break;
 
-			case Mc.Initialization:
-				ProcessInitialization(message);
-			break;
-
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
@@ -229,6 +225,10 @@ namespace managers
 
 			case Mc.RequestAdminWorkerBreak:
 				ProcessRequestAdminWorkerBreak(message);
+			break;
+
+			case Mc.Initialization:
+				ProcessInitialization(message);
 			break;
 
 			default:

@@ -306,6 +306,18 @@
                         <TextBlock Text="{Binding EmployeeUtilization95Up, StringFormat={}{0:F6}}"/>
                         <TextBlock Text=")"/>
                     </StackPanel>
+                    <TextBlock Text="Average summary waiting time for all procedures" Margin="0,15,0,0"
+                               TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding SumWaitingTime}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding SumWaitingTime95Lo}"/>
+                        <TextBlock Text="; "/>
+                        <TextBlock Text="{Binding SumWaitingTime95Up}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
 

@@ -22,8 +22,7 @@ namespace continualAssistants
         {
             if (((MySimulation) MySim).EnableEarlyArrivals)
             {
-                message.Code = Mc.NoticePickedPreGeneratedPatient;
-                message.Addressee = MyAgent;
+                message.Code = Mc.NoticePreGeneratedPatientHoldEnded;
                 double holdTime = ((MySimulation) MySim).PreGeneratedPatients.First.ArrivalTime - MySim.CurrentTime < 0
                     ? 0
                     : ((MySimulation) MySim).PreGeneratedPatients.First.ArrivalTime - MySim.CurrentTime;
@@ -32,10 +31,8 @@ namespace continualAssistants
             }
             else
             {
-                message.Code = Mc.NoticePatientGenerated;
-                message.Addressee = MyAgent;
-
-				if (!((MessagePatient)message).IsFirst)
+                message.Code = Mc.NoticePatientGeneratingEnded;
+                if (!((MessagePatient)message).IsFirst)
                     Hold(32400.0 / ((MySimulation)MySim).OrderedPatientsNum, message);
                 else
                     Hold(0, message);
@@ -47,13 +44,21 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-				case Mc.NoticePatientGenerated:
-                    Notice(message);
-                    break;
-				case Mc.NoticePickedPreGeneratedPatient:
-					Notice(message);
-                    break;
-			}
+            }
+		}
+
+		//meta! sender="AgentSurrounding", id="128", type="Notice"
+		public void ProcessNoticePatientGeneratingEnded(MessageForm message)
+        {
+            message.Code = Mc.NoticePatientGenerated;
+            Notice(message);
+		}
+
+		//meta! sender="AgentSurrounding", id="132", type="Notice"
+		public void ProcessNoticePreGeneratedPatientHoldEnded(MessageForm message)
+		{
+            message.Code = Mc.NoticePreGeneratedPatientPicked;
+            Notice(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -61,6 +66,14 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+			case Mc.NoticePatientGeneratingEnded:
+				ProcessNoticePatientGeneratingEnded(message);
+			break;
+
+			case Mc.NoticePreGeneratedPatientHoldEnded:
+				ProcessNoticePreGeneratedPatientHoldEnded(message);
+			break;
+
 			case Mc.Start:
 				ProcessStart(message);
 			break;

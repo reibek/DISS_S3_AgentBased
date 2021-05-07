@@ -20,7 +20,7 @@ namespace continualAssistants
 		//meta! sender="AgentCanteen", id="69", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
-            message.Code = Mc.ProcessEatingEnded;
+            message.Code = Mc.NoticeProcessEatingEnded;
 
             if (((MySimulation)MySim).EnableLightModel)
                 Hold(0, message);
@@ -34,10 +34,13 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-				case Mc.ProcessEatingEnded:
-                    AssistantFinished(message);
-					break;
-			}
+            }
+		}
+
+		//meta! sender="AgentCanteen", id="155", type="Notice"
+		public void ProcessNoticeProcessEatingEnded(MessageForm message)
+		{
+            AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -45,6 +48,10 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
+			case Mc.NoticeProcessEatingEnded:
+				ProcessNoticeProcessEatingEnded(message);
+			break;
+
 			case Mc.Start:
 				ProcessStart(message);
 			break;

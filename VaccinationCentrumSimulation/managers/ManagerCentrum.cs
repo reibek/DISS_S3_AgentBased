@@ -214,15 +214,15 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.RequestRegistration:
-				ProcessRequestRegistration(message);
-			break;
-
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
 				case SimId.ProcessMovingExaToVac:
 					ProcessFinishProcessMovingExaToVac(message);
+				break;
+
+				case SimId.ProcessMovingToFromCan:
+					ProcessFinishProcessMovingToFromCan(message);
 				break;
 
 				case SimId.ProcessMovingVacToWai:
@@ -232,23 +232,11 @@ namespace managers
 				case SimId.ProcessMovingRegToExa:
 					ProcessFinishProcessMovingRegToExa(message);
 				break;
-
-				case SimId.ProcessMovingToFromCan:
-					ProcessFinishProcessMovingToFromCan(message);
-				break;
 				}
 			break;
 
-			case Mc.RequestVaccination:
-				ProcessRequestVaccination(message);
-			break;
-
-			case Mc.RequestEmployeeLunch:
-				ProcessRequestEmployeeLunch(message);
-			break;
-
-			case Mc.RequestDoctorBreak:
-				ProcessRequestDoctorBreak(message);
+			case Mc.RequestAdminWorkerBreak:
+				ProcessRequestAdminWorkerBreak(message);
 			break;
 
 			case Mc.RequestExamination:
@@ -259,20 +247,32 @@ namespace managers
 				ProcessInitialization(message);
 			break;
 
-			case Mc.RequestAdminWorkerBreak:
-				ProcessRequestAdminWorkerBreak(message);
+			case Mc.RequestRegistration:
+				ProcessRequestRegistration(message);
+			break;
+
+			case Mc.RequestVaccination:
+				ProcessRequestVaccination(message);
+			break;
+
+			case Mc.RequestEmployeeLunch:
+				ProcessRequestEmployeeLunch(message);
 			break;
 
 			case Mc.RequestWaitingRoom:
 				ProcessRequestWaitingRoom(message);
 			break;
 
+			case Mc.RequestNurseBreak:
+				ProcessRequestNurseBreak(message);
+			break;
+
 			case Mc.NoticeNewPatient:
 				ProcessNoticeNewPatient(message);
 			break;
 
-			case Mc.RequestNurseBreak:
-				ProcessRequestNurseBreak(message);
+			case Mc.RequestDoctorBreak:
+				ProcessRequestDoctorBreak(message);
 			break;
 
 			default:

@@ -20,7 +20,7 @@ namespace continualAssistants
 		//meta! sender="AgentVaccination", id="89", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
-            message.Code = Mc.ProcessMovingToFromColdStorEnded;
+            message.Code = Mc.NoticeProcessMovingToFromColdStorEnded;
 
             if (((MySimulation)MySim).EnableLightModel)
                 Hold(0, message);
@@ -33,10 +33,13 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-                case Mc.ProcessMovingToFromColdStorEnded:
-                    AssistantFinished(message);
-                    break;
-			}
+            }
+		}
+
+		//meta! sender="AgentVaccination", id="150", type="Notice"
+		public void ProcessNoticeProcessMovingToFromColdStorEnded(MessageForm message)
+		{
+            AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -46,6 +49,10 @@ namespace continualAssistants
 			{
 			case Mc.Start:
 				ProcessStart(message);
+			break;
+
+			case Mc.NoticeProcessMovingToFromColdStorEnded:
+				ProcessNoticeProcessMovingToFromColdStorEnded(message);
 			break;
 
 			default:

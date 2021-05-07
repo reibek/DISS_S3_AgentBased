@@ -20,7 +20,7 @@ namespace continualAssistants
 		//meta! sender="AgentWaitingRoom", id="29", type="Start"
 		public void ProcessStart(MessageForm message)
         {
-            message.Code = Mc.ProcessWaitingRoomEnded;
+            message.Code = Mc.NoticeProcessWaitingRoomEnded;
             Hold(((MessagePatient) message).Patient.WaitingRoomTime, message);
         }
 
@@ -29,10 +29,13 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-                case Mc.ProcessWaitingRoomEnded:
-                    AssistantFinished(message);
-                    break;
-			}
+            }
+		}
+
+		//meta! sender="AgentWaitingRoom", id="152", type="Notice"
+		public void ProcessNoticeProcessWaitingRoomEnded(MessageForm message)
+		{
+            AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -42,6 +45,10 @@ namespace continualAssistants
 			{
 			case Mc.Start:
 				ProcessStart(message);
+			break;
+
+			case Mc.NoticeProcessWaitingRoomEnded:
+				ProcessNoticeProcessWaitingRoomEnded(message);
 			break;
 
 			default:
