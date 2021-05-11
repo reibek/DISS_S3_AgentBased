@@ -297,7 +297,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
@@ -342,15 +342,28 @@
                                         <Grid Margin="0,5">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="15" />
-                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="15" />
+                                                <ColumnDefinition Width="15" />
+                                                <ColumnDefinition Width="55" />
+                                                <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="50" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="40" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Text="{Binding Id}" />
-                                            <ProgressBar Grid.Column="1" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
-                                            <TextBlock Grid.Column="2" Margin="5,0,0,0" Text="{Binding AverageUtilization, Mode=OneWay, StringFormat={}{0:F4}}" />
-                                            <Ellipse Grid.Column="3" Width="10" Height="10">
+                                            <TextBlock Text="{Binding Id}" TextAlignment="Right"/>
+                                            <Rectangle Grid.Column="1" Width="10" Height="10" Margin="5,0,0,0">
+                                                <Rectangle.Style>
+                                                    <Style TargetType="Rectangle">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HadBreak}" Value="False">
+                                                                <Setter Property="Fill" Value="LightCoral"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding HadBreak}" Value="True">
+                                                                <Setter Property="Fill" Value="LightGreen"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                            <Ellipse Grid.Column="2" Width="10" Height="10" Margin="5,0,0,0">
                                                 <Ellipse.Style>
                                                     <Style TargetType="Ellipse">
                                                         <Style.Triggers>
@@ -370,7 +383,9 @@
                                                     </Style>
                                                 </Ellipse.Style>
                                             </Ellipse>
-                                            <TextBlock Grid.Column="4" Margin="5,0,0,0" Text="{Binding HadBreak, Mode=OneWay}"/>
+                                            <TextBlock Grid.Column="3" Margin="5,0,0,0" Text="{Binding State, Mode=OneWay}" />
+                                            <ProgressBar Grid.Column="4" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
+                                            <TextBlock Grid.Column="5" Margin="5,0,0,0" Text="{Binding AverageUtilization, Mode=OneWay, StringFormat={}{0:F4}}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -424,15 +439,28 @@
                                         <Grid Margin="0,5">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="15" />
-                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="15" />
+                                                <ColumnDefinition Width="15" />
+                                                <ColumnDefinition Width="55" />
+                                                <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="50" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="40" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Text="{Binding Id}" />
-                                            <ProgressBar Grid.Column="1" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
-                                            <TextBlock Grid.Column="2" Margin="5,0,0,0" Text="{Binding AverageUtilization, Mode=OneWay, StringFormat={}{0:F4}}" />
-                                            <Ellipse Grid.Column="3" Width="10" Height="10">
+                                            <TextBlock Text="{Binding Id}" TextAlignment="Right"/>
+                                            <Rectangle Grid.Column="1" Width="10" Height="10" Margin="5,0,0,0">
+                                                <Rectangle.Style>
+                                                    <Style TargetType="Rectangle">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HadBreak}" Value="False">
+                                                                <Setter Property="Fill" Value="LightCoral"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding HadBreak}" Value="True">
+                                                                <Setter Property="Fill" Value="LightGreen"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                            <Ellipse Grid.Column="2" Width="10" Height="10" Margin="5,0,0,0">
                                                 <Ellipse.Style>
                                                     <Style TargetType="Ellipse">
                                                         <Style.Triggers>
@@ -452,7 +480,9 @@
                                                     </Style>
                                                 </Ellipse.Style>
                                             </Ellipse>
-                                            <TextBlock Grid.Column="4" Margin="5,0,0,0" Text="{Binding HadBreak, Mode=OneWay}"/>
+                                            <TextBlock Grid.Column="3" Margin="5,0,0,0" Text="{Binding State, Mode=OneWay}" />
+                                            <ProgressBar Grid.Column="4" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
+                                            <TextBlock Grid.Column="5" Margin="5,0,0,0" Text="{Binding AverageUtilization, Mode=OneWay, StringFormat={}{0:F4}}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -505,16 +535,29 @@
                                         <Grid Margin="0,5">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="15" />
-                                                <ColumnDefinition Width="75" />
-                                                <ColumnDefinition Width="50" />
-                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="15" />
+                                                <ColumnDefinition Width="15" />
+                                                <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="20" />
-                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="50" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Text="{Binding Id}" />
-                                            <ProgressBar Grid.Column="1" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
-                                            <TextBlock Grid.Column="2" Margin="5,0,0,0" Text="{Binding AverageUtilization, Mode=OneWay, StringFormat={}{0:F4}}" />
-                                            <Ellipse Grid.Column="3" Width="10" Height="10">
+                                            <TextBlock Text="{Binding Id}" TextAlignment="Right"/>
+                                            <Rectangle Grid.Column="1" Width="10" Height="10" Margin="5,0,0,0">
+                                                <Rectangle.Style>
+                                                    <Style TargetType="Rectangle">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HadBreak}" Value="False">
+                                                                <Setter Property="Fill" Value="LightCoral"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding HadBreak}" Value="True">
+                                                                <Setter Property="Fill" Value="LightGreen"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                            <Ellipse Grid.Column="2" Width="10" Height="10" Margin="5,0,0,0">
                                                 <Ellipse.Style>
                                                     <Style TargetType="Ellipse">
                                                         <Style.Triggers>
@@ -537,8 +580,10 @@
                                                     </Style>
                                                 </Ellipse.Style>
                                             </Ellipse>
+                                            <TextBlock Grid.Column="3" Margin="5,0,0,0" Text="{Binding State, Mode=OneWay}" />
                                             <TextBlock Grid.Column="4" Margin="5,0,0,0" Text="{Binding SyringesFullCount}"/>
-                                            <TextBlock Grid.Column="5" Margin="5,0,0,0" Text="{Binding HadBreak, Mode=OneWay}"/>
+                                            <ProgressBar Grid.Column="5" Margin="5,0,0,0" Minimum="0" Maximum="1" Value="{Binding AverageUtilization, Mode=OneWay}" />
+                                            <TextBlock Grid.Column="6" Margin="5,0,0,0" Text="{Binding AverageUtilization, Mode=OneWay, StringFormat={}{0:F4}}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

@@ -709,11 +709,11 @@ namespace GUI
             SetCheckLightModel = false;
             SetChartVisibleValuesNum = 100;
             SetNthObservation = 20;
-            SetExpReplicationsNum = 5000;
-            SetMinDoctors = 15;
-            SetMaxDoctors = 25;
+            SetExpReplicationsNum = 20;
+            SetMinDoctors = 10;
+            SetMaxDoctors = 20;
 
-            ReplicationsNum = 1_000_000;
+            ReplicationsNum = 10_000;
             RepCount = 0;
             
             RepQuRegistrationSize = 0;
