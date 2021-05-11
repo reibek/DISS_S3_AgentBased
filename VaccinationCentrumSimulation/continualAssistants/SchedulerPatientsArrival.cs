@@ -70,12 +70,12 @@ namespace continualAssistants
 				ProcessNoticePatientGeneratingEnded(message);
 			break;
 
-			case Mc.NoticePreGeneratedPatientHoldEnded:
-				ProcessNoticePreGeneratedPatientHoldEnded(message);
-			break;
-
 			case Mc.Start:
 				ProcessStart(message);
+			break;
+
+			case Mc.NoticePreGeneratedPatientHoldEnded:
+				ProcessNoticePreGeneratedPatientHoldEnded(message);
 			break;
 
 			default:

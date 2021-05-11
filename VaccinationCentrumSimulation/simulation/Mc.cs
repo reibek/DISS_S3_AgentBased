@@ -26,6 +26,7 @@ namespace simulation
 		public const int RequestExamination = 1004;
 		public const int RequestVaccination = 1005;
 		public const int RequestWaitingRoom = 1006;
+		public const int NoticeProcessOpenNewPackageEnded = 1039;
 		public const int NoticePatientLeave = 1008;
 		public const int Initialization = 1010;
 		public const int RequestFillSyringes = 1011;

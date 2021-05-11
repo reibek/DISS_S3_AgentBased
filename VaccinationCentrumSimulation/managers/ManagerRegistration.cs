@@ -206,29 +206,29 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.RequestRegistration:
-				ProcessRequestRegistration(message);
-			break;
-
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
-				case SimId.SchedulerAdminWorkerBreak:
-					ProcessFinishSchedulerAdminWorkerBreak(message);
-				break;
-
 				case SimId.ProcessRegistration:
 					ProcessFinishProcessRegistration(message);
 				break;
+
+				case SimId.SchedulerAdminWorkerBreak:
+					ProcessFinishSchedulerAdminWorkerBreak(message);
+				break;
 				}
+			break;
+
+			case Mc.Initialization:
+				ProcessInitialization(message);
 			break;
 
 			case Mc.RequestAdminWorkerBreak:
 				ProcessRequestAdminWorkerBreak(message);
 			break;
 
-			case Mc.Initialization:
-				ProcessInitialization(message);
+			case Mc.RequestRegistration:
+				ProcessRequestRegistration(message);
 			break;
 
 			default:

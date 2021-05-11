@@ -43,12 +43,12 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-			case Mc.Start:
-				ProcessStart(message);
-			break;
-
 			case Mc.NoticeProcessWaitingRoomEnded:
 				ProcessNoticeProcessWaitingRoomEnded(message);
+			break;
+
+			case Mc.Start:
+				ProcessStart(message);
 			break;
 
 			default:

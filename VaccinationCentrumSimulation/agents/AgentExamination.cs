@@ -53,8 +53,8 @@ namespace agents
 		private void Init()
 		{
 			new ManagerExamination(SimId.ManagerExamination, MySim, this);
-			new ProcessExamination(SimId.ProcessExamination, MySim, this);
 			new SchedulerDoctorBreak(SimId.SchedulerDoctorBreak, MySim, this);
+			new ProcessExamination(SimId.ProcessExamination, MySim, this);
 			AddOwnMessage(Mc.Initialization);
 			AddOwnMessage(Mc.NoticeTimeForBreak);
 			AddOwnMessage(Mc.NoticeProcessExaminationEnded);

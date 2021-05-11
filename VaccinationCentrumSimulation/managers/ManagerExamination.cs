@@ -220,16 +220,16 @@ namespace managers
 				}
 			break;
 
-			case Mc.RequestExamination:
-				ProcessRequestExamination(message);
-			break;
-
 			case Mc.Initialization:
 				ProcessInitialization(message);
 			break;
 
 			case Mc.RequestDoctorBreak:
 				ProcessRequestDoctorBreak(message);
+			break;
+
+			case Mc.RequestExamination:
+				ProcessRequestExamination(message);
 			break;
 
 			default:

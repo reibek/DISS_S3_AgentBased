@@ -51,10 +51,10 @@ namespace agents
 		private void Init()
 		{
 			new ManagerCentrum(SimId.ManagerCentrum, MySim, this);
-			new ProcessMovingToFromCan(SimId.ProcessMovingToFromCan, MySim, this);
+			new ProcessMovingExaToVac(SimId.ProcessMovingExaToVac, MySim, this);
 			new ProcessMovingVacToWai(SimId.ProcessMovingVacToWai, MySim, this);
 			new ProcessMovingRegToExa(SimId.ProcessMovingRegToExa, MySim, this);
-			new ProcessMovingExaToVac(SimId.ProcessMovingExaToVac, MySim, this);
+			new ProcessMovingToFromCan(SimId.ProcessMovingToFromCan, MySim, this);
 			AddOwnMessage(Mc.Initialization);
 			AddOwnMessage(Mc.NoticeProcessMovingVacToWaiEnded);
 			AddOwnMessage(Mc.NoticeProcessMovingExaToVacEnded);

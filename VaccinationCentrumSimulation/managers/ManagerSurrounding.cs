@@ -131,20 +131,20 @@ namespace managers
 				ProcessInitialization(message);
 			break;
 
-			case Mc.NoticePatientGenerated:
-				ProcessNoticePatientGenerated(message);
-			break;
-
-			case Mc.NoticePatientLeave:
-				ProcessNoticePatientLeave(message);
-			break;
-
 			case Mc.Finish:
 				ProcessFinish(message);
 			break;
 
+			case Mc.NoticePatientGenerated:
+				ProcessNoticePatientGenerated(message);
+			break;
+
 			case Mc.NoticePreGeneratedPatientPicked:
 				ProcessNoticePreGeneratedPatientPicked(message);
+			break;
+
+			case Mc.NoticePatientLeave:
+				ProcessNoticePatientLeave(message);
 			break;
 
 			default:

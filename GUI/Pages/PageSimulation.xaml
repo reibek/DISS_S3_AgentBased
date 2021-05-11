@@ -284,6 +284,20 @@
                                HorizontalAlignment="Center"/>
                 </StackPanel>
             </Border>
+
+            <Border Grid.Column="4" Background="#fafafa" Margin="10" 
+                    CornerRadius="3" VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Direction="315" RenderingBias="Quality" Opacity=".2" ShadowDepth="4" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel Margin="20,10">
+                    <TextBlock Text="Vaccines left in package" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding VaccinesPackageCount}" 
+                               FontFamily="/GUI;component/src/fonts/#Poppins" FontSize="24" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
         </Grid>
 
         <!-- ROOMS CONTENT -->
@@ -575,6 +589,9 @@
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding State}" Value="Preparing">
                                                                 <Setter Property="Fill" Value="Orange"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding State}" Value="Opening">
+                                                                <Setter Property="Fill" Value="Brown"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>

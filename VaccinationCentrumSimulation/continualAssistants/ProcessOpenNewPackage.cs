@@ -3,10 +3,10 @@ using simulation;
 using agents;
 namespace continualAssistants
 {
-	//meta! id="19"
-	public class ProcessRegistration : Process
+	//meta! id="161"
+	public class ProcessOpenNewPackage : Process
 	{
-		public ProcessRegistration(int id, Simulation mySim, CommonAgent myAgent) :
+		public ProcessOpenNewPackage(int id, Simulation mySim, CommonAgent myAgent) :
 			base(id, mySim, myAgent)
 		{
 		}
@@ -17,25 +17,26 @@ namespace continualAssistants
 			// Setup component for the next replication
 		}
 
-		//meta! sender="AgentRegistration", id="20", type="Start"
+		//meta! sender="AgentColdStorage", id="162", type="Start"
 		public void ProcessStart(MessageForm message)
         {
-            message.Code = Mc.NoticeProcessRegistrationEnded;
-			Hold(((MessagePatient)message).AdminWorker.RandRegistrationTime.Sample(), message);
-		}
+            message.Code = Mc.NoticeProcessOpenNewPackageEnded;
+			Hold(MyAgent.RandOpenPackage.Sample(), message);
+        }
+
+		//meta! sender="AgentColdStorage", id="163", type="Notice"
+		public void ProcessNoticeProcessOpenNewPackageEnded(MessageForm message)
+        {
+            MyAgent.VaccinesInPackageLeft = 400;
+			AssistantFinished(message);
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
 			switch (message.Code)
 			{
-            }
-		}
-
-		//meta! sender="AgentRegistration", id="144", type="Notice"
-		public void ProcessNoticeProcessRegistrationEnded(MessageForm message)
-		{
-            AssistantFinished(message);
+			}
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -47,8 +48,8 @@ namespace continualAssistants
 				ProcessStart(message);
 			break;
 
-			case Mc.NoticeProcessRegistrationEnded:
-				ProcessNoticeProcessRegistrationEnded(message);
+			case Mc.NoticeProcessOpenNewPackageEnded:
+				ProcessNoticeProcessOpenNewPackageEnded(message);
 			break;
 
 			default:
@@ -57,11 +58,11 @@ namespace continualAssistants
 			}
 		}
 		//meta! tag="end"
-		public new AgentRegistration MyAgent
+		public new AgentColdStorage MyAgent
 		{
 			get
 			{
-				return (AgentRegistration)base.MyAgent;
+				return (AgentColdStorage)base.MyAgent;
 			}
 		}
 	}

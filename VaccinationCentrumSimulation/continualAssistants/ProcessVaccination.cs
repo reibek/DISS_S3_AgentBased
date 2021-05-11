@@ -43,12 +43,12 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-			case Mc.NoticeProcessVaccinationEnded:
-				ProcessNoticeProcessVaccinationEnded(message);
-			break;
-
 			case Mc.Start:
 				ProcessStart(message);
+			break;
+
+			case Mc.NoticeProcessVaccinationEnded:
+				ProcessNoticeProcessVaccinationEnded(message);
 			break;
 
 			default:

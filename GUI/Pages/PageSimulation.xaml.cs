@@ -60,6 +60,7 @@ namespace GUI.Pages
         private int _employeesMovingToCanteenCount;
         private int _employeesMovingFromCanteenCount;
         private int _employeesEatingCount;
+        private int _vaccinesPackageCount;
 
         #region PROPERTIES
 
@@ -443,6 +444,16 @@ namespace GUI.Pages
             }
         }
 
+        public int VaccinesPackageCount
+        {
+            get => _vaccinesPackageCount;
+            set
+            {
+                _vaccinesPackageCount = value;
+                OnPropertyChanged(nameof(VaccinesPackageCount));
+            }
+        }
+
         #endregion
 
         public PageSimulation(MainWindow mw)
@@ -502,6 +513,8 @@ namespace GUI.Pages
             EmployeesMovingToCanteenCount = 0;
             EmployeesMovingFromCanteenCount = 0;
             EmployeesEatingCount = 0;
+
+            VaccinesPackageCount = 0;
         }
 
         private void RunSimulation()
@@ -619,6 +632,8 @@ namespace GUI.Pages
                 AdminWorkers = new ObservableCollection<EntityAdminWorker>(simulation.AgentRegistration.PoolAdminWorkers.Entities);
                 Doctors = new ObservableCollection<EntityDoctor>(simulation.AgentExamination.PoolDoctors.Entities);
                 Nurses = new ObservableCollection<EntityNurse>(simulation.AgentVaccination.PoolNurses.Entities);
+
+                VaccinesPackageCount = simulation.AgentColdStorage.VaccinesInPackageLeft;
             }
         }
 

@@ -54,8 +54,8 @@ namespace agents
 		private void Init()
 		{
 			new ManagerVaccination(SimId.ManagerVaccination, MySim, this);
-			new SchedulerNurseBreak(SimId.SchedulerNurseBreak, MySim, this);
 			new ProcessMovingToFromColdStor(SimId.ProcessMovingToFromColdStor, MySim, this);
+			new SchedulerNurseBreak(SimId.SchedulerNurseBreak, MySim, this);
 			new ProcessVaccination(SimId.ProcessVaccination, MySim, this);
 			AddOwnMessage(Mc.Initialization);
 			AddOwnMessage(Mc.NoticeTimeForBreak);

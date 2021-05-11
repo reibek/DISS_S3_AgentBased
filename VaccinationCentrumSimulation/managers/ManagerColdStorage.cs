@@ -2,6 +2,8 @@ using OSPABA;
 using simulation;
 using agents;
 using continualAssistants;
+using entities;
+
 //using instantAssistants;
 
 namespace managers
@@ -27,7 +29,7 @@ namespace managers
 		}
 
 		//meta! sender="ProcessFillingSyringes", id="81", type="Finish"
-		public void ProcessFinish(MessageForm message)
+		public void ProcessFinishProcessFillingSyringes(MessageForm message)
         {
             var nurse = ((MessageNurse) message).Nurse;
             nurse.SyringesFullCount = 20;
@@ -54,9 +56,20 @@ namespace managers
 		{
             if (MyAgent.PreparingNursesCount < 2)
             {
-                MyAgent.PreparingNursesCount++;
-                message.Addressee = MyAgent.FindAssistant(SimId.ProcessFillingSyringes);
-				StartContinualAssistant(message);
+                var nurse = ((MessageNurse)message).Nurse;
+				MyAgent.PreparingNursesCount++;
+                if (MyAgent.VaccinesInPackageLeft == 0)
+                {
+                    nurse.State = EntityState.Opening;
+					message.Addressee = MyAgent.FindAssistant(SimId.ProcessOpenNewPackage);
+                    StartContinualAssistant(message);
+				}
+                else
+                {
+                    nurse.State = EntityState.Preparing;
+					message.Addressee = MyAgent.FindAssistant(SimId.ProcessFillingSyringes);
+                    StartContinualAssistant(message);
+				}
             }
             else
             {
@@ -74,6 +87,15 @@ namespace managers
 			}
 		}
 
+		//meta! sender="ProcessOpenNewPackage", id="162", type="Finish"
+		public void ProcessFinishProcessOpenNewPackage(MessageForm message)
+		{
+            var nurse = ((MessageNurse)message).Nurse;
+			nurse.State = EntityState.Preparing;
+			message.Addressee = MyAgent.FindAssistant(SimId.ProcessFillingSyringes);
+            StartContinualAssistant(message);
+		}
+
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
@@ -83,12 +105,21 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.RequestFillSyringes:
-				ProcessRequestFillSyringes(message);
+			case Mc.Finish:
+				switch (message.Sender.Id)
+				{
+				case SimId.ProcessOpenNewPackage:
+					ProcessFinishProcessOpenNewPackage(message);
+				break;
+
+				case SimId.ProcessFillingSyringes:
+					ProcessFinishProcessFillingSyringes(message);
+				break;
+				}
 			break;
 
-			case Mc.Finish:
-				ProcessFinish(message);
+			case Mc.RequestFillSyringes:
+				ProcessRequestFillSyringes(message);
 			break;
 
 			default:

@@ -137,6 +137,7 @@ namespace entities
         Moving,
         Preparing,
         Break,
-        Eating
+        Eating,
+        Opening
     }
 }

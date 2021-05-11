@@ -46,7 +46,8 @@ namespace continualAssistants
 
 		//meta! sender="AgentColdStorage", id="153", type="Notice"
 		public void ProcessNoticeProcessFillingSyringesEnded(MessageForm message)
-		{
+        {
+            MyAgent.VaccinesInPackageLeft -= 20;
             AssistantFinished(message);
 		}
 
@@ -55,12 +56,12 @@ namespace continualAssistants
 		{
 			switch (message.Code)
 			{
-			case Mc.Start:
-				ProcessStart(message);
-			break;
-
 			case Mc.NoticeProcessFillingSyringesEnded:
 				ProcessNoticeProcessFillingSyringesEnded(message);
+			break;
+
+			case Mc.Start:
+				ProcessStart(message);
 			break;
 
 			default:

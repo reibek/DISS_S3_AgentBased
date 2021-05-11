@@ -287,30 +287,30 @@ namespace managers
 					ProcessFinishProcessMovingToFromColdStor(message);
 				break;
 
-				case SimId.SchedulerNurseBreak:
-					ProcessFinishSchedulerNurseBreak(message);
-				break;
-
 				case SimId.ProcessVaccination:
 					ProcessFinishProcessVaccination(message);
+				break;
+
+				case SimId.SchedulerNurseBreak:
+					ProcessFinishSchedulerNurseBreak(message);
 				break;
 				}
 			break;
 
-			case Mc.RequestVaccination:
-				ProcessRequestVaccination(message);
+			case Mc.Initialization:
+				ProcessInitialization(message);
 			break;
 
 			case Mc.RequestFillSyringes:
 				ProcessRequestFillSyringes(message);
 			break;
 
-			case Mc.RequestNurseBreak:
-				ProcessRequestNurseBreak(message);
+			case Mc.RequestVaccination:
+				ProcessRequestVaccination(message);
 			break;
 
-			case Mc.Initialization:
-				ProcessInitialization(message);
+			case Mc.RequestNurseBreak:
+				ProcessRequestNurseBreak(message);
 			break;
 
 			default:
